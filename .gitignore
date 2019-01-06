@@ -5,6 +5,14 @@
 .project
 .settings
 .springBeans
+.DS_Store
+.cache
+.tmproj
+*.esproj
+*.sublime-project
+*.sublime-workspace
+nbproject
+thumbs.db
 
 ### IntelliJ IDEA ###
 .idea
@@ -13,3 +21,44 @@
 *.ipr
 target/
 out/
+
+# temp file for git conflict merging
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*.sass-cache
+*.tmp.html
+*.dump
+
+# Numerous always-ignore extensions
+*.bak
+*.patch
+*.diff
+*.err
+
+# Folders to ignore
+.CVS
+node_modules/
+jscoverage_lib/
+bower_components/
+dist/
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
