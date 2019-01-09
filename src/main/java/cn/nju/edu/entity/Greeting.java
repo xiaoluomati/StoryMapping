@@ -1,4 +1,4 @@
-package po;
+package cn.nju.edu.entity;
 
 // for test
 public class Greeting {
