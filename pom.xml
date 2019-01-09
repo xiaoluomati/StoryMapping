@@ -28,6 +28,7 @@
             <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
         <!--</dependency>-->
         <!-- 热部署模块 -->
+        <!-- test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
