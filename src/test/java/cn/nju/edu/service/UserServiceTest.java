@@ -26,11 +26,17 @@ public class UserServiceTest {
     public void findNameAndPassword() {
         assertArrayEquals(
                 new boolean[] {
-                        userService.FindNameAndPassword("张三", "123456") instanceof User,
+                        //用户名，密码都正确
+                        userService.FindNameAndPassword("张三", "123456") != null,
+                        //用户名正确，密码错误
                         userService.FindNameAndPassword("张三","123") == null,
-                        userService.FindNameAndPassword("张二","123") == null
+                        //密码为空
+                        userService.FindNameAndPassword("张三","") == null,
+                        //用户名为空
+                        userService.FindNameAndPassword("","") == null
                 },
                 new boolean[] {
+                        true,
                         true,
                         true,
                         true
@@ -42,6 +48,7 @@ public class UserServiceTest {
     @Transactional
     public void save() {
         User user = new User("李四","654321");
+        //用户数据插入数据库，查看id判断是否成功
         userService.save(user);
         System.out.println("UserID" + user.getId());
         assertTrue(user.getId() > 0);
@@ -51,7 +58,9 @@ public class UserServiceTest {
     public void findByName() {
         assertArrayEquals(
                 new Object[] {
+                        //用户存在
                         userService.FindByName("张三").isEmpty(),
+                        //用户不存在
                         userService.FindByName("王二").isEmpty()
                 },
                 new Object[] {

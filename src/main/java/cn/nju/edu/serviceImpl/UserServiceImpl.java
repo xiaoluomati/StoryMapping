@@ -1,6 +1,6 @@
-package cn.nju.edu.service.impl;
+package cn.nju.edu.serviceImpl;
 
-import cn.nju.edu.dao.UserDao;
+import cn.nju.edu.repository.UserRepository;
 import cn.nju.edu.entity.User;
 import cn.nju.edu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +11,15 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserDao userDao;
+    UserRepository userRepository;
 
     public User FindNameAndPassword(String name, String password) {
-        return userDao.findByNameAndPassword(name, password);
+        return userRepository.findByNameAndPassword(name, password);
     }
     public void save(User user1) {
-        userDao.save(user1);
+        userRepository.save(user1);
     }
     public List<User> FindByName(String name) {
-        return userDao.findByName(name);
+        return userRepository.findByName(name);
     }
 }
