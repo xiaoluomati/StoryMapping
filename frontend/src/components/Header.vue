@@ -57,30 +57,6 @@ export default {
 </script>
 
 <style>
-  a {
-    text-decoration: none;
-  }
-
-  ul {
-    list-style: none;
-    margin-bottom: 0;
-  }
-
-  .pull-left {
-    float: left;
-  }
-
-  .pull-right {
-    float: right;
-  }
-
-  .container {
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    width: 100%;
-  }
-
   /* top navbar style start */
   .container .topbar-wrap {
     height: 50px;
