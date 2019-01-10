@@ -9,7 +9,7 @@ public interface StoryMapService {
 
     List<StoryMapVo> getStoryMapList(int userId);
 
-    StoryMapVo getStoryMapByName(String name);
+//    StoryMapVo getStoryMapByName(String name);
 
     boolean addStoryMap(StoryMapVo storyMapVo);
 

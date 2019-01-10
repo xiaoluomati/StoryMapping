@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "story_map")
+@IdClass(StoryMapKey.class)
 public class StoryMap implements Serializable {
     private static final long serialVersionUID = -850216663528399998L;
 

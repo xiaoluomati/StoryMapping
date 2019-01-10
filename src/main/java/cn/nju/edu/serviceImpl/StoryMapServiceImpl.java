@@ -34,17 +34,17 @@ public class StoryMapServiceImpl implements StoryMapService {
         return storyMapVolist;
     }
 
-    @Override
-    @Transactional
-    public StoryMapVo getStoryMapByName(String name) {
-        StoryMap storyMap = storyMapRepository.findById(name).get();
-        StoryMapVo storyMapVo = new StoryMapVo();
-        storyMapVo.setStoryName(storyMap.getStoryName());
-        storyMapVo.setStoryDescription(storyMap.getStoryDescription());
-        storyMapVo.setRelease(storyMap.getRelease());
-        storyMapVo.setUserId(storyMap.getUserId());
-        return storyMapVo;
-    }
+//    @Override
+//    @Transactional
+//    public StoryMapVo getStoryMapByName(String name) {
+//        StoryMap storyMap = storyMapRepository.findById(name).get();
+//        StoryMapVo storyMapVo = new StoryMapVo();
+//        storyMapVo.setStoryName(storyMap.getStoryName());
+//        storyMapVo.setStoryDescription(storyMap.getStoryDescription());
+//        storyMapVo.setRelease(storyMap.getRelease());
+//        storyMapVo.setUserId(storyMap.getUserId());
+//        return storyMapVo;
+//    }
 
     @Override
     @Transactional
