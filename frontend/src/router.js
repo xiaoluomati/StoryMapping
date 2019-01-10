@@ -11,20 +11,21 @@ export default new Router({
   routes: [
     {
       path: '/',
+      type: 'home',
       name: 'home',
-      component: Home,
       redirect: '/storymap-manager',
+      component: Home,
       children: [
         {
-          path: '/stroymap-manager',
+          path: '/storymap-manager',
           components: {
             default: StoryMapManager,
-            Header: Header,
+            navheader: Header,
             aside: Navmenu
-          },
-          leaf: true, // 只有一个节点
-          iconCls: 'iconfont icon-home', // 图标样式class
-          menuShow: true
+          }
+          // leaf: true, // 只有一个节点
+          // iconCls: 'iconfont icon-home', // 图标样式class
+          // menuShow: true
         }
       ]
     }

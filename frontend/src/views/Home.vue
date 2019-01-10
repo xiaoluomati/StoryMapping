@@ -2,7 +2,7 @@
   <el-container>
     <!--头部-->
     <el-col :span="24">
-      <router-view name="header"></router-view>
+      <router-view name="navheader"></router-view>
     </el-col>
     <el-col :span="24" class="main">
       <!--左侧导航-->
@@ -11,7 +11,7 @@
       <section class="content-container">
         <div class="grid-content bg-purple-light">
           <transition name="fade" mode="out-in">
-            <router-view name='content'></router-view>
+            <router-view></router-view>
           </transition>
         </div>
       </section>
