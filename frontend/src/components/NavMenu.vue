@@ -7,7 +7,7 @@
           <i class="el-icon-circle-plus-outline"></i>
           <span slot="title">增加地图</span>
         </el-menu-item>
-        <el-menu-item index="2">
+        <el-menu-item @click="jumpTo('/create')" index="2">
           <i class="el-icon-search"></i>
           <span slot="title">寻找地图</span>
         </el-menu-item>
@@ -24,6 +24,9 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    },
+    jumpTo (url) {
+      this.$router.push(url) // 用go刷新
     }
   }
 }
