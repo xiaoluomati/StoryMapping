@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import routers from './router'
 import './plugins/element.js'
+import '@/assets/css/story-style.css'
 
 Vue.config.productionTip = false
 
