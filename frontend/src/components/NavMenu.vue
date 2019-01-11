@@ -1,8 +1,8 @@
 <template>
   <el-row class="tac">
-    <el-col :span="15">
+    <el-col :span="11" :offset="12">
       <el-menu default-active="1" class="action-menu" @open="handleOpen" @close="handleClose"
-               background-color="#F8F9F9" text-color="#17394D" active-text-color="#026AA7">
+               text-color="#17394D" active-text-color="#026AA7">
         <el-menu-item index="1">
           <i class="el-icon-circle-plus-outline"></i>
           <span slot="title">增加地图</span>
@@ -31,3 +31,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>

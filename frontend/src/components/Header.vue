@@ -1,17 +1,18 @@
 <template>
-  <el-row class="container">
+  <el-row>
     <el-col :span="24" class="topbar-wrap">
       <div class="topbar-logo topbar-btn">
         <!--<a href="/"><img src="../assets/logo.png" style="padding-left:8px;"></a>-->
-        <a href="/"><img src="../assets/images.jpg" style="padding-left:8px;"></a>
+        <!--<a href="/"><img src="../assets/images.jpg" style="padding-left:8px;"></a>-->
+        <i class="el-icon-success"></i>
       </div>
       <div class="topbar-logos">
-        <a href="/" style="color: #1e1e1e;">story-map</a>
+        <a href="/" style="color: #f9f9f9;">story-map</a>
       </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
-          <span class="el-dropdown-link userinfo-inner">
-            <i class="iconfont icon-user"></i> {{ nickname }}   <i class="el-icon-caret-bottom"></i></span>
+        <span class="el-dropdown-link userinfo-inner">
+          <i class="iconfont icon-user"></i> {{ nickname }}   <i class="el-icon-caret-bottom"></i></span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <div @click="jumpTo('/user/profile')"><span style="color: #555;font-size: 14px;">个人信息</span></div>
@@ -56,39 +57,46 @@ export default {
 }
 </script>
 
-<style>
-  /* top navbar style start */
-  .container .topbar-wrap {
+<style scoped>
+  .topbar-wrap {
     height: 50px;
     line-height: 50px;
-    background: #f8f9f9;
-    padding: 0px;
+    background: #026AA7;
+    padding: 0;
   }
 
-  .container .topbar-wrap .topbar-btn {
+  .topbar-wrap .topbar-btn {
     color: #1e1e1e;
   }
 
-  .container .topbar-wrap .topbar-logo {
+  .topbar-logo i {
+    font-size: 30px;
+    vertical-align: middle;
+    color: #f9f9f9;
+    margin-left: 10px;
+  }
+  .topbar-wrap .topbar-logo {
     float: left;
     width: 60px;
-    line-height: 26px;
+    /*line-height: 26px;*/
   }
 
-  .container .topbar-wrap .topbar-logos {
+  .topbar-wrap .topbar-logos {
     float: left;
-    width: 128px;
+    width: 200px;
     line-height: 48px;
-    font-size: 14px;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 600;
   }
 
-  .container .topbar-wrap .topbar-logo img, .container .topbar-wrap .topbar-logos img {
+  .topbar-wrap .topbar-logo img, .topbar-wrap .topbar-logos img {
     height: 30px;
     margin-top: 12px;
     margin-left: 2px;
   }
 
-  .container .topbar-wrap .topbar-title {
+  .topbar-wrap .topbar-title {
     float: left;
     text-align: left;
     padding-left: 10px;
@@ -120,32 +128,33 @@ export default {
     vertical-align: middle;
   }
 
-  .container .topbar-wrap .topbar-account {
+  .topbar-wrap .topbar-account {
     float: right;
     padding-right: 12px;
   }
 
-  .container .topbar-wrap .topbar-timer {
+  .topbar-wrap .topbar-timer {
     display: inline-block;
   }
 
-  .container .topbar-wrap .topbar-timer span {
+  .topbar-wrap .topbar-timer span {
     display: inline-block;
     vertical-align: middle;
   }
 
-  .container .topbar-wrap .topbar-timer .login-name {
+  .topbar-wrap .topbar-timer .login-name {
     margin: 0 6px;
     font-style: normal;
   }
 
-  .container .topbar-wrap .userinfo-inner {
+  .topbar-wrap .userinfo-inner {
     cursor: pointer;
-    color: #1e1e1e;
+    color: #f9f9f9;
     padding-left: 10px;
+    font-size: 20px;
   }
 
-  .container .topbar-wrap .userinfo-inner img {
+  .topbar-wrap .userinfo-inner img {
     margin-left: 6px;
     width: 42px;
     height: 42px;
