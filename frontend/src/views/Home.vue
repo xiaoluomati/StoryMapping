@@ -5,9 +5,9 @@
       <router-view name="navheader"></router-view>
     </el-col>
     <el-col :span="24" class="main">
-      <!--左侧导航-->
+      左侧导航
       <router-view name="aside"></router-view>
-      <!--右侧内容区-->
+      右侧内容区
       <section class="content-container">
         <div class="grid-content bg-purple-light">
           <transition name="fade" mode="out-in">
