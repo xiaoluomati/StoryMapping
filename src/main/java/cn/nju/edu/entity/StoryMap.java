@@ -33,6 +33,7 @@ public class StoryMap implements Serializable {
         this.storyDescription = storyDescription;
     }
 
+    @Column(name = "story_release")
     public int getRelease() {
         return release;
     }
