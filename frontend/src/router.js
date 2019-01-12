@@ -5,6 +5,7 @@ import Header from '@/components/Header.vue'
 import Navmenu from '@/components/NavMenu.vue'
 import StoryMapManager from '@/views/StoryMapManager.vue'
 import CreateMap from '@/views/CreateMap.vue'
+import StoryMap from '@/views/StoryMap.vue'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/storymap',
+      name: 'storymap',
+      component: StoryMap
     }
     // {
     //   path: '/about',
