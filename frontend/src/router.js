@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Header from '@/components/Header.vue'
 import Navmenu from '@/components/NavMenu.vue'
 import StoryMapManager from '@/views/StoryMapManager.vue'
+import CreateMap from '@/views/CreateMap.vue'
 
 Vue.use(Router)
 
@@ -26,6 +27,14 @@ export default new Router({
           // leaf: true, // 只有一个节点
           // iconCls: 'iconfont icon-home', // 图标样式class
           // menuShow: true
+        },
+        {
+          path: '/create',
+          components: {
+            default: CreateMap,
+            navheader: Header,
+            aside: Navmenu
+          }
         }
       ]
     }
