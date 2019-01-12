@@ -21,7 +21,7 @@ public class UserServiceTest {
     UserService userService;
 
     @Test
-    public void getUserByNameAndPasswordTest() {
+    public void getUserByNameAndPassword() {
         assertArrayEquals(
                 new boolean[] {
                         //用户名，密码都正确
@@ -43,28 +43,40 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserListByNameTest() {
+    public void getUserByName() {
         assertArrayEquals(
                 new Object[] {
                         //用户存在
-                        userService.getUserListByName("张三").isEmpty(),
+                        userService.getUserByName("张三") != null,
                         //用户不存在
-                        userService.getUserListByName("王二").isEmpty()
+                        userService.getUserByName("王二") == null
                 },
                 new Object[] {
-                        false,
+                        true,
                         true
                 }
         );
     }
 
     @Test
-    public void addUserTest() {
+    public void addUser() {
         UserVo userVo = new UserVo();
         userVo.setName("李四");
         userVo.setPassword("654321");
         //用户数据插入数据库，根据名字查找判断是否成功
         userService.addUser(userVo);
-        assertNotNull(userService.getUserListByName("李四"));
+        System.out.println(userService.getUserByName("李四"));
+        assertNotNull(userService.getUserByName("李四"));
+    }
+
+    @Test
+    public void updateUser() {
+        UserVo userVo = new UserVo();
+        userVo.setName("张三");
+        userVo.setPassword("654321");
+        userService.updateUser(userVo);
+//        UserVo tmp = userService.getUserByName("张三");
+//        System.out.println(tmp);
+        assertEquals(userService.getUserByName("张三").getPassword(), "654321");
     }
 }

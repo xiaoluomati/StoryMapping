@@ -13,6 +13,7 @@ public class User {
     private String password;
     private String email;
 
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -21,6 +22,7 @@ public class User {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -29,6 +31,7 @@ public class User {
         this.name = name;
     }
 
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -37,6 +40,7 @@ public class User {
         this.password = password;
     }
 
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }

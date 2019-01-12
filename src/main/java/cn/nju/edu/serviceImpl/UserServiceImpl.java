@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,34 +22,28 @@ public class UserServiceImpl implements UserService {
             return null;
         } else {
             User user = userRepository.findByNameAndPassword(name, password);
-            if (user == null) {
-                return null;
-            } else {
-            UserVo userVo = new UserVo();
-            userVo.setId(user.getId());
-            userVo.setName(user.getName());
-            userVo.setPassword(user.getPassword());
-            userVo.setEmail(user.getEmail());
-            return userVo;
-            }
+            return getUserVo(user);
         }
     }
 
     @Override
     @Transactional
-    public List<UserVo> getUserListByName(String name) {
-        List<User> users = userRepository.findByName(name);
-        List<UserVo> userVos = new ArrayList<UserVo>();
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            UserVo userVo = new UserVo();
-            userVo.setId(user.getId());
-            userVo.setName(user.getName());
-            userVo.setPassword(user.getPassword());
-            userVo.setEmail(user.getEmail());
-            userVos.add(userVo);
+    public UserVo getUserByName(String name) {
+        User user = userRepository.findByName(name);
+        return getUserVo(user);
+    }
+
+    private UserVo getUserVo(User user) {
+        if (user == null) {
+            return null;
+        } else {
+        UserVo userVo = new UserVo();
+        userVo.setId(user.getId());
+        userVo.setName(user.getName());
+        userVo.setPassword(user.getPassword());
+        userVo.setEmail(user.getEmail());
+        return userVo;
         }
-        return userVos;
     }
 
     @Override
@@ -64,4 +56,17 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userVo.getEmail());
         userRepository.save(user);
     }
+
+    @Override
+    @Transactional
+    public void updateUser(UserVo userVo) {
+        User user = new User();
+        int id = userRepository.findByName(userVo.getName()).getId();
+        user.setId(id);
+        user.setName(userVo.getName());
+        user.setPassword(userVo.getPassword());
+        user.setEmail(userVo.getEmail());
+        userRepository.save(user);
+    }
+
 }
