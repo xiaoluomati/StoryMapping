@@ -25,17 +25,17 @@
         </el-dropdown>
       </div>
       <el-dialog title="账号信息" :visible.sync="accountFormVisible" :width="accountFormWidth">
-        <el-form :model="accountForm">
+        <el-form :model="account">
           <el-form-item label="昵称" :label-width="accountFormLabelWidth">
-            <el-input v-model="accountForm.nickname" autocomplete="off"></el-input>
+            <el-input v-model="account.nickname" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" :label-width="accountFormLabelWidth">
-            <el-input v-model="accountForm.email" autocomplete="off"></el-input>
+            <el-input v-model="account.email" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="accountFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="accountFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="updateAccount()">确 定</el-button>
         </div>
       </el-dialog>
       <el-dialog title="修改密码" :visible.sync="changepwdFormVisible" :width="changepwdFormWidth">
@@ -68,7 +68,8 @@ export default {
       nickname: '',
       accountFormVisible: false,
       changepwdFormVisible: false,
-      accountForm: {
+      account: {
+        id: '',
         nickname: '',
         email: ''
       },
@@ -88,9 +89,11 @@ export default {
     jumpTo (url) {
       this.$router.push(url) // 用go刷新
     },
+
     handleSelect (index) {
       this.defaultActiveIndex = index
     },
+
     logout () {
       // logout
       this.$confirm('确认退出吗?', '提示', {
@@ -100,26 +103,29 @@ export default {
         localStorage.removeItem('access-user')
         // road.$emit('goto', '/login');
       }).catch(() => {})
-    }
+    },
 
+    updateAccount () {
+      this.accountFormVisible = false
+      API
+        .updateAccount(this.account.id, this.account)
+        .catch(reason => {
+          console.log('error!')
+          console.log(reason)
+        })
+    }
   },
 
   mounted () {
     // let user = window.localStorage.getItem('access-user');
     // 登陆成功后会在 window.localStorage 里 set，现在先 mock
-    let user = JSON.stringify(
-      {
-        id: '1',
-        nickname: '小龙虾',
-        email: '123456@789.com'
+    API.getUser('1').then(res => {
+      let user = res
+      if (user) {
+        this.nickname = user.nickname || ''
+        this.account = user
       }
-    )
-    if (user) {
-      user = JSON.parse(user)
-      this.nickname = user.nickname || ''
-      this.accountForm.nickname = user.nickname || ''
-      this.accountForm.email = user.email || ''
-    }
+    })
   }
 }
 </script>
