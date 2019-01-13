@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface RelationRepository extends CrudRepository<Relation, Integer> {
 
-    List<Relation> findByPositionXAndPositionYAndStoryNameAndUserId(int positionX, int positionY, String storyName, int userId);
+    List<Relation> findByCardId(int cardId);
 }

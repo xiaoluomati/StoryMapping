@@ -18,17 +18,14 @@ public class RelationServiceImpl implements RelationService {
     RelationRepository relationRepository;
 
     @Override
-    public List<RelationVo> getRelationByCard(int positionX, int positionY, String storyName, int userId) {
+    public List<RelationVo> getRelationByCardId(int cardId) {
         List<RelationVo> relationVos = new ArrayList<>();
-        List<Relation> relations = relationRepository.findByPositionXAndPositionYAndStoryNameAndUserId(positionX, positionY, storyName, userId);
+        List<Relation> relations = relationRepository.findByCardId(cardId);
         for (Relation relation: relations) {
             RelationVo relationVo = new RelationVo();
             relationVo.setRelationId(relation.getRelationId());
             relationVo.setRoleId(relation.getRoleId());
-            relationVo.setPositionX(relation.getPositionX());
-            relationVo.setPositionY(relation.getPositionY());
-            relationVo.setStoryName(relation.getStoryName());
-            relationVo.setUserId(relation.getUserId());
+            relationVo.setCardId(relation.getCardId());
             relationVos.add(relationVo);
         }
         return relationVos;
@@ -38,10 +35,7 @@ public class RelationServiceImpl implements RelationService {
     public void addRelation(RelationVo relationVo) {
         Relation relation = new Relation();
         relation.setRoleId(relationVo.getRoleId());
-        relation.setPositionX(relationVo.getPositionX());
-        relation.setPositionY(relationVo.getPositionY());
-        relation.setStoryName(relationVo.getStoryName());
-        relation.setUserId(relationVo.getUserId());
+        relation.setCardId(relationVo.getCardId());
         relationRepository.save(relation);
     }
 
@@ -50,10 +44,7 @@ public class RelationServiceImpl implements RelationService {
         Relation relation = new Relation();
         relation.setRelationId(relationVo.getRelationId());
         relation.setRoleId(relationVo.getRoleId());
-        relation.setPositionX(relationVo.getPositionX());
-        relation.setPositionY(relationVo.getPositionY());
-        relation.setStoryName(relationVo.getStoryName());
-        relation.setUserId(relationVo.getUserId());
+        relation.setCardId(relationVo.getCardId());
         relationRepository.delete(relation);
     }
 }

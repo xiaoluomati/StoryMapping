@@ -23,7 +23,7 @@ public class RelationServiceTest {
 
     @Test
     public void getRelationByCard() {
-        List<RelationVo> relationVos = relationService.getRelationByCard(1,1,"awayz",1);
+        List<RelationVo> relationVos = relationService.getRelationByCardId(1);
         assertNotNull(relationVos);
         for (RelationVo relationVo: relationVos) {
             if (relationVo.getRelationId() == 1) {
@@ -35,13 +35,10 @@ public class RelationServiceTest {
     @Test
     public void addRelation() {
         RelationVo relationVo = new RelationVo();
-        relationVo.setRoleId(1);
-        relationVo.setPositionX(2);
-        relationVo.setPositionY(2);
-        relationVo.setStoryName("awayz");
-        relationVo.setUserId(1);
+        relationVo.setRoleId(2);
+        relationVo.setCardId(3);
         relationService.addRelation(relationVo);
-        List<RelationVo> relationVos = relationService.getRelationByCard(2,2,"awayz",1);
+        List<RelationVo> relationVos = relationService.getRelationByCardId(3);
         assertNotNull(relationVos);
         for (RelationVo tmp : relationVos) {
             if (tmp.getRoleId() == 1) {
@@ -55,12 +52,9 @@ public class RelationServiceTest {
         RelationVo relationVo = new RelationVo();
         relationVo.setRelationId(2);
         relationVo.setRoleId(2);
-        relationVo.setPositionX(1);
-        relationVo.setPositionY(1);
-        relationVo.setStoryName("awayz");
-        relationVo.setUserId(1);
+        relationVo.setCardId(1);
         relationService.deleteRelation(relationVo);
-        List<RelationVo> relationVos = relationService.getRelationByCard(1,1,"awayz",1);
+        List<RelationVo> relationVos = relationService.getRelationByCardId(1);
         boolean isDeleted = true;
         for (RelationVo tmp : relationVos) {
             if (tmp.getRoleId() == 2 && tmp.getRelationId() == 2) {

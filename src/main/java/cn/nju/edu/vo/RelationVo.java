@@ -3,10 +3,7 @@ package cn.nju.edu.vo;
 public class RelationVo {
     private int relationId;
     private int roleId;
-    private int positionX;
-    private int positionY;
-    private String storyName;
-    private int userId;
+    private int cardId;
 
     public int getRelationId() {
         return relationId;
@@ -24,36 +21,12 @@ public class RelationVo {
         this.roleId = roleId;
     }
 
-    public int getPositionX() {
-        return positionX;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
-
-    public String getStoryName() {
-        return storyName;
-    }
-
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 
     @Override
@@ -61,10 +34,7 @@ public class RelationVo {
         return "RelationVo{" +
                 "relationId=" + relationId +
                 ", roleId=" + roleId +
-                ", positionX=" + positionX +
-                ", positionY=" + positionY +
-                ", storyName='" + storyName + '\'' +
-                ", userId=" + userId +
+                ", cardId=" + cardId +
                 '}';
     }
 }

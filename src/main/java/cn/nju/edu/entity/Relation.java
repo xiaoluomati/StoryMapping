@@ -13,17 +13,8 @@ public class Relation {
     @Column(name = "role_id")
     private int roleId;
 
-    @Column(name = "position_x")
-    private int positionX;
-
-    @Column(name = "position_y")
-    private int positionY;
-
-    @Column(name = "story_name")
-    private String storyName;
-
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name = "card_id")
+    private int cardId;
 
     public int getRelationId() {
         return relationId;
@@ -41,38 +32,12 @@ public class Relation {
         this.roleId = roleId;
     }
 
-
-    public int getPositionY() {
-        return positionY;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
-
-
-    public int getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
-    public String getStoryName() {
-        return storyName;
-    }
-
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 
     @Override
@@ -80,10 +45,7 @@ public class Relation {
         return "Relation{" +
                 "relationId=" + relationId +
                 ", roleId=" + roleId +
-                ", positionX=" + positionX +
-                ", positionY=" + positionY +
-                ", storyName='" + storyName + '\'' +
-                ", userId=" + userId +
+                ", cardId=" + cardId +
                 '}';
     }
 }

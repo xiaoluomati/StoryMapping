@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RelationService {
     //显示关系列表
-    List<RelationVo> getRelationByCard(int positionX, int positionY, String storyName, int userId);
+    List<RelationVo> getRelationByCardId(int cardId);
 
     //添加关系
     void addRelation(RelationVo relationVo);
