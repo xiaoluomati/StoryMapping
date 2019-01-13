@@ -22,7 +22,7 @@ public class StoryRoleServiceTest {
 
     @Test
     public void getStoryRoleList() {
-        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx");
+        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx",1);
         assertNotNull(storyRoleVos);
         for (StoryRoleVo tmp : storyRoleVos) {
             if (tmp.getRoleName().equals("awayz"))
@@ -43,19 +43,17 @@ public class StoryRoleServiceTest {
     public void addStoryRole() {
         StoryRoleVo storyRoleVo = new StoryRoleVo();
         storyRoleVo.setStoryName("example");
-        storyRoleVo.setRoleId(2);
         storyRoleVo.setRoleName("Denny");
         storyRoleVo.setRoleDetail("It's a storyRole");
+        storyRoleVo.setUserId(1);
         storyRoleService.addStoryRole(storyRoleVo);
-        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("example");
+        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("example",1);
         assertNotNull(storyRoleVos);
-        boolean flag = false;
         for (StoryRoleVo tmp : storyRoleVos) {
             if (tmp.getRoleName().equals("Denny")) {
-                flag = true;
+                assertEquals(tmp.getRoleDetail(), "It's a storyRole");
             }
         }
-        assertTrue(flag);
     }
 
     @Test
@@ -66,7 +64,7 @@ public class StoryRoleServiceTest {
         storyRoleVo.setRoleId(1);
         storyRoleVo.setRoleDetail("master");
         storyRoleService.deleteStoryRole(storyRoleVo);
-        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx");
+        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx",1);
         boolean flag = false;
         if (storyRoleVos != null) {
             for (StoryRoleVo tmp : storyRoleVos) {
@@ -80,15 +78,19 @@ public class StoryRoleServiceTest {
     @Test
     public void updateStoryRole() {
         StoryRoleVo storyRoleVo = new StoryRoleVo();
+        storyRoleVo.setRoleId(1);
         storyRoleVo.setStoryName("xxx");
-        storyRoleVo.setRoleName("awayz");
+        storyRoleVo.setRoleName("denny");
         storyRoleVo.setRoleDetail("hhhhhh");
+        storyRoleVo.setUserId(1);
         storyRoleService.updateStoryRole(storyRoleVo);
-        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx");
+        List<StoryRoleVo> storyRoleVos = storyRoleService.getStoryRoleList("xxx",1);
         for (StoryRoleVo tmp : storyRoleVos) {
             System.out.println(tmp);
-            if (tmp.getRoleName().equals("awayz"))
+            if (tmp.getRoleId() == 1) {
                 assertEquals(tmp.getRoleDetail(), "hhhhhh");
+                assertEquals(tmp.getRoleName(), "denny");
+            }
         }
     }
 }

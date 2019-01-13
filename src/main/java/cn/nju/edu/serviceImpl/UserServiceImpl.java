@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addUser(UserVo userVo) {
         User user = new User();
-        user.setId(userVo.getId());
         user.setName(userVo.getName());
         user.setPassword(userVo.getPassword());
         user.setEmail(userVo.getEmail());
@@ -61,8 +60,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUser(UserVo userVo) {
         User user = new User();
-        int id = userRepository.findByName(userVo.getName()).getId();
-        user.setId(id);
+        user.setId(userVo.getId());
         user.setName(userVo.getName());
         user.setPassword(userVo.getPassword());
         user.setEmail(userVo.getEmail());

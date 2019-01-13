@@ -72,11 +72,14 @@ public class UserServiceTest {
     @Test
     public void updateUser() {
         UserVo userVo = new UserVo();
+        userVo.setId(1);
         userVo.setName("张三");
         userVo.setPassword("654321");
+        userVo.setEmail("857672790@qq.com");
         userService.updateUser(userVo);
 //        UserVo tmp = userService.getUserByName("张三");
 //        System.out.println(tmp);
         assertEquals(userService.getUserByName("张三").getPassword(), "654321");
+        assertEquals(userService.getUserByName("张三").getEmail(),"857672790@qq.com");
     }
 }

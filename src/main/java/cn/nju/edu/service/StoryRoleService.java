@@ -15,5 +15,5 @@ public interface StoryRoleService {
     void updateStoryRole(StoryRoleVo storyRoleVo);
 
     //获取角色列表
-    List<StoryRoleVo> getStoryRoleList(String storyName);
+    List<StoryRoleVo> getStoryRoleList(String storyName, int userId);
 }
