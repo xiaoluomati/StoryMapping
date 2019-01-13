@@ -15,24 +15,72 @@
           <i class="iconfont icon-user"></i> {{ nickname }}   <i class="el-icon-caret-bottom"></i></span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <div @click="jumpTo('/user/profile')"><span style="color: #555;font-size: 14px;">个人信息</span></div>
+              <div @click="accountFormVisible = true"><span style="color: #555;font-size: 14px;">个人信息</span></div>
             </el-dropdown-item>
             <el-dropdown-item>
-              <div @click="jumpTo('/user/changepwd')"><span style="color: #555;font-size: 14px;">修改密码</span></div>
+              <div @click="changepwdFormVisible = true"><span style="color: #555;font-size: 14px;">修改密码</span></div>
             </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <el-dialog title="账号信息" :visible.sync="accountFormVisible" :width="accountFormWidth">
+        <el-form :model="accountForm">
+          <el-form-item label="昵称" :label-width="accountFormLabelWidth">
+            <el-input v-model="accountForm.nickname" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" :label-width="accountFormLabelWidth">
+            <el-input v-model="accountForm.email" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="accountFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="accountFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title="修改密码" :visible.sync="changepwdFormVisible" :width="changepwdFormWidth">
+        <el-form :model="pwdForm" :label-position="'left'">
+          <el-form-item label="原密码" :label-width="changepwdFormLabelWidth">
+            <el-input v-model="pwdForm.old" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" :label-width="changepwdFormLabelWidth">
+            <el-input v-model="pwdForm.new1" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认" :label-width="changepwdFormLabelWidth">
+            <el-input v-model="pwdForm.new2" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="changepwdFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="changepwdFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import API from '@/api/api_user'
+
 export default {
   data () {
     return {
-      nickname: 'admin'
+      nickname: '',
+      accountFormVisible: false,
+      changepwdFormVisible: false,
+      accountForm: {
+        nickname: '',
+        email: ''
+      },
+      accountFormLabelWidth: '60px',
+      accountFormWidth: '500px',
+      changepwdFormLabelWidth: '60px',
+      changepwdFormWidth: '500px',
+      pwdForm: {
+        old: '',
+        new1: '',
+        new2: ''
+      }
     }
   },
 
@@ -44,20 +92,43 @@ export default {
       this.defaultActiveIndex = index
     },
     logout () {
-      // //logout
-      // this.$confirm('确认退出吗?', '提示', {
-      //   confirmButtonClass: 'el-button--warning'
-      // }).then(() => {
-      //   //确认
-      //   localStorage.removeItem('access-user');
-      //   road.$emit('goto', '/login');
-      // }).catch(() => {});
+      // logout
+      this.$confirm('确认退出吗?', '提示', {
+        confirmButtonClass: 'el-button--warning'
+      }).then(() => {
+        // 确认
+        localStorage.removeItem('access-user')
+        // road.$emit('goto', '/login');
+      }).catch(() => {})
+    }
+
+  },
+
+  mounted () {
+    // let user = window.localStorage.getItem('access-user');
+    // 登陆成功后会在 window.localStorage 里 set，现在先 mock
+    let user = JSON.stringify(
+      {
+        id: '1',
+        nickname: '小龙虾',
+        email: '123456@789.com'
+      }
+    )
+    if (user) {
+      user = JSON.parse(user)
+      this.nickname = user.nickname || ''
+      this.accountForm.nickname = user.nickname || ''
+      this.accountForm.email = user.email || ''
     }
   }
 }
 </script>
 
 <style scoped>
+  .el-input {
+    width: 350px;
+  }
+
   .topbar-wrap {
     height: 50px;
     line-height: 50px;

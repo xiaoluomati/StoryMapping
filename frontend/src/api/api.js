@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 axios.defaults.withCredentials = false;
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';// 配置请求头
 //基地址
-let base = 'http://localhost:8090';
+let base = 'http://localhost:8090'
 
 //通用方法
 export const POST = (url, params) => {
