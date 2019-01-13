@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 import cn.nju.edu.entity.StoryMap;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.NoSuchElementException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,23 +41,38 @@ public class StoryMapRepositoryTest {
         storyMap.setRelease(3);
         storyMapRepository.save(storyMap);
 
-//        StoryMapKey id = new StoryMapKey();
-//        id.setStoryName("GuideMap");
-//        id.setUserId(1);
-//        StoryMap storyMap1 = storyMapRepository.findById(id).get();
-//        Assert.assertNotNull(storyMap1);
-//        Assert.assertEquals(storyMap1.getStoryDescription(),"sample project");
+        StoryMapKey id = new StoryMapKey();
+        id.setStoryName("GuideMap");
+        id.setUserId(1);
+        StoryMap storyMap1 = storyMapRepository.findById(id).get();
+        Assert.assertNotNull(storyMap1);
+        Assert.assertEquals(storyMap1.getStoryDescription(),"sample project");
 
-        List<StoryMap> storyMaps = storyMapRepository.findByUserId(1);
-        Assert.assertNotNull(storyMaps);
-        Assert.assertEquals(storyMaps.size(),3);
+//        List<StoryMap> storyMaps = storyMapRepository.findByUserId(1);
+//        Assert.assertNotNull(storyMaps);
+//        Assert.assertEquals(storyMaps.size(),3);
     }
 
     @Test
     public void findByUserId(){
+        StoryMap storyMap = new StoryMap();
+        storyMap.setUserId(1);
+        storyMap.setStoryName("GuideMap");
+        storyMap.setStoryDescription("sample project");
+        storyMap.setRelease(3);
+        storyMapRepository.save(storyMap);
+
+        String description = "";
         List<StoryMap> storyMaps = storyMapRepository.findByUserId(1);
         Assert.assertNotNull(storyMaps);
-        Assert.assertEquals(storyMaps.get(0).getStoryDescription(),"its a rbq");
+        for(int i = 0;i < storyMaps.size();i++){
+            StoryMap temp = storyMaps.get(i);
+            if(temp.getStoryName().equals("GuideMap") && temp.getUserId() == 1){
+                description = "sample project";
+            }
+        }
+        Assert.assertNotNull(description);
+        Assert.assertEquals(description,"sample project");
     }
 
     @Test
@@ -89,9 +104,16 @@ public class StoryMapRepositoryTest {
 //        storyMap1.setUserId(1);
 //        storyMapRepository.save(storyMap1);
 
-        List<StoryMap> storyMaps = storyMapRepository.findByUserId(1);
-        Assert.assertNotNull(storyMaps);
-        Assert.assertEquals(storyMaps.size(),1);
+        boolean isDeleted = false;
+
+        try {
+            StoryMap storyMap1 = storyMapRepository.findById(id).get();
+        }
+        catch (NoSuchElementException e){
+            isDeleted = true;
+        }
+
+        Assert.assertEquals(isDeleted,true);
     }
 
 }

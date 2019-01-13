@@ -9,6 +9,7 @@ import CreateMap from '@/views/CreateMap.vue'
 import StoryMap from '@/views/StoryMap.vue'
 import Cards from '@/views/Cards.vue'
 
+
 Vue.use(Router)
 
 export default new Router({

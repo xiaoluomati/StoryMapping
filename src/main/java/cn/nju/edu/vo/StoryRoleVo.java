@@ -5,6 +5,7 @@ public class StoryRoleVo {
     private String roleName;
     private String roleDetail;
     private String storyName;
+    private int userId;
 
     public int getRoleId() {
         return roleId;
@@ -38,13 +39,22 @@ public class StoryRoleVo {
         this.storyName = storyName;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
-        return "StoryRole{" +
+        return "StoryRoleVo{" +
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
                 ", roleDetail='" + roleDetail + '\'' +
                 ", storyName='" + storyName + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

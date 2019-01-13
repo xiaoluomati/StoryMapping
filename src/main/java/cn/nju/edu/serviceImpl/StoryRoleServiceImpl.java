@@ -18,15 +18,16 @@ public class StoryRoleServiceImpl implements StoryRoleService {
 
     @Override
     @Transactional
-    public List<StoryRoleVo> getStoryRoleList(String storyName) {
+    public List<StoryRoleVo> getStoryRoleList(String storyName, int userId) {
         List<StoryRoleVo> storyRoleVos = new ArrayList<>();
-        List<StoryRole> storyRoles = storyRoleRepository.findByStoryName(storyName);
+        List<StoryRole> storyRoles = storyRoleRepository.findByStoryNameAndUserId(storyName, userId);
         for (StoryRole storyRole : storyRoles) {
             StoryRoleVo storyRoleVo = new StoryRoleVo();
             storyRoleVo.setRoleId(storyRole.getRoleId());
             storyRoleVo.setRoleName(storyRole.getRoleName());
             storyRoleVo.setRoleDetail(storyRole.getRoleDetail());
             storyRoleVo.setStoryName(storyRole.getStoryName());
+            storyRoleVo.setUserId(storyRole.getUserId());
             storyRoleVos.add(storyRoleVo);
         }
         return storyRoleVos;
@@ -36,10 +37,10 @@ public class StoryRoleServiceImpl implements StoryRoleService {
     @Transactional
     public void addStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
-        storyRole.setRoleId(storyRoleVo.getRoleId());
         storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
         storyRole.setStoryName(storyRoleVo.getStoryName());
+        storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.save(storyRole);
     }
 
@@ -51,6 +52,7 @@ public class StoryRoleServiceImpl implements StoryRoleService {
         storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
         storyRole.setStoryName(storyRoleVo.getStoryName());
+        storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.delete(storyRole);
     }
 
@@ -58,13 +60,11 @@ public class StoryRoleServiceImpl implements StoryRoleService {
     @Transactional
     public void updateStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
-        String storyName = storyRoleVo.getStoryName();
-        String roleName = storyRoleVo.getRoleName();
-        int roleId = storyRoleRepository.findByStoryNameAndRoleName(storyName, roleName).getRoleId();
-        storyRole.setRoleId(roleId);
-        storyRole.setStoryName(storyName);
-        storyRole.setRoleName(roleName);
+        storyRole.setRoleId(storyRoleVo.getRoleId());
+        storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
+        storyRole.setStoryName(storyRoleVo.getStoryName());
+        storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.save(storyRole);
     }
 }

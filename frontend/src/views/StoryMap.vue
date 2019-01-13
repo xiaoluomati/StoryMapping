@@ -15,7 +15,12 @@
 
 <script>
 export default {
-  name: 'storymap'
+  name: 'storymap',
+  data () {
+    return {
+      loading: false
+    }
+  }
 }
 </script>
 

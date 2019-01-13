@@ -25,7 +25,16 @@ public class StoryMapServiceTest {
     public void getStoryMapList(){
         List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
         Assert.assertNotNull(storyMapVos);
-        Assert.assertEquals(storyMapVos.get(0).getStoryDescription(),"its a rbq");
+
+        String description = "";
+        for(int i = 0;i < storyMapVos.size();i++){
+            StoryMapVo temp = storyMapVos.get(i);
+            if(temp.getStoryName().equals("awayz")){
+                description = temp.getStoryDescription();
+            }
+        }
+        Assert.assertNotNull(description);
+        Assert.assertEquals(description,"its a rbq");
     }
 
     @Test
@@ -40,7 +49,15 @@ public class StoryMapServiceTest {
 
         List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
         Assert.assertNotNull(storyMapVos);
-        Assert.assertEquals(storyMapVos.get(1).getStoryDescription(),"sample project");
+        String description = "";
+        for(int i = 0;i < storyMapVos.size();i++){
+            StoryMapVo temp = storyMapVos.get(i);
+            if(temp.getStoryName().equals("GuideMap")){
+                description = temp.getStoryDescription();
+            }
+        }
+        Assert.assertNotNull(description);
+        Assert.assertEquals(description,"sample project");
     }
 
     @Test
@@ -55,7 +72,15 @@ public class StoryMapServiceTest {
 
         List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
         Assert.assertNotNull(storyMapVos);
-        Assert.assertEquals(storyMapVos.size(),1);
+
+        boolean isDeleted = true;
+        for(int i = 0;i < storyMapVos.size();i++){
+            StoryMapVo temp = storyMapVos.get(i);
+            if(temp.getStoryName().equals("xxx")){
+                isDeleted = false;
+            }
+        }
+        Assert.assertEquals(isDeleted,true);
     }
 
 }

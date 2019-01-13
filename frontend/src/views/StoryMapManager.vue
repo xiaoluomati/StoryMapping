@@ -1,29 +1,61 @@
 <template>
-  <el-row class="wrap">
-    <el-col :span="24" class="wrap-breadcrumb">
-      <el-breadcrumb seporate="/">
-        <el-breadcrumb-item :to="{ path: '/'}"><b>首页</b></el-breadcrumb-item>
-      </el-breadcrumb>
-      <el-col :span="24" class="wrap-main">
-      </el-col>
+  <el-row>
+    <el-col :span="6" v-for="storymap in storymaps" :key="storymap.id" :offset=1>
+      <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
+               @click.native="jumpTo({name: 'storymap', params: storymap.id})">
+        <div style="padding: 10px;">
+          <h1>{{ storymap.title }}</h1>
+          <p>
+            {{ storymap.description }}
+          </p>
+          <a></a>
+        </div>
+
+      </el-card>
     </el-col>
   </el-row>
 </template>
-<style>
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
 
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
+<script>
+export default {
+  name: 'storymap-manager',
+  data () {
+    return {
+      storymaps: [
+        {
+          id: 1,
+          title: 'storymap',
+          description: 'this is a test description'
+        },
+        {
+          id: 2,
+          title: 'storymap',
+          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
+        },
+        {
+          id: 3,
+          title: 'storymap',
+          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
+        },
+        {
+          id: 4,
+          title: 'storymap',
+          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
+        }
+      ]
+    }
+  },
 
-  .image {
-    width: 100%;
-    display: block;
+  methods: {
+    jumpTo (url) {
+      console.log(url)
+      this.$router.push(url) // 用go刷新
+    }
   }
+}
+</script>
+
+<style scoped>
 
   .clearfix:before,
   .clearfix:after {
@@ -35,15 +67,23 @@
     clear: both
   }
 
-</style>
-<script>
-export default {
-  name: 'storymap-manager',
-  data () {
-    return {
-      chartColumn: null,
-      chartBar: null
-    }
+  .storymap {
+    margin: 0 0 20px 0;
+    height: 200px;
+    background: #007bbc;
+    color: #ffffff;
+    border-radius: 3px;
   }
-}
-</script>
+
+  h1 {
+    font-size: 24px;
+  }
+
+  p {
+    margin: 10px 0 0 0;
+  }
+
+  .el-card:hover {
+    box-shadow: 0 7px 16px 0 rgba(0, 0, 0, 0.4)
+  }
+</style>

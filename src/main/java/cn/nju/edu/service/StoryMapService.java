@@ -1,7 +1,6 @@
 package cn.nju.edu.service;
 
 import cn.nju.edu.vo.StoryMapVo;
-import cn.nju.edu.entity.StoryMap;
 
 import java.util.List;
 

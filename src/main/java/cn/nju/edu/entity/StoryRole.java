@@ -11,6 +11,7 @@ public class StoryRole {
     private String roleName;
     private String roleDetail;
     private String storyName;
+    private int userId;
 
     @Column(name = "role_id")
     public int getRoleId() {
@@ -48,6 +49,15 @@ public class StoryRole {
         this.storyName = storyName;
     }
 
+    @Column(name = "user_id")
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "StoryRole{" +
@@ -55,6 +65,7 @@ public class StoryRole {
                 ", roleName='" + roleName + '\'' +
                 ", roleDetail='" + roleDetail + '\'' +
                 ", storyName='" + storyName + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }
