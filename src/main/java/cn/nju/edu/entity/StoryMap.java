@@ -13,6 +13,7 @@ public class StoryMap implements Serializable {
     private String storyDescription;
     private int release;
     private int userId;
+    private int storyId;
 
     @Id
     @Column(name = "story_name")
@@ -52,6 +53,16 @@ public class StoryMap implements Serializable {
         this.userId = userId;
     }
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "story_id")
+    public int getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
+    }
+
     @Override
     public String toString() {
         return "story_map{" +
@@ -59,6 +70,7 @@ public class StoryMap implements Serializable {
                 ", story_description='" + storyDescription + '\'' +
                 ", release='" + release + '\'' +
                 ", user_id='" + userId + '\'' +
+                ", story_id='" + storyId + '\'' +
                 '}';
     }
 }

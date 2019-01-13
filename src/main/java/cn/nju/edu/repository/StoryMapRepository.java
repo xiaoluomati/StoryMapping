@@ -10,4 +10,5 @@ public interface StoryMapRepository extends CrudRepository<StoryMap, StoryMapKey
 
     List<StoryMap> findByUserId(int userId);
 
+    StoryMap findByStoryId(int storyId);
 }

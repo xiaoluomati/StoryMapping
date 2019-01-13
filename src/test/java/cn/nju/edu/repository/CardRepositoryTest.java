@@ -23,12 +23,19 @@ public class CardRepositoryTest {
     @Test
     public void findById(){
         CardKey id = new CardKey();
-        id.setPositionX(1);
+        id.setPositionX(5);
         id.setPositionY(1);
-        id.setStoryName("awayz");
-        id.setUserId(1);
+        id.setStoryId(1);
 
         Card card = cardRepository.findById(id).get();
+        Assert.assertNotNull(card);
+        Assert.assertEquals(card.getContent(),"awayz is a rbq");
+    }
+
+    @Test
+    public void finfByCardId(){
+        Card card = cardRepository.findByCardId(1);
+
         Assert.assertNotNull(card);
         Assert.assertEquals(card.getContent(),"awayz is a rbq");
     }
@@ -41,15 +48,13 @@ public class CardRepositoryTest {
         card.setCost(38);
         card.setPositionX(3);
         card.setPositionY(8);
-        card.setStoryName("awayz");
-        card.setUserId(1);
+        card.setStoryId(1);
         cardRepository.save(card);
 
         CardKey id = new CardKey();
         id.setPositionX(3);
         id.setPositionY(8);
-        id.setStoryName("awayz");
-        id.setUserId(1);
+        id.setStoryId(1);
 
         Card card1 = cardRepository.findById(id).get();
         Assert.assertNotNull(card);
@@ -57,23 +62,21 @@ public class CardRepositoryTest {
     }
 
     @Test
-    public void findByStoryNameAndUserId(){
+    public void findByStoryId(){
         Card card = new Card();
         card.setContent("gaygayxiong");
         card.setState(1);
         card.setCost(38);
         card.setPositionX(3);
         card.setPositionY(8);
-        card.setStoryName("awayz");
-        card.setUserId(1);
+        card.setStoryId(1);
         cardRepository.save(card);
 
         String content = "";
-        List<Card> cards = cardRepository.findByStoryNameAndUserId("awayz",1);
+        List<Card> cards = cardRepository.findByStoryId(1);
         for(int i = 0;i < cards.size();i++){
             Card temp = cards.get(i);
-            if(temp.getStoryName().equals("awayz") && temp.getUserId() == 1 &&
-                    temp.getPositionX() == 3 && temp.getPositionY() == 8){
+            if(temp.getStoryId() == 1 && temp.getPositionX() == 3 && temp.getPositionY() == 8){
                 content = temp.getContent();
             }
         }
@@ -84,10 +87,9 @@ public class CardRepositoryTest {
     @Test
     public void update(){
         CardKey id = new CardKey();
-        id.setPositionX(1);
+        id.setPositionX(5);
         id.setPositionY(1);
-        id.setStoryName("awayz");
-        id.setUserId(1);
+        id.setStoryId(1);
 
         Card card = cardRepository.findById(id).get();
         card.setContent("awayz is still a rbq");
@@ -101,10 +103,9 @@ public class CardRepositoryTest {
     @Test
     public void delete(){
         CardKey id = new CardKey();
-        id.setPositionX(1);
+        id.setPositionX(5);
         id.setPositionY(1);
-        id.setStoryName("awayz");
-        id.setUserId(1);
+        id.setStoryId(1);
 
         Card card = cardRepository.findById(id).get();
         cardRepository.delete(card);

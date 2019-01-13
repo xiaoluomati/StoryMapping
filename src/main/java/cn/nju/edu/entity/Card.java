@@ -24,12 +24,13 @@ public class Card implements Serializable{
     private int positionY;
 
     @Id
-    @Column(name = "story_name")
-    private String storyName;
+    @Column(name = "story_id")
+    private int storyId;
 
     @Id
-    @Column(name = "user_id")
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "card_id")
+    private int cardId;
 
     public String getContent() {
         return content;
@@ -71,20 +72,20 @@ public class Card implements Serializable{
         this.positionY = positionY;
     }
 
-    public String getStoryName() {
-        return storyName;
+    public int getStoryId() {
+        return storyId;
     }
 
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getCardId() {
+        return cardId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
     }
 
     @Override
@@ -95,8 +96,8 @@ public class Card implements Serializable{
                 ", cost='" + cost + '\'' +
                 ", position_x='" + positionX + '\'' +
                 ", position_y='" + positionY + '\'' +
-                ", story_map_id='" + storyName + '\'' +
-                ", user_id='" + userId + '\'' +
+                ", story_id='" + storyId + '\'' +
+                ", card_id='" + cardId + '\'' +
                 '}';
     }
 }

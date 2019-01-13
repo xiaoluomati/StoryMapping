@@ -22,8 +22,8 @@ public class CardServiceImpl implements CardService {
 
 
     @Override
-    public List<CardVo> getCardList(String storyName,int userId) {
-        List<Card> cards = cardRepository.findByStoryNameAndUserId(storyName,userId);
+    public List<CardVo> getCardList(int storyId) {
+        List<Card> cards = cardRepository.findByStoryId(storyId);
         List<CardVo> cardVos = new ArrayList<>();
         for(int i = 0;i < cards.size();i++){
             Card temp = cards.get(i);
@@ -33,10 +33,10 @@ public class CardServiceImpl implements CardService {
             cardVo.setCost(temp.getCost());
             cardVo.setPositionX(temp.getPositionX());
             cardVo.setPositionY(temp.getPositionY());
-            cardVo.setStoryName(temp.getStoryName());
-            cardVo.setUserId(temp.getUserId());
+            cardVo.setStoryId(temp.getStoryId());
             int x= temp.getPositionX();
             cardVo.setType(CardType.values()[x > 2 ? 2 : x]);
+            cardVo.setCardId(temp.getCardId());
             cardVos.add(cardVo);
         }
         return cardVos;
@@ -50,8 +50,7 @@ public class CardServiceImpl implements CardService {
         card.setCost(cardVo.getCost());
         card.setPositionX(cardVo.getPositionX());
         card.setPositionY(cardVo.getPositionY());
-        card.setStoryName(cardVo.getStoryName());
-        card.setUserId(cardVo.getUserId());
+        card.setStoryId(cardVo.getStoryId());
         cardRepository.save(card);
         return true;
     }
@@ -64,9 +63,21 @@ public class CardServiceImpl implements CardService {
         card.setCost(cardVo.getCost());
         card.setPositionX(cardVo.getPositionX());
         card.setPositionY(cardVo.getPositionY());
-        card.setStoryName(cardVo.getStoryName());
-        card.setUserId(cardVo.getUserId());
+        card.setStoryId(cardVo.getStoryId());
         cardRepository.delete(card);
         return true;
+    }
+
+    public static void main(String[] args) {
+        CardVo cardVo = new CardVo();
+        cardVo.setContent("xiaoluomati");
+        cardVo.setState(CardState.DOING);
+        cardVo.setCost(55);
+        cardVo.setPositionX(7);
+        cardVo.setPositionY(3);
+        cardVo.setStoryId(1);
+        cardVo.setType(CardType.USER_STORY);
+
+
     }
 }

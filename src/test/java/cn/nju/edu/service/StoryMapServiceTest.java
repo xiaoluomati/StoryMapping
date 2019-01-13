@@ -27,14 +27,25 @@ public class StoryMapServiceTest {
         Assert.assertNotNull(storyMapVos);
 
         String description = "";
+        int storyId = 0;
         for(int i = 0;i < storyMapVos.size();i++){
             StoryMapVo temp = storyMapVos.get(i);
             if(temp.getStoryName().equals("awayz")){
                 description = temp.getStoryDescription();
+                storyId = temp.getStoryId();
             }
         }
-        Assert.assertNotNull(description);
-        Assert.assertEquals(description,"its a rbq");
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        description,
+                        storyId
+                },
+                new Object[]{
+                        "its a rbq",
+                        1
+                }
+        );
     }
 
     @Test
@@ -49,15 +60,26 @@ public class StoryMapServiceTest {
 
         List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
         Assert.assertNotNull(storyMapVos);
+
         String description = "";
+        int storyId = 0;
+
         for(int i = 0;i < storyMapVos.size();i++){
             StoryMapVo temp = storyMapVos.get(i);
             if(temp.getStoryName().equals("GuideMap")){
                 description = temp.getStoryDescription();
+                storyId = temp.getStoryId();
             }
         }
-        Assert.assertNotNull(description);
-        Assert.assertEquals(description,"sample project");
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        description,
+                },
+                new Object[]{
+                        "sample project",
+                }
+        );
     }
 
     @Test
