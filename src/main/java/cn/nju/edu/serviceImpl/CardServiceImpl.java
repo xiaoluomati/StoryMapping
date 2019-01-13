@@ -1,5 +1,7 @@
 package cn.nju.edu.serviceImpl;
 
+import cn.nju.edu.enumeration.CardState;
+import cn.nju.edu.enumeration.CardType;
 import cn.nju.edu.repository.CardRepository;
 import cn.nju.edu.service.CardService;
 import cn.nju.edu.vo.CardVo;
@@ -27,12 +29,14 @@ public class CardServiceImpl implements CardService {
             Card temp = cards.get(i);
             CardVo cardVo = new CardVo();
             cardVo.setContent(temp.getContent());
-            cardVo.setState(temp.getState());
+            cardVo.setState(CardState.values()[temp.getState()]);
             cardVo.setCost(temp.getCost());
             cardVo.setPositionX(temp.getPositionX());
             cardVo.setPositionY(temp.getPositionY());
             cardVo.setStoryName(temp.getStoryName());
             cardVo.setUserId(temp.getUserId());
+            int x= temp.getPositionX();
+            cardVo.setType(CardType.values()[x > 2 ? 2 : x]);
             cardVos.add(cardVo);
         }
         return cardVos;
@@ -42,7 +46,7 @@ public class CardServiceImpl implements CardService {
     public boolean addCard(CardVo cardVo) {
         Card card = new Card();
         card.setContent(cardVo.getContent());
-        card.setState(cardVo.getState());
+        card.setState(cardVo.getState().ordinal());
         card.setCost(cardVo.getCost());
         card.setPositionX(cardVo.getPositionX());
         card.setPositionY(cardVo.getPositionY());
@@ -56,7 +60,7 @@ public class CardServiceImpl implements CardService {
     public boolean deleteCard(CardVo cardVo) {
         Card card = new Card();
         card.setContent(cardVo.getContent());
-        card.setState(cardVo.getState());
+        card.setState(cardVo.getState().ordinal());
         card.setCost(cardVo.getCost());
         card.setPositionX(cardVo.getPositionX());
         card.setPositionY(cardVo.getPositionY());

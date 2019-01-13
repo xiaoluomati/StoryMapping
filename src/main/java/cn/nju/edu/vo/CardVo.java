@@ -1,9 +1,12 @@
 package cn.nju.edu.vo;
 
+import cn.nju.edu.enumeration.CardState;
+import cn.nju.edu.enumeration.CardType;
+
 public class CardVo {
     private String content;
 
-    private int state;
+    private CardState state;
 
     private int cost;
 
@@ -15,6 +18,8 @@ public class CardVo {
 
     private int userId;
 
+    private CardType type;
+
     public String getContent() {
         return content;
     }
@@ -23,11 +28,11 @@ public class CardVo {
         this.content = content;
     }
 
-    public int getState() {
+    public CardState getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(CardState state) {
         this.state = state;
     }
 
@@ -71,6 +76,14 @@ public class CardVo {
         this.userId = userId;
     }
 
+    public CardType getType() {
+        return type;
+    }
+
+    public void setType(CardType type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "CardVo{" +
@@ -81,6 +94,7 @@ public class CardVo {
                 ", position_y='" + positionY + '\'' +
                 ", story_map_id='" + storyName + '\'' +
                 ", user_id='" + userId + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
