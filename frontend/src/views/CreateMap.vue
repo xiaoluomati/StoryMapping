@@ -7,8 +7,8 @@
       <el-input type="textarea" v-model="formLabelAlign.description"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="success" @click="submitForm('')">保存</el-button>
-      <el-button type="primary" @click="submitAndOpen('')">保存并打开</el-button>
+      <el-button type="success" @click.native="submitForm('')">保存</el-button>
+      <el-button type="primary" @click.native="submitAndOpen('')">保存并打开</el-button>
     </el-form-item>
   </el-form>
 </template>
