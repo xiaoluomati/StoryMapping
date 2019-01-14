@@ -68,16 +68,4 @@ public class CardServiceImpl implements CardService {
         return true;
     }
 
-    public static void main(String[] args) {
-        CardVo cardVo = new CardVo();
-        cardVo.setContent("xiaoluomati");
-        cardVo.setState(CardState.DOING);
-        cardVo.setCost(55);
-        cardVo.setPositionX(7);
-        cardVo.setPositionY(3);
-        cardVo.setStoryId(1);
-        cardVo.setType(CardType.USER_STORY);
-
-
-    }
 }
