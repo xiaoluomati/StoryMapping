@@ -5,7 +5,7 @@ import cn.nju.edu.vo.CardVo;
 import java.util.List;
 
 public interface CardService {
-    List<CardVo> getCardList(String storyName,int userId);
+    List<CardVo> getCardList(int storyId);
 
     boolean addCard(CardVo cardVo);
 

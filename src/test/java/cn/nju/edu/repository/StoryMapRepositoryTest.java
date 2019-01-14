@@ -33,6 +33,14 @@ public class StoryMapRepositoryTest {
     }
 
     @Test
+    public void findByStoryId(){
+        StoryMap storyMap = storyMapRepository.findByStoryId(1);
+
+        Assert.assertNotNull(storyMap);
+        Assert.assertEquals(storyMap.getStoryDescription(),"its a rbq");
+    }
+
+    @Test
     public void save(){
         StoryMap storyMap = new StoryMap();
         storyMap.setUserId(1);

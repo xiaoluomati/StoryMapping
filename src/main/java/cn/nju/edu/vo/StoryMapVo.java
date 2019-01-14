@@ -9,6 +9,8 @@ public class StoryMapVo {
 
     private int userId;
 
+    private int storyId;
+
     public String getStoryName() {
         return storyName;
     }
@@ -41,6 +43,14 @@ public class StoryMapVo {
         this.userId = userId;
     }
 
+    public int getStoryId() {
+        return storyId;
+    }
+
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
+    }
+
     @Override
     public String toString() {
         return "StoryMapVo{" +
@@ -48,6 +58,7 @@ public class StoryMapVo {
                 ", storyDescription='" + storyDescription + '\'' +
                 ", release='" + release + '\'' +
                 ", userId='" + userId + '\'' +
+                ", storyId='" + storyId + '\'' +
                 '}';
     }
 }

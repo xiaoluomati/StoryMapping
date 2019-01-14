@@ -29,6 +29,7 @@ public class StoryMapServiceImpl implements StoryMapService {
             storyMapVo.setStoryDescription(temp.getStoryDescription());
             storyMapVo.setRelease(temp.getRelease());
             storyMapVo.setUserId(temp.getUserId());
+            storyMapVo.setStoryId(temp.getStoryId());
             storyMapVolist.add(storyMapVo);
         }
         return storyMapVolist;

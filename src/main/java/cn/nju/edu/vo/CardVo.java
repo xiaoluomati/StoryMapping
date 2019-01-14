@@ -14,11 +14,11 @@ public class CardVo {
 
     private int positionY;
 
-    private String storyName;
-
-    private int userId;
+    private int storyId;
 
     private CardType type;
+
+    private int cardId;
 
     public String getContent() {
         return content;
@@ -60,20 +60,12 @@ public class CardVo {
         this.positionY = positionY;
     }
 
-    public String  getStoryName() {
-        return storyName;
+    public int getStoryId() {
+        return storyId;
     }
 
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 
     public CardType getType() {
@@ -84,6 +76,14 @@ public class CardVo {
         this.type = type;
     }
 
+    public int getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(int cardId) {
+        this.cardId = cardId;
+    }
+
     @Override
     public String toString() {
         return "CardVo{" +
@@ -92,9 +92,9 @@ public class CardVo {
                 ", cost='" + cost + '\'' +
                 ", position_x='" + positionX + '\'' +
                 ", position_y='" + positionY + '\'' +
-                ", story_map_id='" + storyName + '\'' +
-                ", user_id='" + userId + '\'' +
+                ", story_id='" + storyId + '\'' +
                 ", type='" + type + '\'' +
+                ", card_id='" + cardId + '\'' +
                 '}';
     }
 }

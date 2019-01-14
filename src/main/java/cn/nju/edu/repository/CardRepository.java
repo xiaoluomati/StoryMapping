@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface CardRepository extends CrudRepository<Card, CardKey>{
 
-    List<Card> findByStoryNameAndUserId(String storyName,int userId);
+    List<Card> findByStoryId(int storyId);
+
+    Card findByCardId(int cardId);
 }

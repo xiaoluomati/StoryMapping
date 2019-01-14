@@ -5,8 +5,7 @@ import java.io.Serializable;
 public class CardKey implements Serializable{
     private int positionX;
     private int positionY;
-    private String storyName;
-    private int userId;
+    private int storyId;
 
     public int getPositionX() {
         return positionX;
@@ -24,25 +23,17 @@ public class CardKey implements Serializable{
         this.positionY = positionY;
     }
 
-    public String getStoryName() {
-        return storyName;
+    public int getStoryId() {
+        return storyId;
     }
 
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 
     @Override
     public String toString() {
         return "CardKey [position_x=" + positionX + ", position_y=" + positionY
-                + ", story_map_id=" + storyName + ", user_id=" + userId + "]";
+                + ", story_id=" + storyId + "]";
     }
 }
