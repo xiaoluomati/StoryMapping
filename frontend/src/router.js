@@ -2,10 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Header from '@/components/Header.vue'
+import MapHeader from '@/components/MapHeader.vue'
 import Navmenu from '@/components/NavMenu.vue'
 import StoryMapManager from '@/views/StoryMapManager.vue'
 import CreateMap from '@/views/CreateMap.vue'
 import StoryMap from '@/views/StoryMap.vue'
+import Cards from '@/views/Cards.vue'
 
 Vue.use(Router)
 
@@ -41,8 +43,18 @@ export default new Router({
     },
     {
       path: '/storymap',
+      type: 'storymap',
       name: 'storymap',
-      component: StoryMap
+      component: StoryMap,
+      children: [
+        {
+          path: '/storymap/:storymapid',
+          components: {
+            navheader: MapHeader,
+            cards: Cards
+          }
+        }
+      ]
     }
     // {
     //   path: '/about',

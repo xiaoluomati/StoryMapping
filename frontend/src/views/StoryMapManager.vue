@@ -2,7 +2,7 @@
   <el-row>
     <el-col :span="6" v-for="storymap in storymaps" :key="storymap.id" :offset=1>
       <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
-               @click.native="jumpTo({name: 'storymap', params: storymap.id})">
+               @click.native="jumpTo('storymap', storymap.id)">
         <div style="padding: 10px;">
           <h1>{{ storymap.title }}</h1>
           <p>
@@ -47,9 +47,11 @@ export default {
   },
 
   methods: {
-    jumpTo (url) {
-      console.log(url)
-      this.$router.push(url) // 用go刷新
+    jumpTo (name, param) {
+      console.log(name)
+      console.log(param)
+      // this.$router.push({ name: name, params: { id : param }}) // 用go刷新
+      this.$router.push({ path: `/${name}/${param}`}) // 用go刷新
     }
   }
 }

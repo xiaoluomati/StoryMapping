@@ -2,13 +2,29 @@
   "user": [
     {
       "id": "1",
-      "nickname": "小龙虾9",
+      "nickname": "小龙虾",
       "email": "123456@789.com"
     },
     {
       "id": "2",
       "nickname": "小龙虾2",
       "email": "456@789.com"
+    }
+  ],
+  "storymaps": [
+    {
+      "id": "1",
+      "map_width": 4,
+      "map_height": 2,
+      "cards": [
+        {
+          "id": "1",
+          "title": "a1",
+          "content": "b1",
+          "x": 1,
+          "y": 1
+        }
+      ]
     }
   ]
 }
