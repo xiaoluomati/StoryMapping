@@ -51,7 +51,7 @@ export default {
       console.log(name)
       console.log(param)
       // this.$router.push({ name: name, params: { id : param }}) // 用go刷新
-      this.$router.push({ path: `/${name}/${param}`}) // 用go刷新
+      this.$router.push({ path: `/${name}/${param}` }) // 用go刷新
     }
   }
 }
