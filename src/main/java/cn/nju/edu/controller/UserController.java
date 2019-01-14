@@ -2,24 +2,29 @@ package cn.nju.edu.controller;
 
 import cn.nju.edu.service.UserService;
 import cn.nju.edu.vo.UserVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public UserVo questUser() {
-        UserVo userVo = new UserVo();
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public void login(@RequestBody UserVo userVo) {
+        System.out.println(userVo);
+        userService.addUser(userVo);
+    }
 
-        return userVo;
+    @RequestMapping("/{id}")
+    public UserVo getUser(@PathVariable("id") int userId) {
+        return userService.getUserById(userId);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void updateAccount(@PathVariable("id") int userId, @RequestBody UserVo userVo) {
+        userVo.setId(userId);
+        userService.updateUser(userVo);
     }
 }

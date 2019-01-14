@@ -8,12 +8,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "nickname")
+    private String nickname;
+
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -22,7 +31,6 @@ public class User {
         this.id = id;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -31,7 +39,6 @@ public class User {
         this.name = name;
     }
 
-    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -40,7 +47,14 @@ public class User {
         this.password = password;
     }
 
-    @Column(name = "email")
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -51,10 +65,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "user{" +
-                "id='" + id + '\'' +
+        return "User{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
