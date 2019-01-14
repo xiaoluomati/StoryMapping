@@ -9,7 +9,6 @@ import CreateMap from '@/views/CreateMap.vue'
 import StoryMap from '@/views/StoryMap.vue'
 import Cards from '@/views/Cards.vue'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -43,14 +42,13 @@ export default new Router({
       ]
     },
     {
-      path: '/',
+      path: '/storymap',
       type: 'storymap',
       name: 'storymap',
-      redirect: '/storymap',
       component: StoryMap,
       children: [
         {
-          path: '/storymap',
+          path: '/storymap/:storymapid',
           components: {
             navheader: MapHeader,
             cards: Cards
