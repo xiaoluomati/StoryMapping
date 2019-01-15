@@ -10,6 +10,10 @@ export default {
     return API.GET('user/logout', params)
   },
 
+  register: params => {
+    return API.POST('user/register', params)
+  },
+
   updateAccount: (id, params) => {
     return API.PUT(`user/${id}`, params)
   },
