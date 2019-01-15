@@ -1,6 +1,7 @@
 package cn.nju.edu.service;
 
 import cn.nju.edu.StoryMapApplication;
+import cn.nju.edu.vo.UserLoginVo;
 import cn.nju.edu.vo.UserPswdVo;
 import cn.nju.edu.vo.UserVo;
 import org.junit.Test;
@@ -28,24 +29,24 @@ public class UserServiceTest {
         testCase.setPassword("654321");
         testCase.setNickname("小龙虾");
         userService.addUser(testCase);
-        assertArrayEquals(
-                new boolean[] {
-                        //用户名，密码都正确
-                        userService.getUserByNameAndPassword("hujia", "654321") != null,
-                        //用户名正确，密码错误
-                        userService.getUserByNameAndPassword("hujia","123") == null,
-                        //密码为空
-                        userService.getUserByNameAndPassword("hujia","") == null,
-                        //用户名为空
-                        userService.getUserByNameAndPassword("","") == null
-                },
-                new boolean[] {
-                        true,
-                        true,
-                        true,
-                        true
-                }
-        );
+
+        //用户名，密码正确
+        UserLoginVo test1 = new UserLoginVo();
+        test1.setName("hujia");
+        test1.setPassword("654321");
+        assertTrue(userService.getUserByNameAndPassword(test1) > 0);
+
+        //用户名错误，密码正确
+        UserLoginVo test2 = new UserLoginVo();
+        test2.setName("a");
+        test2.setPassword("654321");
+        assertEquals(userService.getUserByNameAndPassword(test2), 0);
+
+        //用户名正确，密码错误
+        UserLoginVo test3 = new UserLoginVo();
+        test3.setName("hujia");
+        test3.setPassword("123456");
+        assertEquals(userService.getUserByNameAndPassword(test3), 0);
     }
 
     @Test
@@ -55,6 +56,7 @@ public class UserServiceTest {
         testCase.setPassword("654321");
         testCase.setNickname("小龙虾");
         userService.addUser(testCase);
+
         assertArrayEquals(
                 new Object[] {
                         //用户存在
