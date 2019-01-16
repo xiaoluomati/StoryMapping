@@ -7,17 +7,17 @@ let base = 'api/'
 
 // 通用方法
 export const POST = (url, params) => {
-  return axios.post(`${base}${url}`, params).then(res => res.data)
+  return axios.post(`${base}${url}`, params)
 }
 
 export const GET = (url, params) => {
-  return axios.get(`${base}${url}`, { params: params }).then(res => res.data)
+  return axios.get(`${base}${url}`, { params: params })
 }
 
 export const PUT = (url, params) => {
-  return axios.put(`${base}${url}`, params).then(res => res.data)
+  return axios.put(`${base}${url}`, params)
 }
 
 export const DELETE = (url, params) => {
-  return axios.delete(`${base}${url}`, { params: params }).then(res => res.data)
+  return axios.delete(`${base}${url}`, { params: params })
 }
