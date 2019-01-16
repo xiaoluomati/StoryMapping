@@ -1,9 +1,17 @@
 package cn.nju.edu.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserVo {
     private int id;
+
+    @JsonIgnore
     private String name;
+
+    @JsonIgnore
     private String password;
+    private String nickname;
     private String email;
 
     public int getId() {
@@ -14,20 +22,32 @@ public class UserVo {
         this.id = id;
     }
 
+    @JsonIgnore
     public String getName() {
         return name;
     }
 
+    @JsonProperty
     public void setName(String name) {
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -40,10 +60,11 @@ public class UserVo {
 
     @Override
     public String toString() {
-        return "user{" +
-                "id='" + id + '\'' +
+        return "UserVo{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

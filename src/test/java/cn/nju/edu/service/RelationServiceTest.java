@@ -23,13 +23,13 @@ public class RelationServiceTest {
 
     @Test
     public void getRelationByCard() {
-        List<RelationVo> relationVos = relationService.getRelationByCardId(1);
+        RelationVo testCase = new RelationVo();
+        testCase.setRoleId(2);
+        testCase.setCardId(3);
+        relationService.addRelation(testCase);
+
+        List<RelationVo> relationVos = relationService.getRelationByCardId(3);
         assertNotNull(relationVos);
-        for (RelationVo relationVo: relationVos) {
-            if (relationVo.getRelationId() == 1) {
-                assertEquals(relationVo.getRoleId(),1);
-            }
-        }
     }
 
     @Test
@@ -49,6 +49,11 @@ public class RelationServiceTest {
 
     @Test
     public void deleteRelation() {
+        RelationVo testCase = new RelationVo();
+        testCase.setRoleId(2);
+        testCase.setCardId(3);
+        relationService.addRelation(testCase);
+        
         RelationVo relationVo = new RelationVo();
         relationVo.setRelationId(2);
         relationVo.setRoleId(2);

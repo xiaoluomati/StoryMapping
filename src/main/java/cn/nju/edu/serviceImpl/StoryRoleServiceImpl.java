@@ -35,18 +35,19 @@ public class StoryRoleServiceImpl implements StoryRoleService {
 
     @Override
     @Transactional
-    public void addStoryRole(StoryRoleVo storyRoleVo) {
+    public boolean addStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
         storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
         storyRole.setStoryName(storyRoleVo.getStoryName());
         storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.save(storyRole);
+        return true;
     }
 
     @Override
     @Transactional
-    public void deleteStoryRole(StoryRoleVo storyRoleVo) {
+    public boolean deleteStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
         storyRole.setRoleId(storyRoleVo.getRoleId());
         storyRole.setRoleName(storyRoleVo.getRoleName());
@@ -54,11 +55,12 @@ public class StoryRoleServiceImpl implements StoryRoleService {
         storyRole.setStoryName(storyRoleVo.getStoryName());
         storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.delete(storyRole);
+        return true;
     }
 
     @Override
     @Transactional
-    public void updateStoryRole(StoryRoleVo storyRoleVo) {
+    public boolean updateStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
         storyRole.setRoleId(storyRoleVo.getRoleId());
         storyRole.setRoleName(storyRoleVo.getRoleName());
@@ -66,5 +68,6 @@ public class StoryRoleServiceImpl implements StoryRoleService {
         storyRole.setStoryName(storyRoleVo.getStoryName());
         storyRole.setUserId(storyRoleVo.getUserId());
         storyRoleRepository.save(storyRole);
+        return true;
     }
 }

@@ -32,19 +32,26 @@ public class RelationServiceImpl implements RelationService {
     }
 
     @Override
-    public void addRelation(RelationVo relationVo) {
+    public boolean addRelation(RelationVo relationVo) {
+        int roleId = relationVo.getRoleId();
+        int cardId = relationVo.getCardId();
+        if (relationRepository.findByRoleIdAndCardId(roleId, cardId) != null) {
+            return false;
+        }
         Relation relation = new Relation();
         relation.setRoleId(relationVo.getRoleId());
         relation.setCardId(relationVo.getCardId());
         relationRepository.save(relation);
+        return true;
     }
 
     @Override
-    public void deleteRelation(RelationVo relationVo) {
+    public boolean deleteRelation(RelationVo relationVo) {
         Relation relation = new Relation();
         relation.setRelationId(relationVo.getRelationId());
         relation.setRoleId(relationVo.getRoleId());
         relation.setCardId(relationVo.getCardId());
         relationRepository.delete(relation);
+        return true;
     }
 }

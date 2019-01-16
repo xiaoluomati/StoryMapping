@@ -1,25 +1,65 @@
 package cn.nju.edu.controller;
 
 import cn.nju.edu.service.UserService;
+import cn.nju.edu.vo.UserLoginVo;
+import cn.nju.edu.vo.UserPswdVo;
 import cn.nju.edu.vo.UserVo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     UserService userService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public UserVo questUser() {
-        UserVo userVo = new UserVo();
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity login(@RequestBody UserVo userVo) {
+        boolean flag = userService.addUser(userVo);
+        if (flag) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
-        return userVo;
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<Integer> register(@RequestBody UserLoginVo userLoginVo) {
+        int id = userService.getUserByNameAndPassword(userLoginVo);
+        if (id == 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping("/{id}")
+    public ResponseEntity<UserVo> getUser(@PathVariable("id") int userId) {
+        UserVo userVo = userService.getUserById(userId);
+        if (userVo.getId() == 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(userVo, HttpStatus.OK);
+        }
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity updateAccount(@PathVariable("id") int userId, @RequestBody UserVo userVo) {
+        userVo.setId(userId);
+        boolean flag = userService.updateUser(userVo);
+        if (flag) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/{id}/updatePswd", method = RequestMethod.PUT)
+    public ResponseEntity updatePassword(@PathVariable("id") int userId, @RequestBody UserPswdVo userPswdVo) {
+        boolean flag = userService.updatePassword(userPswdVo);
+        if (flag) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

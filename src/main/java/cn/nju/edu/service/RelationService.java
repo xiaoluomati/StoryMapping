@@ -9,8 +9,8 @@ public interface RelationService {
     List<RelationVo> getRelationByCardId(int cardId);
 
     //添加关系
-    void addRelation(RelationVo relationVo);
+    boolean addRelation(RelationVo relationVo);
 
     //删除关系
-    void deleteRelation(RelationVo relationVo);
+    boolean deleteRelation(RelationVo relationVo);
 }
