@@ -64,8 +64,8 @@ public class StoryMapServiceImpl implements StoryMapService {
     public boolean deleteStoryMap(StoryMapVo storyMapVo) {
         StoryMap storyMap = new StoryMap();
         storyMap.setStoryName(storyMapVo.getStoryName());
-        storyMap.setStoryDescription(storyMapVo.getStoryDescription());
-        storyMap.setRelease(storyMapVo.getRelease());
+//        storyMap.setStoryDescription(storyMapVo.getStoryDescription());
+//        storyMap.setRelease(storyMapVo.getRelease());
         storyMap.setUserId(storyMapVo.getUserId());
         storyMapRepository.delete(storyMap);
         return true;
