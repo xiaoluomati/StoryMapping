@@ -14,56 +14,68 @@
   "storymaps": [
     {
       "id": "1",
-      "map_width": 4,
-      "map_height": 2,
-      "cards": [
+      "mapWide": 4,
+      "mapLong": 2,
+      "cardVos": [
         {
-          "id": "1",
+          "cardId": "1",
+          "storyId": "1",
           "title": "a1",
           "content": "b1",
-          "type": "1",
-          "x": 1,
-          "y": 1
+          "state": "1",
+          "type": "USER_STORY",
+          "positionX": 1,
+          "positionY": 1
         },
         {
-          "id": "2",
+          "cardId": "2",
+          "storyId": "1",
           "title": "a2",
           "content": "b2",
-          "type": "1",
-          "x": 1,
-          "y": 4
+          "state": "1",
+          "type": "USER_STORY",
+          "positionX": 1,
+          "positionY": 4
         },
         {
-          "id": "3",
+          "cardId": "3",
+          "storyId": "1",
           "title": "a3",
           "content": "b3",
-          "type": "2",
-          "x": 2,
-          "y": 1
+          "state": "2",
+          "type": "USER_TASK",
+          "positionX": 2,
+          "positionY": 1
         },
         {
-          "id": "4",
+          "cardId": "4",
+          "storyId": "1",
           "title": "a4",
           "content": "b4",
-          "type": "2",
-          "x": 2,
-          "y": 2
+          "state": "2",
+          "type": "USER_TASK",
+          "positionX": 2,
+          "positionY": 2
         },
         {
-          "id": "5",
+          "cardId": "5",
+          "storyId": "1",
           "title": "a5",
           "content": "b5",
-          "type": "2",
-          "x": 2,
-          "y": 3
+          "state": "2",
+          "type": "USER_TASK",
+          "positionX": 2,
+          "positionY": 3
         },
         {
-          "id": "6",
+          "cardId": "6",
+          "storyId": "1",
           "title": "a6",
           "content": "b6",
-          "type": "2",
-          "x": 2,
-          "y": 4
+          "state": "2",
+          "type": "USER_TASK",
+          "positionX": 2,
+          "positionY": 4
         }
       ]
     }

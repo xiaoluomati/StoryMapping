@@ -11,14 +11,34 @@
       </div>
       <div class="operation-buttons">
         <el-button icon="el-icon-check" circle></el-button>
-        <el-button icon="el-icon-plus" circle></el-button>
-        <el-button icon="el-icon-search" circle></el-button>
+        <el-popover placement="bottom" width="400" trigger="click">
+          <el-tabs v-model="activeName" >
+            <el-tab-pane label="角色列表" name="first">用户管理</el-tab-pane>
+            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+          </el-tabs>
+          <el-button slot="reference" icon="el-icon-plus" circle></el-button>
+        </el-popover>
+        <el-button icon="el-icon-search" @click="testMapId()" circle></el-button>
         <el-button icon="el-icon-download" circle></el-button>
         <el-button icon="el-icon-back" circle></el-button>
       </div>
     </el-col>
   </el-row>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      activeName: 'first'
+    };
+  },
+  methods: {
+    testMapId () {
+      console.log(this.$route.params.storymapid)
+    }
+  }
+};
+</script>
 <style scoped>
   .topbar-wrap {
     height: 50px;
@@ -73,6 +93,12 @@
     float: right;
     padding-right: 12px;
   }
+
+  .topbar-wrap .operation-buttons .el-button {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
   .el-button{
     color: #1881E3;
   }

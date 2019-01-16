@@ -21,11 +21,11 @@ public class CardController {
         int mapWide = 0;
 
         for(CardVo cardVo : cardVos){
-            if(cardVo.getPositionX() > mapLong){
-                mapLong = cardVo.getPositionX();
+            if(cardVo.getPositionY() > mapLong){
+                mapLong = cardVo.getPositionY();
             }
-            if(cardVo.getPositionY() > mapWide){
-                mapWide = cardVo.getPositionY();
+            if(cardVo.getPositionX() > mapWide){
+                mapWide = cardVo.getPositionX();
             }
         }
 

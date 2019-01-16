@@ -58,13 +58,47 @@ public class CardServiceImpl implements CardService {
     @Override
     public boolean deleteCard(CardVo cardVo) {
         Card card = new Card();
-        card.setContent(cardVo.getContent());
-        card.setState(cardVo.getState().ordinal());
-        card.setCost(cardVo.getCost());
-        card.setPositionX(cardVo.getPositionX());
-        card.setPositionY(cardVo.getPositionY());
-        card.setStoryId(cardVo.getStoryId());
+//        card.setContent(cardVo.getContent());
+//        card.setState(cardVo.getState().ordinal());
+//        card.setCost(cardVo.getCost());
+        int x = cardVo.getPositionX();
+        int y = cardVo.getPositionY();
+        int id = cardVo.getStoryId();
+        card.setPositionX(x);
+        card.setPositionY(y);
+        card.setStoryId(id);
+//        card.setCardId(cardVo.getCardId());
         cardRepository.delete(card);
+
+        if(x < 3){//删除所有子卡片
+            List<CardVo> cardVos = getCardList(id);
+            for(CardVo temp : cardVos){
+                boolean will_delete = false;
+                if(temp.getPositionX() > x){
+                    if(temp.getPositionY() == y){
+                        will_delete = true;
+                    }
+                    else if(temp.getPositionY() > y){
+                        for(CardVo temp2 : cardVos){
+                            if(temp2.getPositionX() == x && temp2.getPositionY() > y
+                            && temp2.getPositionY() <= temp.getPositionY()){
+                                will_delete = false;
+                                break;
+                            }
+                            will_delete = true;
+                        }
+                    }
+                }
+                if(will_delete == true){
+                    Card card1 = new Card();
+                    card1.setPositionX(temp.getPositionX());
+                    card1.setPositionY(temp.getPositionY());
+                    card1.setStoryId(temp.getStoryId());
+                    cardRepository.delete(card1);
+                }
+            }
+        }
+
         return true;
     }
 

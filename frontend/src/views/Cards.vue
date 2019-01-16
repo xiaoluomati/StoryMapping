@@ -5,7 +5,7 @@
         <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null">
           <div slot="header" class="clearfix">
             <span>{{getCard(h,w).title}}</span>
-            <span style="float: right">{{getCard(h,w).type}}</span>
+            <span style="float: right">{{getCard(h,w).state}}</span>
           </div>
           <div class="text item">{{getCard(h,w).content}}</div>
           <div style="text-align:right">
@@ -23,6 +23,10 @@
         </el-card>
       </div>
     </div>
+    <!--<el-button icon="el-icon-delete" @click="test()" size="mini" circle></el-button>-->
+    <!--<div style="width: 200px" id="test">-->
+      <!--test-->
+    <!--</div>-->
     <el-dialog title="删除确认" :visible.sync="dialogVisible" width="30%">
       <span>这会删除所有子卡片，继续吗？</span>
       <span slot="footer" class="dialog-footer">
@@ -109,7 +113,7 @@ export default {
   methods: {
     getCard (x, y) {
       for (let item in this.cards) {
-        if (this.cards[item].x === x && this.cards[item].y === y) {
+        if (this.cards[item].positionX === x && this.cards[item].positionY === y) {
           return this.cards[item]
         }
       }
@@ -119,9 +123,9 @@ export default {
       API.getStoryMap(this.$route.params.storymapid).then(res => {
         let map = res
         if (map) {
-          this.map_width = map.map_width
-          this.map_height = map.map_height
-          this.cards = map.cards
+          this.map_width = map.mapWide
+          this.map_height = map.mapLong
+          this.cards = map.cardVos
         }
       })
     },
@@ -166,7 +170,7 @@ export default {
       let card = this.getCard(x, y)
       this.editform.name = card.title
       this.editform.descr = card.content
-      this.editform.cardstate = card.type
+      this.editform.cardstate = card.state
     },
     confirmEdit () {
       // TODO API操作

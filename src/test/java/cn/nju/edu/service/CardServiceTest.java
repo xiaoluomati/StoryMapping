@@ -123,26 +123,140 @@ public class CardServiceTest {
     @Test
     public void deleteCard(){
         CardVo cardVo = new CardVo();
-        cardVo.setContent("awayz is a rbq");
-        cardVo.setState(CardState.DOING);
-        cardVo.setCost(38);
-        cardVo.setPositionX(5);
+//        cardVo.setContent("awayz is a rbq");
+//        cardVo.setState(CardState.DOING);
+//        cardVo.setCost(38);
+        cardVo.setPositionX(2);
         cardVo.setPositionY(1);
         cardVo.setStoryId(1);
-        cardVo.setType(CardType.USER_STORY);
+//        cardVo.setType(CardType.USER_STORY);
 
         cardService.deleteCard(cardVo);
 
         List<CardVo> cardVos = cardService.getCardList(1);
 
-        boolean isDeleted = true;
+        boolean isDeleted1 = true;
+        boolean isDeleted2 = true;
+        boolean isDeleted3 = true;
+        boolean isDeleted4 = true;
+        boolean isDeleted5 = true;
+        boolean isDeleted6 = true;
+        boolean isDeleted7 = true;
         for(int i = 0;i < cardVos.size();i++){
             CardVo temp = cardVos.get(i);
             if(temp.getPositionX() == 5 && temp.getPositionY() == 1){
-                isDeleted = false;
+                isDeleted1 = false;
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 2){
+                isDeleted2 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 1){
+                isDeleted3 = false;
+            }if(temp.getPositionX() == 1 && temp.getPositionY() == 1){
+                isDeleted4 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+                isDeleted5 = false;
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 3){
+                isDeleted6 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+                isDeleted7 = false;
             }
         }
-        Assert.assertEquals(isDeleted,true);
+        System.out.println("isDeleted1 = " + isDeleted1);
+        System.out.println("isDeleted2 = " + isDeleted2);
+        System.out.println("isDeleted3 = " + isDeleted3);
+        System.out.println("isDeleted4 = " + isDeleted4);
+        System.out.println("isDeleted5 = " + isDeleted5);
+        System.out.println("isDeleted6 = " + isDeleted6);
+        System.out.println("isDeleted7 = " + isDeleted7);
+        Assert.assertArrayEquals(
+                new Object[]{
+                        isDeleted1,
+                        isDeleted2,
+                        isDeleted3,
+                        isDeleted4,
+                        isDeleted5,
+                        isDeleted6,
+                        isDeleted7
+                },
+                new Object[]{
+                        true,
+                        false,
+                        true,
+                        false,
+                        false,
+                        false,
+                        false
+                }
+        );
+
+    }
+
+    @Test
+    public void deleteCard1(){
+        CardVo cardVo = new CardVo();
+//        cardVo.setContent("awayz is a rbq");
+//        cardVo.setState(CardState.DOING);
+//        cardVo.setCost(38);
+        cardVo.setPositionX(1);
+        cardVo.setPositionY(1);
+        cardVo.setStoryId(1);
+//        cardVo.setType(CardType.USER_STORY);
+
+        cardService.deleteCard(cardVo);
+
+        List<CardVo> cardVos = cardService.getCardList(1);
+
+        boolean isDeleted1 = true;
+        boolean isDeleted2 = true;
+        boolean isDeleted3 = true;
+        boolean isDeleted4 = true;
+        boolean isDeleted5 = true;
+        boolean isDeleted6 = true;
+        boolean isDeleted7 = true;
+        for(int i = 0;i < cardVos.size();i++){
+            CardVo temp = cardVos.get(i);
+            if(temp.getPositionX() == 5 && temp.getPositionY() == 1){
+                isDeleted1 = false;
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 2){
+                isDeleted2 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 1){
+                isDeleted3 = false;
+            }if(temp.getPositionX() == 1 && temp.getPositionY() == 1){
+                isDeleted4 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+                isDeleted5 = false;
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 3){
+                isDeleted6 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+                isDeleted7 = false;
+            }
+        }
+        System.out.println("isDeleted1 = " + isDeleted1);
+        System.out.println("isDeleted2 = " + isDeleted2);
+        System.out.println("isDeleted3 = " + isDeleted3);
+        System.out.println("isDeleted4 = " + isDeleted4);
+        System.out.println("isDeleted5 = " + isDeleted5);
+        System.out.println("isDeleted6 = " + isDeleted6);
+        System.out.println("isDeleted7 = " + isDeleted7);
+        Assert.assertArrayEquals(
+                new Object[]{
+                        isDeleted1,
+                        isDeleted2,
+                        isDeleted3,
+                        isDeleted4,
+                        isDeleted5,
+                        isDeleted6,
+                        isDeleted7
+                },
+                new Object[]{
+                        true,
+                        true,
+                        true,
+                        true,
+                        true,
+                        true,
+                        true
+                }
+        );
 
     }
 
