@@ -8,7 +8,8 @@ import StoryMapManager from '@/views/StoryMapManager.vue'
 import CreateMap from '@/views/CreateMap.vue'
 import StoryMap from '@/views/StoryMap.vue'
 import Cards from '@/views/Cards.vue'
-import Register from '@/views/Register.vue'
+import Register from '@/views/user/Register.vue'
+import Login from '@/views/user/Login.vue'
 
 Vue.use(Router)
 
@@ -62,6 +63,12 @@ export default new Router({
       type: 'register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/login',
+      type: 'login',
+      name: 'login',
+      component: Login
     }
     // {
     //   path: '/about',

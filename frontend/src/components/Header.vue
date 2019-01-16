@@ -41,13 +41,13 @@
       <el-dialog title="修改密码" :visible.sync="changepwdFormVisible" :width="changepwdFormWidth">
         <el-form :model="pwdForm" :label-position="'left'">
           <el-form-item label="原密码" :label-width="changepwdFormLabelWidth">
-            <el-input v-model="pwdForm.old" autocomplete="off"></el-input>
+            <el-input type="password" v-model="pwdForm.old" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="新密码" :label-width="changepwdFormLabelWidth">
-            <el-input v-model="pwdForm.new1" autocomplete="off"></el-input>
+            <el-input type="password" v-model="pwdForm.new1" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="确认" :label-width="changepwdFormLabelWidth">
-            <el-input v-model="pwdForm.new2" autocomplete="off"></el-input>
+            <el-input type="password" v-model="pwdForm.new2" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -109,23 +109,38 @@ export default {
       this.accountFormVisible = false
       API
         .updateAccount(this.account.id, this.account)
-        .catch(reason => {
-          console.log('error!')
-          console.log(reason)
+        .then(res => {
+          let status = res.status
+          if (status === 200) {
+            this.$message({
+              message: '账号信息更改成功',
+              type: 'success'
+            })
+            this.updateUserInfo()
+          } else {
+            this.$message.error('账号信息更改失败')
+          }
         })
+        .catch(() => {
+          this.$message.error('账号信息更改失败')
+        })
+    },
+
+    updateUserInfo() {
+      API.getUser('1').then(res => {
+        let user = res.data
+        if (user) {
+          this.nickname = user.nickname || ''
+          this.account = user
+        }
+      })
     }
   },
 
   mounted () {
     // let user = window.localStorage.getItem('access-user');
     // 登陆成功后会在 window.localStorage 里 set，现在先 mock
-    API.getUser('1').then(res => {
-      let user = res
-      if (user) {
-        this.nickname = user.nickname || ''
-        this.account = user
-      }
-    })
+    this.updateUserInfo()
   }
 }
 </script>
