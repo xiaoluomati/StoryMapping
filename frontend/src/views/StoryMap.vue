@@ -7,7 +7,6 @@
     <el-container class="main-content">
       <el-main>
         <router-view name="cards"></router-view>
-        <router-view name="tools"></router-view>
       </el-main>
     </el-container>
   </el-container>
