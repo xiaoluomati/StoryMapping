@@ -11,6 +11,23 @@
       "email": "456@789.com"
     }
   ],
+  "storyroles": [
+    {
+      "id": "1",
+      "roles": [
+        {
+          "roleId": "1",
+          "roleName": "roleA",
+          "roleDetail": "descA"
+        },
+        {
+          "roleId": "2",
+          "roleName": "roleB",
+          "roleDetail": "descB"
+        }
+      ]
+    }
+  ],
   "storymaps": [
     {
       "id": "1",

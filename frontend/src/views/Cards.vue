@@ -71,6 +71,10 @@
           </el-select>
         </el-form-item>
       </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmEdit()">确 定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -173,6 +177,7 @@ export default {
       this.editform.cardstate = card.state
     },
     confirmEdit () {
+      this.dialogEditFormVisible = false
       // TODO API操作
       console.log(this.editform.x)
     }

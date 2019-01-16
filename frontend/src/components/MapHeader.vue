@@ -11,33 +11,146 @@
       </div>
       <div class="operation-buttons">
         <el-button icon="el-icon-check" circle></el-button>
-        <el-popover placement="bottom" width="400" trigger="click">
-          <el-tabs v-model="activeName" >
-            <el-tab-pane label="角色列表" name="first">用户管理</el-tab-pane>
-            <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
+        <el-popover placement="bottom" width="350" trigger="click">
+          <el-tabs type="border-card">
+            <el-tab-pane label="角色管理">
+              <el-collapse v-model="activeNames">
+                <el-collapse-item v-for="role in roles" :key="role.roleId" :title="role.roleName" :name="role.roleId">
+                  <div>
+                    {{role.roleDetail}}
+                    <el-button icon="el-icon-edit" style="float: right" @click="editRole(role.roleId)" size="mini" circle></el-button>
+                    <el-button icon="el-icon-delete" style="float: right" @click="deleteRole(role.roleId)" size="mini" circle></el-button>
+                  </div>
+                </el-collapse-item>
+              </el-collapse>
+            </el-tab-pane>
+            <el-button style="margin-top: 10px" icon="el-icon-plus" @click="addRole()" circle></el-button>
           </el-tabs>
-          <el-button slot="reference" icon="el-icon-plus" circle></el-button>
+          <el-button slot="reference" icon="el-icon-myicon-user" circle></el-button>
         </el-popover>
         <el-button icon="el-icon-search" @click="testMapId()" circle></el-button>
         <el-button icon="el-icon-download" circle></el-button>
         <el-button icon="el-icon-back" circle></el-button>
       </div>
     </el-col>
+    <el-dialog title="新建角色" :visible.sync="dialogFormVisible">
+      <el-form :model="addform">
+        <el-form-item label="角色名称" :label-width="formLabelWidth">
+          <el-input v-model="addform.roleName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色描述" :label-width="formLabelWidth">
+          <el-input v-model="addform.roleDetail" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmAdd()">确 定</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="删除确认" :visible.sync="dialogVisible" width="30%">
+      <span>删除该角色？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmDelete()">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="编辑角色" :visible.sync="dialogEditFormVisible">
+      <el-form :model="editform">
+        <el-form-item label="角色名称" :label-width="formLabelWidth">
+          <el-input v-model="editform.roleName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="角色描述" :label-width="formLabelWidth">
+          <el-input v-model="editform.roleDetail" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogEditFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirmEdit()">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-row>
 </template>
 <script>
+import API from '@/api/api_storymap'
 export default {
-  data() {
+  data () {
     return {
-      activeName: 'first'
-    };
+      formLabelWidth: '120px',
+      activeName: 'first',
+      activeNames: ['1'],
+      roles: [],
+      dialogEditFormVisible: false,
+      editform: {
+        roleId: '',
+        roleName: '',
+        roleDetail: ''
+      },
+      dialogVisible: false,
+      deleteRoleId: '',
+      dialogFormVisible: false,
+      addform: {
+        roleName: '',
+        roleDetail: ''
+      },
+    }
   },
   methods: {
     testMapId () {
       console.log(this.$route.params.storymapid)
-    }
+    },
+    initStoryMapRoles () {
+      API.getStoryMapRoles(this.$route.params.storymapid).then(res => {
+        let rolelist = res
+        if (rolelist) {
+          this.roles = rolelist.roles
+        }
+      })
+    },
+    getRole (roleId) {
+      for (let item in this.roles) {
+        if (this.roles[item].roleId === roleId) {
+          return this.roles[item]
+        }
+      }
+      return null
+    },
+    addRole () {
+      this.dialogFormVisible = true
+    },
+    confirmAdd () {
+      this.dialogFormVisible = false
+      console.log('roleName=' + this.addform.roleName)
+      console.log('roleDetail=' + this.addform.roleDetail)
+      // TODO API操作
+      this.addform.roleName = ''
+      this.addform.roleDetail = ''
+    },
+    editRole (roleId) {
+      this.dialogEditFormVisible = true
+      let role = this.getRole(roleId)
+      this.editform.roleId = role.roleId
+      this.editform.roleName = role.roleName
+      this.editform.roleDetail = role.roleDetail
+    },
+    confirmEdit () {
+      this.dialogEditFormVisible = false
+      // TODO API操作
+      console.log(this.editform.roleId)
+    },
+    deleteRole (roleId) {
+      this.dialogVisible = true
+      this.deleteRoleId = roleId
+    },
+    confirmDelete () {
+      this.dialogVisible = false
+      // TODO API操作
+    },
+
+  },
+  mounted () {
+    this.initStoryMapRoles()
   }
-};
+}
 </script>
 <style scoped>
   .topbar-wrap {
