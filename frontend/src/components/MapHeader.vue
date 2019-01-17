@@ -10,7 +10,6 @@
         <a href="/" style="color: #f9f9f9;">story-map</a>
       </div>
       <div class="operation-buttons">
-        <el-button icon="el-icon-check" circle></el-button>
         <el-popover placement="bottom" width="350" trigger="click">
           <el-tabs type="border-card">
             <el-tab-pane label="角色管理">
@@ -28,7 +27,17 @@
           </el-tabs>
           <el-button slot="reference" icon="el-icon-myicon-user" circle></el-button>
         </el-popover>
-        <el-button icon="el-icon-search" @click="testMapId()" circle></el-button>
+        <el-popover placement="bottom" trigger="click" @hide="messageCards('')">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline" style="display: flex">
+            <el-form-item >
+              <el-input v-model="formInline.searchWords"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="messageCards(formInline.searchWords)">搜索</el-button>
+            </el-form-item>
+          </el-form>
+          <el-button slot="reference" icon="el-icon-search" @click="testMapId()" circle></el-button>
+        </el-popover>
         <el-button icon="el-icon-download" circle></el-button>
         <el-button icon="el-icon-back" circle></el-button>
       </div>
@@ -72,6 +81,7 @@
 </template>
 <script>
 import API from '@/api/api_storymap'
+import { eventBus } from '../main'
 export default {
   data () {
     return {
@@ -92,15 +102,25 @@ export default {
         roleName: '',
         roleDetail: ''
       },
+      formInline: {
+        searchWords: ''
+      }
     }
   },
   methods: {
     testMapId () {
       console.log(this.$route.params.storymapid)
     },
+    messageCards (words) {
+      eventBus.$emit('searchWords', words)
+    },
     initStoryMapRoles () {
       API.getStoryMapRoles(this.$route.params.storymapid).then(res => {
-        let rolelist = res
+        let status = res.status
+        if (status !== 200) {
+          this.$notify.error('获取角色列表失败')
+        }
+        let rolelist = res.data
         if (rolelist) {
           this.roles = rolelist.roles
         }
@@ -144,8 +164,7 @@ export default {
     confirmDelete () {
       this.dialogVisible = false
       // TODO API操作
-    },
-
+    }
   },
   mounted () {
     this.initStoryMapRoles()
@@ -210,9 +229,5 @@ export default {
   .topbar-wrap .operation-buttons .el-button {
     margin-left: 5px;
     margin-right: 5px;
-  }
-
-  .el-button{
-    color: #1881E3;
   }
 </style>

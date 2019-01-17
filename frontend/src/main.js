@@ -6,7 +6,7 @@ import './plugins/iconfont.css'
 import '@/assets/css/story-style.css'
 
 Vue.config.productionTip = false
-
+export const eventBus = new Vue()
 new Vue({
   router,
   render: h => h(App)

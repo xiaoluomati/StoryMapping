@@ -126,7 +126,7 @@ export default {
         })
     },
 
-    updateUserInfo() {
+    updateUserInfo () {
       API.getUser('1').then(res => {
         let user = res.data
         if (user) {

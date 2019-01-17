@@ -2,7 +2,7 @@
   <div>
     <div v-for="h in map_height" :key="h" :style="{'width': map_width * card_width + 'px', 'height': card_width + 'px' }">
       <div v-for= "w in map_width" :key="w" style="float: left">
-        <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null">
+        <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null" v-bind:class="{ highlightcard : isHighlight(getCard(h,w).cardId)}">
           <div slot="header" class="clearfix">
             <span>{{getCard(h,w).title}}</span>
             <span style="float: right">{{getCard(h,w).state}}</span>
@@ -80,6 +80,7 @@
 </template>
 <script>
 import API from '@/api/api_storymap'
+import { eventBus } from '../main'
 export default {
   data () {
     return {
@@ -110,8 +111,8 @@ export default {
       map_height: '',
       cards: [
 
-      ]
-
+      ],
+      searchWord: ''
     }
   },
   methods: {
@@ -125,7 +126,11 @@ export default {
     },
     initStoryMap () {
       API.getStoryMap(this.$route.params.storymapid).then(res => {
-        let map = res
+        let status = res.status
+        if (status !== 200) {
+          this.$notify.error('获取卡片列表失败')
+        }
+        let map = res.data
         if (map) {
           this.map_width = map.mapWide
           this.map_height = map.mapLong
@@ -182,8 +187,28 @@ export default {
       console.log(this.editform.x)
     }
   },
+  computed: {
+    isHighlight: function () {
+      return function (cardId) {
+        if (this.searchWord === '') {
+          return false
+        }
+        for (let item in this.cards) {
+          if (this.cards[item].cardId === cardId && (this.cards[item].title.indexOf(this.searchWord) !== -1 || this.cards[item].content.indexOf(this.searchWord) !== -1)) {
+            return true
+          }
+        }
+        return false
+      }
+    }
+  },
   mounted () {
     this.initStoryMap()
+  },
+  created () {
+    eventBus.$on('searchWords', (message) => {
+      this.searchWord = message
+    })
   }
 }
 </script>
@@ -192,5 +217,8 @@ export default {
     width: 180px;
     height: 180px;
     margin: 10px;
+  }
+  .highlightcard {
+    -webkit-box-shadow: 0 0 5px rgba(0,113,241,1)
   }
 </style>
