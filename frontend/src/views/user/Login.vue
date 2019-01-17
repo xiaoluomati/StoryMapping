@@ -40,6 +40,7 @@
 </template>
 <script>
 import API from '@/api/api_user'
+import tool from '@/util/tool'
 
 export default {
   name: 'login',
@@ -48,7 +49,7 @@ export default {
       if (value === '') {
         callback(new Error('请输入账号'))
       } else {
-        let isEnglish = this.isEnglish(value)
+        let isEnglish = tool.isEnglish(value)
         if (!isEnglish) {
           callback(new Error('请输入英文或数字'))
         }
@@ -113,11 +114,6 @@ export default {
 
     jumpTo (url) {
       this.$router.push(url) // 用go刷新
-    },
-
-    isEnglish (str) {
-      let reg = /^[a-zA-Z0-9]+$/
-      return reg.test(str)
     }
   }
 }
