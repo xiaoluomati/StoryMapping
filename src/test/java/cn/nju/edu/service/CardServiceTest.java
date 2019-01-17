@@ -121,6 +121,71 @@ public class CardServiceTest {
     }
 
     @Test
+    public void addCard1(){
+        CardVo cardVo = new CardVo();
+        cardVo.setContent("xiaoluomati");
+        cardVo.setState(CardState.DOING);
+        cardVo.setCost(55);
+        cardVo.setPositionX(2);
+        cardVo.setPositionY(2);
+        cardVo.setStoryId(1);
+        cardVo.setType(CardType.USER_STORY);
+
+        cardService.addCard(cardVo);
+
+        List<CardVo> cardVos = cardService.getCardList(1);
+        String content1 = "";
+        String content2 = "";
+        String content3 = "";
+        String content4 = "";
+        String content5 = "";
+        String content = "";
+
+        for(CardVo card : cardVos){
+            if(card.getPositionX() == 2 && card.getPositionY() == 2){
+                content = card.getContent();
+            }if(card.getPositionX() == 2 && card.getPositionY() == 3){
+                content1 = card.getContent();
+            }if(card.getPositionX() == 5 && card.getPositionY() == 3){
+                content2 = card.getContent();
+            }if(card.getPositionX() == 2 && card.getPositionY() == 4){
+                content3 = card.getContent();
+            }if(card.getPositionX() == 5 && card.getPositionY() == 4){
+                content4 = card.getContent();
+            }if(card.getPositionX() == 5 && card.getPositionY() == 1){
+                content5 = card.getContent();
+            }
+            System.out.println("card.getContent() = " + card.getContent());
+        }
+
+        System.out.println("content = " + content);
+        System.out.println("content1 = " + content1);
+        System.out.println("content2 = " + content2);
+        System.out.println("content3 = " + content3);
+        System.out.println("content4 = " + content4);
+        System.out.println("content5 = " + content5);
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        content,
+                        content1,
+                        content2,
+                        content3,
+                        content4,
+                        content5,
+                },
+                new Object[]{
+                        "xiaoluomati",
+                        "mmmm",
+                        "eee",
+                        "ooxxxxoo",
+                        "xxooooxx",
+                        "awayz is a rbq",
+                }
+        );
+    }
+
+    @Test
     public void deleteCard(){
         CardVo cardVo = new CardVo();
 //        cardVo.setContent("awayz is a rbq");
