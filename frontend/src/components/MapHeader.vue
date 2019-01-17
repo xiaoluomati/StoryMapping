@@ -116,7 +116,7 @@ export default {
     }
   },
   methods: {
-    downloadFile(){
+    downloadFile () {
       // TODO API操作
     },
     testMapId () {
