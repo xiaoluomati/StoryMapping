@@ -48,15 +48,16 @@
 </template>
 <script>
 import API from '@/api/api_user'
+import tool from '@/util/tool'
 
 export default {
   name: 'register',
   data () {
-    var validateName = (rule, value, callback) => {
+    let validateName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入账号'))
       } else {
-        let isEnglish = this.isEnglish(value)
+        let isEnglish = tool.isEnglish(value)
         if (!isEnglish) {
           callback(new Error('请输入英文或数字'))
         }
@@ -64,7 +65,7 @@ export default {
       }
     }
 
-    var validateNickName = (rule, value, callback) => {
+    let validateNickName = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入昵称'))
       } else {
@@ -72,7 +73,7 @@ export default {
       }
     }
 
-    var validatePassword = (rule, value, callback) => {
+    let validatePassword = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入密码'))
       } else {
@@ -80,11 +81,11 @@ export default {
       }
     }
 
-    var validateEmail = (rule, value, callback) => {
+    let validateEmail = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入邮箱'))
       } else {
-        if (!this.isEmail(value)) {
+        if (!tool.isEmail(value)) {
           callback(new Error('请输入正确的邮箱'))
         }
         callback()
@@ -154,16 +155,6 @@ export default {
 
     jumpTo (url) {
       this.$router.push(url) // 用go刷新
-    },
-
-    isEmail (str) {
-      let reg = /^\w+@[a-zA-Z0-9]{2,10}(?:\.[a-z]{2,4}){1,3}$/
-      return reg.test(str)
-    },
-
-    isEnglish (str) {
-      let reg = /^[a-zA-Z0-9]+$/
-      return reg.test(str)
     }
   }
 }

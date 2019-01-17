@@ -20,5 +20,9 @@ export default {
 
   getUser: id => {
     return API.GET(`user/${id}`)
+  },
+
+  updatePassword: (id, params) => {
+    return API.PUT(`user/${id}`, params)
   }
 }

@@ -15,44 +15,45 @@
           <i class="iconfont icon-user"></i> {{ nickname }}   <i class="el-icon-caret-bottom"></i></span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <div @click="accountFormVisible = true"><span style="color: #555;font-size: 14px;">个人信息</span></div>
+              <div @click="handleToUpdateAccount"><span style="color: #555;font-size: 14px;">个人信息</span></div>
             </el-dropdown-item>
             <el-dropdown-item>
-              <div @click="changepwdFormVisible = true"><span style="color: #555;font-size: 14px;">修改密码</span></div>
+              <div @click="handleToChangePwd"><span style="color: #555;font-size: 14px;">修改密码</span></div>
             </el-dropdown-item>
             <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
       <el-dialog title="账号信息" :visible.sync="accountFormVisible" :width="accountFormWidth">
-        <el-form :model="account">
-          <el-form-item label="昵称" :label-width="accountFormLabelWidth">
+        <el-form :model="account" status-icon :rules="accountRules" ref="account">
+          <el-form-item label="昵称" :label-width="accountFormLabelWidth" prop="nickname">
             <el-input v-model="account.nickname" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱" :label-width="accountFormLabelWidth">
+          <el-form-item label="邮箱" :label-width="accountFormLabelWidth" prop="email">
             <el-input v-model="account.email" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="accountFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="updateAccount()">确 定</el-button>
+          <el-button type="primary" @click="updateAccount('account')" :loading="loading">确 定</el-button>
         </div>
       </el-dialog>
       <el-dialog title="修改密码" :visible.sync="changepwdFormVisible" :width="changepwdFormWidth">
-        <el-form :model="pwdForm" :label-position="'left'">
-          <el-form-item label="原密码" :label-width="changepwdFormLabelWidth">
+        <el-form :model="pwdForm" :label-position="'left'" status-icon
+                 :rules="pwdRules" ref="pwdForm">
+          <el-form-item label="原密码" :label-width="changepwdFormLabelWidth" prop="old">
             <el-input type="password" v-model="pwdForm.old" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="新密码" :label-width="changepwdFormLabelWidth">
+          <el-form-item label="新密码" :label-width="changepwdFormLabelWidth" prop="new1">
             <el-input type="password" v-model="pwdForm.new1" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="确认" :label-width="changepwdFormLabelWidth">
+          <el-form-item label="确认" :label-width="changepwdFormLabelWidth" prop="new2">
             <el-input type="password" v-model="pwdForm.new2" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="changepwdFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="changepwdFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="handleChangePwd('pwdForm')" :loading="loading">确 定</el-button>
         </div>
       </el-dialog>
     </el-col>
@@ -61,10 +62,55 @@
 
 <script>
 import API from '@/api/api_user'
+import tool from '@/util/tool'
 
 export default {
   data () {
+    let validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入邮箱'))
+      } else {
+        if (tool.isEmail(value)) {
+          callback()
+        } else {
+          callback(new Error('请输入正确的邮箱'))
+        }
+      }
+    }
+
+    let validateOldPwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入旧密码'))
+      } else {
+        callback()
+      }
+    }
+
+    let validateNewPwd1 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入新密码'))
+      } else {
+        callback()
+      }
+    }
+
+    let validateNewPwd2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入新密码'))
+      } else {
+        if (this.pwdForm.new1 !== '') {
+          if (!this.isPwdSame()) {
+            callback(new Error('两次输入的密码不同，请重新输入'))
+          } else {
+            callback()
+          }
+        }
+        callback()
+      }
+    }
+
     return {
+      loading: false,
       nickname: '',
       accountFormVisible: false,
       changepwdFormVisible: false,
@@ -73,6 +119,16 @@ export default {
         nickname: '',
         email: ''
       },
+
+      accountRules: {
+        nickname: [
+          { required: true, message: '请输入昵称', trigger: 'blur' }
+        ],
+        email: [
+          { validator: validateEmail, trigger: 'blur' }
+        ]
+      },
+
       accountFormLabelWidth: '60px',
       accountFormWidth: '500px',
       changepwdFormLabelWidth: '60px',
@@ -81,6 +137,18 @@ export default {
         old: '',
         new1: '',
         new2: ''
+      },
+
+      pwdRules: {
+        old: [
+          { validator: validateOldPwd, trigger: 'blur' }
+        ],
+        new1: [
+          { validator: validateNewPwd1, trigger: 'blur' }
+        ],
+        new2: [
+          { validator: validateNewPwd2, trigger: 'blur' }
+        ]
       }
     }
   },
@@ -90,50 +158,116 @@ export default {
       this.$router.push(url) // 用go刷新
     },
 
-    handleSelect (index) {
-      this.defaultActiveIndex = index
-    },
-
     logout () {
-      // logout
       this.$confirm('确认退出吗?', '提示', {
         confirmButtonClass: 'el-button--warning'
       }).then(() => {
-        // 确认
         localStorage.removeItem('access-user')
-        // road.$emit('goto', '/login');
-      }).catch(() => {})
+        this.jumpTo('/login')
+      }).catch(() => {
+      })
     },
 
-    updateAccount () {
-      this.accountFormVisible = false
-      API
-        .updateAccount(this.account.id, this.account)
-        .then(res => {
-          let status = res.status
-          if (status === 200) {
-            this.$message({
-              message: '账号信息更改成功',
-              type: 'success'
+    handleToUpdateAccount () {
+      this.accountFormVisible = true
+      if (this.$refs['account'] !== undefined) {
+        this.$refs['account'].resetFields()
+      }
+    },
+
+    updateAccount (formName) {
+      this.loading = true
+
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          API.updateAccount(this.account.id, this.account)
+            .then(res => {
+              let status = res.status
+              if (status === 200) {
+                this.$message({
+                  message: '账号信息更改成功',
+                  type: 'success'
+                })
+                this.accountFormVisible = false
+                this.updateUserInfo()
+              } else {
+                this.$message.error('账号信息更改失败')
+              }
             })
-            this.updateUserInfo()
-          } else {
-            this.$message.error('账号信息更改失败')
+            .catch(() => {
+              this.$message.error('账号信息更改失败')
+            })
+        } else {
+          this.$message.error('请检查输入')
+          return false
+        }
+      })
+      this.loading = false
+    },
+
+    updateUserInfo () {
+      this.loading = true
+      API.getUser('1')
+        .then(res => {
+          let user = res.data
+          if (user) {
+            this.nickname = user.nickname || ''
+            this.account = user
           }
         })
         .catch(() => {
-          this.$message.error('账号信息更改失败')
+          this.$message.error('获取用户信息失败，请重试')
+        })
+      this.loading = false
+    },
+
+    changePwd () {
+      API.updatePassword(this.account.id, this.pwdForm)
+        .then(res => {
+          let status = res.status
+          if (status === 200) {
+            this.changepwdFormVisible = false
+            this.$message({
+              message: '密码更改成功',
+              type: 'success'
+            })
+          } else if (status === 400) {
+            this.$message.error('旧密码输入错误')
+            this.$refs['pwdForm'].resetFields()
+          } else {
+            this.$message.error('密码更改失败，请重试')
+            this.$refs['pwdForm'].resetFields()
+          }
+        })
+        .catch(() => {
+          this.$message.error('密码更改失败，请重试')
         })
     },
 
-    updateUserInfo() {
-      API.getUser('1').then(res => {
-        let user = res.data
-        if (user) {
-          this.nickname = user.nickname || ''
-          this.account = user
+    handleChangePwd (formName) {
+      this.loading = true
+
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.changePwd()
+        } else {
+          this.$message.error('请检查输入')
+          return false
         }
       })
+
+      this.loading = false
+    },
+
+    handleToChangePwd () {
+      this.changepwdFormVisible = true
+      if (this.$refs['pwdForm'] !== undefined) {
+        this.$refs['pwdForm'].resetFields()
+      }
+    },
+
+    isPwdSame () {
+      return this.pwdForm.new1 === this.pwdForm.new2
     }
   },
 
@@ -167,6 +301,7 @@ export default {
     color: #f9f9f9;
     margin-left: 10px;
   }
+
   .topbar-wrap .topbar-logo {
     float: left;
     width: 60px;
