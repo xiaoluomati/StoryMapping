@@ -17,42 +17,48 @@
 </template>
 
 <script>
+import API from '@/api/api_storymap'
+import tool from '@/util/tool'
+
 export default {
   name: 'storymap-manager',
   data () {
     return {
-      storymaps: [
-        {
-          id: 1,
-          title: 'storymap',
-          description: 'this is a test description'
-        },
-        {
-          id: 2,
-          title: 'storymap',
-          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
-        },
-        {
-          id: 3,
-          title: 'storymap',
-          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
-        },
-        {
-          id: 4,
-          title: 'storymap',
-          description: 'this is a test description this is a test description this is a test description this is a test description this is a test description this is a test description'
-        }
-      ]
+      storymaps: ''
     }
   },
 
   methods: {
     jumpTo (name, param) {
-      console.log(name)
-      console.log(param)
-      // this.$router.push({ name: name, params: { id : param }}) // 用go刷新
       this.$router.push({ path: `/${name}/${param}` }) // 用go刷新
+    },
+
+    initStoryMap () {
+      let id = tool.getUserId()
+      if (id == null) {
+        this.$message.error('请先登录')
+        this.$router.push('/login')
+      } else {
+        API.getStoryMapList(id)
+          .then(res => {
+            let status = res.status
+            if (status === 200) {
+              this.storymaps = res.data[0].storymaps
+              // 测试的时候返回的是数组，运行时改成注释的样子
+              // this.storymaps = res.data.storymaps
+            } else {
+              this.$message.error('读取数据出错，请刷新页面')
+            }
+          })
+          .catch(() => {
+            this.$message.error('读取数据出错，请刷新页面')
+          })
+      }
     }
+  },
+
+  mounted () {
+    this.initStoryMap()
   }
 }
 </script>

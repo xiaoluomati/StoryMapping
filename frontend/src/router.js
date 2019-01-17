@@ -10,6 +10,7 @@ import StoryMap from '@/views/StoryMap.vue'
 import Cards from '@/views/Cards.vue'
 import Register from '@/views/user/Register.vue'
 import Login from '@/views/user/Login.vue'
+import SearchMap from '@/views/SearchMap.vue'
 
 Vue.use(Router)
 
@@ -29,14 +30,19 @@ export default new Router({
             navheader: Header,
             aside: Navmenu
           }
-          // leaf: true, // 只有一个节点
-          // iconCls: 'iconfont icon-home', // 图标样式class
-          // menuShow: true
         },
         {
           path: '/create',
           components: {
             default: CreateMap,
+            navheader: Header,
+            aside: Navmenu
+          }
+        },
+        {
+          path: '/search',
+          components: {
+            default: SearchMap,
             navheader: Header,
             aside: Navmenu
           }

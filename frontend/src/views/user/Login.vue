@@ -87,12 +87,18 @@ export default {
     userlogin (formName) {
       this.loading = true
 
+      // for test , 假装 id 是 1
+      localStorage.setItem('access-user', '1')
+      this.jumpTo('/storymap-manager')
+      // for test
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
           API.login(this.login)
             .then(res => {
               let status = res.status
               if (status === 200) {
+                localStorage.setItem('access-user', JSON.stringify(res.data.id))
                 this.jumpTo('/storymap-manager')
               } else {
                 this.loading = false

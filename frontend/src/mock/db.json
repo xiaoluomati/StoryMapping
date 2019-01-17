@@ -96,5 +96,32 @@
         }
       ]
     }
+  ],
+  "storymaplist":[
+    {
+      "userid": "1",
+      "storymaps": [
+        {
+          "id": "1",
+          "title": "storymap1",
+          "description": "this is a test description for storymap1"
+        },
+        {
+          "id": "2",
+          "title": "storymap2",
+          "description": "this is a test description for storymap2"
+        },
+        {
+          "id": "3",
+          "title": "storymap3",
+          "description": "this is a test description for storymap3"
+        },
+        {
+          "id": "4",
+          "title": "storymap4",
+          "description": "this is a test description for storymap4"
+        }
+      ]
+    }
   ]
 }

@@ -8,6 +8,9 @@ export default {
 
   getStoryMapRoles: storyid => {
     return API.GET(`storyroles/${storyid}`)
-  }
+  },
 
+  getStoryMapList: userid => {
+    return API.GET(`storymaplist/`, { 'userid': userid })
+  }
 }

@@ -9,6 +9,9 @@
       <div class="topbar-logos">
         <a href="/" style="color: #f9f9f9;">story-map</a>
       </div>
+      <div class="home">
+        <a href="/" style="color: #f9f9f9; font-size: 20px; font-weight: 600; ">主页</a>
+      </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
         <span class="el-dropdown-link userinfo-inner">
@@ -207,7 +210,7 @@ export default {
 
     updateUserInfo () {
       this.loading = true
-      API.getUser('1')
+      API.getUser(tool.getUserId())
         .then(res => {
           let user = res.data
           if (user) {
@@ -282,6 +285,11 @@ export default {
 <style scoped>
   .el-input {
     width: 350px;
+  }
+
+  .home {
+    float: left;
+    width: 100px;
   }
 
   .topbar-wrap {
