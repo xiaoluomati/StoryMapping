@@ -39,12 +39,11 @@
           <el-button slot="reference" icon="el-icon-search" circle></el-button>
         </el-popover>
         <el-popover placement="bottom" trigger="click">
-          <el-radio-group v-model="radio" style="float: left">
+          <el-radio-group v-model="radio">
             <el-radio label="excel">导出为XLSX格式</el-radio>
-            <el-radio label="png" disabled>导出为PNG格式</el-radio>
-
+            <el-radio  label="png" disabled>导出为PNG格式</el-radio>
           </el-radio-group>
-          <el-button type="primary" @click="downloadFile()">下载</el-button>
+          <el-button style="margin-left: 30px" type="primary" @click="downloadFile()">下载</el-button>
           <el-button slot="reference" icon="el-icon-download"  circle></el-button>
         </el-popover>
         <el-button icon="el-icon-back" circle></el-button>
