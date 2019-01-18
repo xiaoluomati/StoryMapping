@@ -9,5 +9,7 @@ public interface CardService {
 
     boolean addCard(CardVo cardVo);
 
+    boolean updateCard(CardVo cardVo);
+
     boolean deleteCard(CardVo cardVo);
 }

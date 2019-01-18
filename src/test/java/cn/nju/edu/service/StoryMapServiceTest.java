@@ -83,6 +83,40 @@ public class StoryMapServiceTest {
     }
 
     @Test
+    public void updateStoryMap(){
+        StoryMapVo storyMapVo = new StoryMapVo();
+        storyMapVo.setStoryName("awayz");
+        storyMapVo.setStoryDescription("its still a rbq");
+        storyMapVo.setRelease(3);
+        storyMapVo.setUserId(1);
+
+        storyMapService.updateStoryMap(storyMapVo);
+
+        List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
+        Assert.assertNotNull(storyMapVos);
+
+        String description = "";
+        int storyId = 0;
+
+        for(int i = 0;i < storyMapVos.size();i++){
+            StoryMapVo temp = storyMapVos.get(i);
+            if(temp.getStoryName().equals("awayz")){
+                description = temp.getStoryDescription();
+                storyId = temp.getStoryId();
+            }
+        }
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        description,
+                },
+                new Object[]{
+                        "its still a rbq",
+                }
+        );
+    }
+
+    @Test
     public void deleteStoryMap(){
         StoryMapVo storyMapVo = new StoryMapVo();
         storyMapVo.setStoryName("xxx");

@@ -4,6 +4,8 @@ import cn.nju.edu.enumeration.CardState;
 import cn.nju.edu.enumeration.CardType;
 
 public class CardVo {
+    private String title;
+
     private String content;
 
     private CardState state;
@@ -19,6 +21,14 @@ public class CardVo {
     private CardType type;
 
     private int cardId;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getContent() {
         return content;
@@ -87,6 +97,7 @@ public class CardVo {
     @Override
     public String toString() {
         return "CardVo{" +
+                "title='" + title + '\'' +
                 "content='" + content + '\'' +
                 ", state='" + state + '\'' +
                 ", cost='" + cost + '\'' +

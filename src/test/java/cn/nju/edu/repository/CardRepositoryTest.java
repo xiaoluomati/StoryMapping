@@ -101,6 +101,31 @@ public class CardRepositoryTest {
     }
 
     @Test
+    public void update1(){
+        Card temp = cardRepository.findByCardId(1);
+
+        System.out.println("--------------------- " + temp.toString());
+
+        cardRepository.delete(temp);
+        System.out.println("delete!------");
+
+        Card card = new Card();
+        card.setContent(temp.getContent());
+        card.setState(temp.getState());
+        card.setCost(temp.getCost());
+        card.setPositionX(temp.getPositionX() + 1);
+        card.setPositionY(temp.getPositionY() + 1);
+        card.setStoryId(temp.getStoryId());
+        card.setCardId(11);
+        System.out.println("--------------------- " + card.toString());
+
+        cardRepository.save(card);
+
+        Card card1 = cardRepository.findByCardId(11);
+        System.out.println(card1.toString());
+    }
+
+    @Test
     public void delete(){
         CardKey id = new CardKey();
         id.setPositionX(5);
@@ -120,6 +145,34 @@ public class CardRepositoryTest {
         }
 
         Assert.assertEquals(isDeleted,true);
+    }
+
+    @Test
+    public void delete1(){
+
+        CardKey id = new CardKey();
+        id.setPositionX(5);
+        id.setPositionY(1);
+        id.setStoryId(1);
+
+        Card card = cardRepository.findByCardId(1);
+        System.out.println(card.toString());
+        cardRepository.delete(card);
+
+        boolean isDeleted = false;
+
+//        try {
+//            Card card1 = cardRepository.findById(id).get();
+////            Card card1 = cardRepository.findByCardId(1);
+//        }
+//        catch (NoSuchElementException e){
+//            isDeleted = true;
+//        }
+
+        Card card1 = cardRepository.findByCardId(1);
+//        System.out.println(card1.toString());
+
+        Assert.assertEquals(card1,null);
     }
 
 
