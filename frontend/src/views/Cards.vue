@@ -5,7 +5,10 @@
         <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null" v-bind:class="{ highlightcard : isHighlight(getCard(h,w).cardId)}">
           <div slot="header" class="clearfix">
             <span>{{getCard(h,w).title}}</span>
-            <span style="float: right">{{getCard(h,w).state}}</span>
+            <span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>
+            <span style="float: right" v-if="h === 1">
+              <el-button icon="el-icon-myicon-user" size="mini" @click="initCardRoles(h,w)" circle></el-button>
+            </span>
           </div>
           <div class="text item">{{getCard(h,w).content}}</div>
           <div style="text-align:right">
@@ -27,6 +30,9 @@
     <!--<div style="width: 200px" id="test">-->
       <!--test-->
     <!--</div>-->
+    <el-dialog title="修改角色" :visible.sync="dialogRoleVisible" @close="editCardRoles()">
+      <span><el-transfer v-model="allRoles" :titles="['所有角色', '相关角色']" :data="addedRoleIds"></el-transfer></span>
+    </el-dialog>
     <el-dialog title="删除确认" :visible.sync="dialogVisible" width="30%">
       <span>这会删除所有子卡片，继续吗？</span>
       <span slot="footer" class="dialog-footer">
@@ -79,11 +85,14 @@
   </div>
 </template>
 <script>
-import API from '@/api/api_storymap'
+import API from '@/api/api_cards'
 import { eventBus } from '../main'
 export default {
   data () {
     return {
+      dialogRoleVisible: false,
+      addedRoleIds: [],
+      allRoles: [],
       dialogVisible: false,
       deleteCardLoc: {
         x: '',
@@ -116,6 +125,12 @@ export default {
     }
   },
   methods: {
+    initCardRoles (x, y) {
+      this.dialogRoleVisible = true
+    },
+    editCardRoles () {
+
+    },
     getCard (x, y) {
       for (let item in this.cards) {
         if (this.cards[item].positionX === x && this.cards[item].positionY === y) {
@@ -125,7 +140,7 @@ export default {
       return null
     },
     initStoryMap () {
-      API.getStoryMap(this.$route.params.storymapid).then(res => {
+      API.getCardListTest(this.$route.params.storymapid).then(res => {
         let status = res.status
         if (status !== 200) {
           this.$notify.error('获取卡片列表失败')
@@ -156,7 +171,21 @@ export default {
     },
     confirmAdd () {
       this.dialogFormVisible = false
-      // TODO API操作
+      API.addCard({ 'storyId': this.$route.params.storymapid,
+        'title': this.addform.name,
+        'content': this.addform.descr,
+        'state': this.addform.cardstate,
+        'cost': 0,
+        'positionX': this.addform.x,
+        'positionY': this.addform.y
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('添加卡片成功')
+        } else {
+          this.$message.error('添加卡片失败')
+        }
+      })
       this.addform.name = ''
       this.addform.cardstate = ''
       this.addform.descr = ''
@@ -168,7 +197,17 @@ export default {
     },
     confirmDelete () {
       this.dialogVisible = false
-      // TODO API操作
+      API.deleteCard({ 'positionX': this.deleteCardLoc.x,
+        'positionY': this.deleteCardLoc.y,
+        'storyId': this.$route.params.storymapid
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('删除卡片成功')
+        } else {
+          this.$message.error('删除卡片失败')
+        }
+      })
       this.deleteCardLoc.x = ''
       this.deleteCardLoc.y = ''
     },
@@ -183,7 +222,21 @@ export default {
     },
     confirmEdit () {
       this.dialogEditFormVisible = false
-      // TODO API操作
+      API.addCard({ 'storyId': this.$route.params.storymapid,
+        'title': this.editform.name,
+        'content': this.editform.descr,
+        'state': this.editform.cardstate,
+        'cost': 0,
+        'positionX': this.editform.x,
+        'positionY': this.editform.y
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('修改卡片成功')
+        } else {
+          this.$message.error('修改卡片失败')
+        }
+      })
       console.log(this.editform.x)
     }
   },
