@@ -37,6 +37,11 @@ public class CardController {
         cardService.addCard(cardVo);
     }
 
+    @PostMapping("/updateCard")
+    public void updateCard(CardVo cardVo){
+        cardService.updateCard(cardVo);
+    }
+
     @PostMapping("/deleteCard")
     public void deleteCard(CardVo cardVo){
         cardService.deleteCard(cardVo);

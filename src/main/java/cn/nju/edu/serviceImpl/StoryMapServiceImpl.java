@@ -61,6 +61,20 @@ public class StoryMapServiceImpl implements StoryMapService {
 
     @Override
     @Transactional
+    public boolean updateStoryMap(StoryMapVo storyMapVo) {
+        storyMapRepository.deleteByStoryId(storyMapVo.getStoryId());
+
+        StoryMap storyMap = new StoryMap();
+        storyMap.setStoryName(storyMapVo.getStoryName());
+        storyMap.setStoryDescription(storyMapVo.getStoryDescription());
+        storyMap.setRelease(storyMapVo.getRelease());
+        storyMap.setUserId(storyMapVo.getUserId());
+        storyMapRepository.save(storyMap);
+        return true;
+    }
+
+    @Override
+    @Transactional
     public boolean deleteStoryMap(StoryMapVo storyMapVo) {
         StoryMap storyMap = new StoryMap();
         storyMap.setStoryName(storyMapVo.getStoryName());

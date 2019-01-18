@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class Card implements Serializable{
     private static final long serialVersionUID = -850216663528399998L;
 
+    private String title;
+
     private String content;
 
     private int state;
@@ -31,6 +33,14 @@ public class Card implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private int cardId;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getContent() {
         return content;
@@ -91,6 +101,7 @@ public class Card implements Serializable{
     @Override
     public String toString() {
         return "card{" +
+                "title='" + title + '\'' +
                 "content='" + content + '\'' +
                 ", state='" + state + '\'' +
                 ", cost='" + cost + '\'' +

@@ -12,6 +12,8 @@ public interface StoryMapService {
 
     boolean addStoryMap(StoryMapVo storyMapVo);
 
+    boolean updateStoryMap(StoryMapVo storyMapVo);
+
     boolean deleteStoryMap(StoryMapVo storyMapVo);
 
 

@@ -29,6 +29,7 @@ public class CardServiceImpl implements CardService {
         for(int i = 0;i < cards.size();i++){
             Card temp = cards.get(i);
             CardVo cardVo = new CardVo();
+            cardVo.setTitle(temp.getTitle());
             cardVo.setContent(temp.getContent());
             cardVo.setState(CardState.values()[temp.getState()]);
             cardVo.setCost(temp.getCost());
@@ -55,6 +56,7 @@ public class CardServiceImpl implements CardService {
             if(x < 3){//对activity和task卡片来说是右边的卡片右移一格（全部右边的卡片）
                 if(temp.getPositionY() >= y){
                     Card card1 = new Card();
+                    card1.setTitle(temp.getTitle());
                     card1.setContent(temp.getContent());
                     card1.setState(temp.getState().ordinal());
                     card1.setCost(temp.getCost());
@@ -66,6 +68,7 @@ public class CardServiceImpl implements CardService {
                     toSave.add(card1);
 
                     Card card3 = new Card();
+                    card3.setTitle(temp.getTitle());
                     card3.setContent(temp.getContent());
                     card3.setState(temp.getState().ordinal());
                     card3.setCost(temp.getCost());
@@ -79,6 +82,7 @@ public class CardServiceImpl implements CardService {
             else {//对story卡片来说是下面的卡片下移一格（仅有此列的卡片）
                 if(temp.getPositionX() >= x && temp.getPositionY() == y){
                     Card card2 = new Card();
+                    card2.setTitle(temp.getTitle());
                     card2.setContent(temp.getContent());
                     card2.setState(temp.getState().ordinal());
                     card2.setCost(temp.getCost());
@@ -90,6 +94,7 @@ public class CardServiceImpl implements CardService {
                     toSave.add(card2);
 
                     Card card3 = new Card();
+                    card3.setTitle(temp.getTitle());
                     card3.setContent(temp.getContent());
                     card3.setState(temp.getState().ordinal());
                     card3.setCost(temp.getCost());
@@ -119,6 +124,7 @@ public class CardServiceImpl implements CardService {
 //        cardRepository.saveAll(toUpdate);
 
         Card card = new Card();
+        card.setTitle(cardVo.getTitle());
         card.setContent(cardVo.getContent());
         card.setState(cardVo.getState().ordinal());
         card.setCost(cardVo.getCost());
@@ -126,6 +132,30 @@ public class CardServiceImpl implements CardService {
         card.setPositionY(y);
         card.setStoryId(id);
         System.out.println("--------------------- " + card.toString());
+        cardRepository.save(card);
+        return true;
+    }
+
+    @Override
+    public boolean updateCard(CardVo cardVo) {
+//        Card temp = cardRepository.findByCardId(cardVo.getCardId());
+
+//        System.out.println("--------------------- " + temp.toString());
+
+        cardRepository.deleteByCardId(cardVo.getCardId());
+        System.out.println("delete!------");
+
+        Card card = new Card();
+        card.setTitle(cardVo.getTitle());
+        card.setContent(cardVo.getContent());
+        card.setState(cardVo.getState().ordinal());
+        card.setCost(cardVo.getCost());
+        card.setPositionX(cardVo.getPositionX());
+        card.setPositionY(cardVo.getPositionY());
+        card.setStoryId(cardVo.getStoryId());
+        card.setCardId(cardVo.getCardId());
+        System.out.println("--------------------- " + card.toString());
+
         cardRepository.save(card);
         return true;
     }

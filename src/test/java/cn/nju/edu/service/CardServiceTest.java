@@ -1,5 +1,6 @@
 package cn.nju.edu.service;
 
+import cn.nju.edu.entity.Card;
 import cn.nju.edu.enumeration.CardState;
 import cn.nju.edu.enumeration.CardType;
 import org.junit.Assert;
@@ -27,6 +28,7 @@ public class CardServiceTest {
     @Test
     public void getCardList(){
         List<CardVo> cardVos = cardService.getCardList(1);
+        String title = "";
         String content = "";
         CardState state = null;
         CardType type = null;
@@ -35,6 +37,7 @@ public class CardServiceTest {
 
         for(CardVo card : cardVos){
             if(card.getPositionX() == 5 && card.getPositionY() == 1){
+                title = card.getTitle();
                 content = card.getContent();
                 state = card.getState();
                 type = card.getType();
@@ -45,6 +48,7 @@ public class CardServiceTest {
 
         Assert.assertArrayEquals(
                 new Object[]{
+                        title,
                         content,
                         state,
                         type,
@@ -52,6 +56,7 @@ public class CardServiceTest {
                         cardId
                 },
                 new Object[]{
+                        "awayz",
                         "awayz is a rbq",
                         CardState.DOING,
                         CardType.USER_STORY,
@@ -186,6 +191,45 @@ public class CardServiceTest {
     }
 
     @Test
+    public void update(){
+        CardVo cardVo = new CardVo();
+        cardVo.setContent("awayz is a rbq");
+        cardVo.setState(CardState.DOING);
+        cardVo.setCost(66);
+        cardVo.setPositionX(5);
+        cardVo.setPositionY(5);
+        cardVo.setStoryId(1);
+        cardVo.setType(CardType.USER_STORY);
+        cardVo.setCardId(1);
+
+        cardService.updateCard(cardVo);
+
+        List<CardVo> cardVos = cardService.getCardList(1);
+
+        String content = "";
+        int cost = 0;
+
+        for(CardVo temp : cardVos){
+            if(temp.getPositionX() == 5 && temp.getPositionY() == 5){
+                content = temp.getContent();
+                cost = temp.getCost();
+            }
+        }
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        content,
+                        cost
+                },
+                new Object[]{
+                        "awayz is a rbq",
+                        66
+                }
+        );
+
+    }
+
+    @Test
     public void deleteCard(){
         CardVo cardVo = new CardVo();
 //        cardVo.setContent("awayz is a rbq");
@@ -221,7 +265,7 @@ public class CardServiceTest {
                 isDeleted5 = false;
             }if(temp.getPositionX() == 5 && temp.getPositionY() == 3){
                 isDeleted6 = false;
-            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 2){
                 isDeleted7 = false;
             }
         }
@@ -291,7 +335,7 @@ public class CardServiceTest {
                 isDeleted5 = false;
             }if(temp.getPositionX() == 5 && temp.getPositionY() == 3){
                 isDeleted6 = false;
-            }if(temp.getPositionX() == 2 && temp.getPositionY() == 3){
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 2){
                 isDeleted7 = false;
             }
         }
