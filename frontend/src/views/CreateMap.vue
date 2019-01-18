@@ -1,7 +1,7 @@
 <template>
   <el-form :label-position="labelPosition" label-width="300px" :model="formLabelAlign">
     <el-form-item label="地图名称">
-      <el-input v-model="formLabelAlign.name"></el-input>
+      <el-input v-model="formLabelAlign.title"></el-input>
     </el-form-item>
     <el-form-item label="地图描述">
       <el-input type="textarea" v-model="formLabelAlign.description"></el-input>
@@ -19,7 +19,7 @@ export default {
     return {
       labelPosition: 'top',
       formLabelAlign: {
-        name: '',
+        title: '',
         description: ''
       }
     }

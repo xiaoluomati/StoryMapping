@@ -95,9 +95,14 @@
           "positionY": 4
         }
       ]
+    },
+    {
+      "id": "2",
+      "title": "storymap22",
+      "description": "this is a test description for storymap23"
     }
   ],
-  "storymaplist":[
+  "storymaplist": [
     {
       "userid": "1",
       "storymaps": [

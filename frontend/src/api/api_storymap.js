@@ -12,5 +12,19 @@ export default {
 
   getStoryMapList: userid => {
     return API.GET(`storymaplist/`, { 'userid': userid })
+  },
+
+  deleteStoryMap: storyid => {
+    return API.DELETE(`storymaps/${storyid}`)
+  },
+
+  // 格式如下：
+  // {
+  //   "id": "2",
+  //   "title": "storymap2",
+  //   "description": "this is a test description for storymap2"
+  // }
+  updateStoryMap: (storyid, params) => {
+    return API.PUT(`storymaps/${storyid}`, params)
   }
 }

@@ -16,16 +16,33 @@
     <el-col :span="6" v-for="storymap in storymapsOnShow" :key="storymap.id" :offset=1>
       <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
                @click.native="jumpTo('storymap', storymap.id)">
-        <div style="padding: 10px;">
+        <div style="padding: 10px; height: 100%">
           <h1>{{ storymap.title }}</h1>
           <p>
             {{ storymap.description }}
           </p>
-          <a></a>
         </div>
-
       </el-card>
+      <div class="operation">
+        <el-button icon="el-icon-delete" circle class="storymap-icon" @click="handleDeleteStoryMap"></el-button>
+        <el-button icon="el-icon-edit" circle class="storymap-icon" @click="handleEditStoryMap(storymap.id)"></el-button>
+      </div>
     </el-col>
+
+    <el-dialog title="用户故事地图编辑" :visible.sync="editStoryMapVisible" width="30%">
+      <el-form :label-position="'top'" label-width="100px" :model="storymapEdit">
+        <el-form-item label="地图名称">
+          <el-input v-model="storymapEdit.title"></el-input>
+        </el-form-item>
+        <el-form-item label="地图描述">
+          <el-input type="textarea" v-model="storymapEdit.description"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click.native="editStoryMapVisible = false">取消</el-button>
+          <el-button type="primary" @click.native="updateStoryMap">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-row>
 </template>
 
@@ -40,7 +57,13 @@ export default {
       storymaps: '',
       storymapsOnShow: '',
       searchInput: '',
-      searchSelect: '1'
+      searchSelect: '1',
+      storymapEdit: {
+        id: '',
+        title: '',
+        description: ''
+      },
+      editStoryMapVisible: false
     }
   },
 
@@ -101,6 +124,85 @@ export default {
       this.searchInput = ''
       this.searchSelect = '1'
       this.storymapsOnShow = this.storymaps.slice()
+    },
+
+    deleteStoryMap () {
+      API.deleteStoryMap(this.storymapEdit.id)
+        .then(res => {
+          let status = res.status
+          if (status === 200) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          } else {
+            this.$message({
+              type: 'warning',
+              message: '删除故事地图失败，请稍后重试'
+            })
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: 'warning',
+            message: '删除故事地图失败，请稍后重试'
+          })
+        })
+    },
+
+    handleDeleteStoryMap () {
+      this.$confirm('此操作将永久删除该故事地图, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        API.deleteStoryMap()
+      }).catch(() => {
+
+      })
+    },
+
+    updateStoryMap () {
+      if (this.storymapEdit.title.trim().length === 0 ||
+        this.storymapEdit.title.description().length === 0) {
+        this.$message({
+          type: 'warning',
+          message: '内容不得为空'
+        })
+        return
+      }
+      API.updateStoryMap(this.storymapEdit.id, this.storymapEdit)
+        .then(res => {
+          let status = res.status
+          if (status === 200) {
+            this.initStoryMap()
+            this.$message.success('更改成功')
+            this.editStoryMapVisible = false
+          } else {
+            this.$message({
+              type: 'warning',
+              message: '更新故事地图失败，请稍后重试'
+            })
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: 'warning',
+            message: '更新故事地图失败，请稍后重试'
+          })
+        })
+    },
+
+    handleEditStoryMap (storymapId) {
+      this.editStoryMapVisible = true
+      for (let i = 0; i < this.storymaps.length; i++) {
+        if (this.storymaps[i].id === storymapId) {
+          this.storymapEdit.id = this.storymaps[i].id
+          this.storymapEdit.title = this.storymaps[i].title
+          this.storymapEdit.description = this.storymaps[i].description
+          break
+        }
+      }
     }
   },
 
@@ -152,5 +254,17 @@ export default {
 
   .search {
     margin-bottom: 50px;
+  }
+
+  .operation {
+    margin-top: -65px;
+    margin-bottom: 50px;
+    min-height: 20px;
+  }
+
+  .storymap-icon {
+    float: right;
+    margin: 0 10px 0 5px;
+    font-size: 14px;
   }
 </style>
