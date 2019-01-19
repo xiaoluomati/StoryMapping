@@ -86,13 +86,18 @@
 </template>
 <script>
 import API from '@/api/api_cards'
+import API_R from '@/api/api_roles'
 import { eventBus } from '../main'
 export default {
   data () {
     return {
       dialogRoleVisible: false,
+      srcAddedRoleIds: [],
       addedRoleIds: [],
       allRoles: [],
+      mapRoles: [],
+      currentCardId: '',
+      currentCardRelations: '',
       dialogVisible: false,
       deleteCardLoc: {
         x: '',
@@ -126,10 +131,61 @@ export default {
   },
   methods: {
     initCardRoles (x, y) {
+      let card = this.getCard(x, y)
+      this.currentCardId = card.cardId
+      for (let item in this.mapRoles) {
+        this.allRoles.push({
+          key: `${this.mapRoles[item].roleId}`,
+          value: `${this.getRole(this.mapRoles[item].roleId).roleName}`
+        })
+      }
+      API_R.getRelationList(card.cardId).then(
+        res => {
+          let status = res.status
+          if (status !== 200) {
+            this.$notify.error('获取关系列表失败')
+          }
+          let relations = res.data
+          for (let item in relations) {
+            this.addedRoleIds.push(`${relations[item].roleId}`)
+            this.srcAddedRoleIds.push(`${relations[item].roleId}`)
+          }
+          this.currentCardRelations = relations
+        })
       this.dialogRoleVisible = true
     },
+    getRole (roleId) {
+      for (let item in this.mapRoles) {
+        if (this.mapRoles[item].roleId === roleId) {
+          return this.mapRoles[item]
+        }
+      }
+      return null
+    },
     editCardRoles () {
-
+      for (let item in this.srcAddedRoleIds) {
+        let deletedId = this.srcAddedRoleIds[item]
+        if (this.addedRoleIds.indexOf(deletedId) === -1) {
+          let relationId = ''
+          for (let j in this.currentCardRelations) {
+            if (this.currentCardRelations[j].roleId === deletedId) {
+              relationId = deletedId
+            }
+          }
+          if (relationId !== '') {
+            API_R.deleteRelation(relationId)
+          }
+        }
+      }
+      for (let item in this.addedRoleIds) {
+        let addId = this.addedRoleIds[item]
+        if (this.srcAddedRoleIds.indexOf(addId) === -1) {
+          API_R.addRelation({
+            'cardId': this.currentCardId,
+            'roleId': addId
+          })
+        }
+      }
     },
     getCard (x, y) {
       for (let item in this.cards) {
@@ -140,7 +196,7 @@ export default {
       return null
     },
     initStoryMap () {
-      API.getCardListTest(this.$route.params.storymapid).then(res => {
+      API.getCardList(this.$route.params.storymapid).then(res => {
         let status = res.status
         if (status !== 200) {
           this.$notify.error('获取卡片列表失败')
@@ -150,6 +206,16 @@ export default {
           this.map_width = map.mapWide
           this.map_height = map.mapLong
           this.cards = map.cardVos
+        }
+      })
+      API_R.getStoryRoleList(this.$route.params.storymapid).then(res => {
+        let status = res.status
+        if (status !== 200) {
+          this.$notify.error('获取角色列表失败')
+        }
+        let roles = res.data
+        if (roles) {
+          this.mapRoles = roles
         }
       })
     },
@@ -186,6 +252,7 @@ export default {
           this.$message.error('添加卡片失败')
         }
       })
+      this.initStoryMap()
       this.addform.name = ''
       this.addform.cardstate = ''
       this.addform.descr = ''
@@ -208,6 +275,7 @@ export default {
           this.$message.error('删除卡片失败')
         }
       })
+      this.initStoryMap()
       this.deleteCardLoc.x = ''
       this.deleteCardLoc.y = ''
     },
@@ -222,7 +290,7 @@ export default {
     },
     confirmEdit () {
       this.dialogEditFormVisible = false
-      API.addCard({ 'storyId': this.$route.params.storymapid,
+      API.updateCard({ 'storyId': this.$route.params.storymapid,
         'title': this.editform.name,
         'content': this.editform.descr,
         'state': this.editform.cardstate,
@@ -237,6 +305,7 @@ export default {
           this.$message.error('修改卡片失败')
         }
       })
+      this.initStoryMap()
       console.log(this.editform.x)
     }
   },
