@@ -128,14 +128,15 @@ export default {
           if (status === 200) {
             localStorage.setItem('access-user', JSON.stringify(this.register))
             this.jumpTo('/storymap-manager')
-          } else {
-            this.loading = false
-            this.$message.error('该账号已存在')
           }
         })
-        .catch(() => {
+        .catch(error => {
           this.loading = false
-          this.$message.error('网络错误，请重试')
+          if (error.response.status === 400) {
+              this.$message.error('该账号已存在')
+          } else {
+            this.$message.error('网络错误，请重试')
+          }
         })
     },
 

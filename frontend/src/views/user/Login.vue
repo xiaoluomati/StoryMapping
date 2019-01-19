@@ -99,7 +99,9 @@ export default {
               console.log(res.status)
               let status = res.status
               if (status === 200) {
-                localStorage.setItem('access-user', res.data.id)
+                console.log(res.data)
+                localStorage.setItem('access-user', res.data)
+                console.log(localStorage.getItem('access-user'))
                 this.jumpTo('/storymap-manager')
               }
             })
@@ -122,7 +124,36 @@ export default {
 
     jumpTo (url) {
       this.$router.push(url) // 用go刷新
+    },
+
+    test () {
+      API.test()
+        .then(res => {
+          console.log(res)
+          let linkElement = document.createElement('a')
+          try {
+            let blob = new Blob([res.data], { type: 'application/octet-stream' })
+            let url = window.URL.createObjectURL(blob)
+            linkElement.setAttribute('href', url)
+            linkElement.setAttribute("download", 'filename')
+            let clickEvent = new MouseEvent("click", {
+              "view": window,
+              "bubbles": true,
+              "cancelable": false
+            })
+            linkElement.dispatchEvent(clickEvent)
+          } catch (ex) {
+            console.log(ex)
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     }
+  },
+
+  mounted () {
+    this.test()
   }
 }
 
