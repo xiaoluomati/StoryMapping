@@ -185,11 +185,11 @@ export default {
         let status = res.status
         if (status === 200) {
           this.$message.success('添加角色成功')
+          this.initStoryMapRoles()
         } else {
           this.$message.error('添加角色失败')
         }
       })
-      this.initStoryMapRoles()
       this.addform.roleName = ''
       this.addform.roleDetail = ''
     },
