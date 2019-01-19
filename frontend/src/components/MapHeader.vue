@@ -158,7 +158,7 @@ export default {
         }
         let rolelist = res.data
         if (rolelist) {
-          this.roles = rolelist.roles
+          this.roles = rolelist
         }
       })
     },

@@ -203,8 +203,8 @@ export default {
         }
         let map = res.data
         if (map) {
-          this.map_width = map.mapWide
-          this.map_height = map.mapLong
+          this.map_width = map.mapLong
+          this.map_height = map.mapWide
           this.cards = map.cardVos
         }
       })
@@ -240,7 +240,7 @@ export default {
       API.addCard({ 'storyId': this.$route.params.storymapid,
         'title': this.addform.name,
         'content': this.addform.descr,
-        'state': this.addform.cardstate,
+        'state': 'DOING',
         'cost': 0,
         'positionX': this.addform.x,
         'positionY': this.addform.y
