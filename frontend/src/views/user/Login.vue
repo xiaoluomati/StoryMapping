@@ -41,6 +41,7 @@
 <script>
 import API from '@/api/api_user'
 import tool from '@/util/tool'
+import axios from 'axios'
 
 export default {
   name: 'login',
@@ -127,15 +128,17 @@ export default {
     },
 
     test () {
-      API.test()
+      axios.get('api/exportExcel?storyId=1', {
+        responseType: 'blob' //指定返回数据的格式为blob
+      })
         .then(res => {
           console.log(res)
           let linkElement = document.createElement('a')
           try {
-            let blob = new Blob([res.data], { type: 'application/octet-stream' })
-            let url = window.URL.createObjectURL(blob)
+            // let blob = new Blob([res.data], { type: 'application/x-xls' })
+            let url = window.URL.createObjectURL(res.data)
             linkElement.setAttribute('href', url)
-            linkElement.setAttribute("download", 'filename')
+            linkElement.setAttribute("download", 'storymap.xlsx')
             let clickEvent = new MouseEvent("click", {
               "view": window,
               "bubbles": true,
@@ -153,7 +156,7 @@ export default {
   },
 
   mounted () {
-    this.test()
+    // this.test()
   }
 }
 
