@@ -25,8 +25,18 @@ public class StoryMapController {
         storyMapService.addStoryMap(storyMapVo);
     }
 
+    @PostMapping("/updateStoryMap")
+    public void updateStoryMap(StoryMapVo storyMapVo){
+        storyMapService.updateStoryMap(storyMapVo);
+    }
+
     @PostMapping("/deleteStoryMap")
     public void deleteStoryMap(StoryMapVo storyMapVo){
         storyMapService.deleteStoryMap(storyMapVo);
+    }
+
+    @GetMapping("/exportExcel")
+    public void exportExcel(@RequestParam(value="storyId", defaultValue="1") int storyId){
+        storyMapService.exportExcel(storyId);
     }
 }

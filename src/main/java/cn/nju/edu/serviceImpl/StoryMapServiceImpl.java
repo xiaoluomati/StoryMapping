@@ -1,8 +1,11 @@
 package cn.nju.edu.serviceImpl;
 
+import cn.nju.edu.entity.Card;
 import cn.nju.edu.entity.StoryMap;
+import cn.nju.edu.repository.CardRepository;
 import cn.nju.edu.repository.StoryMapRepository;
 import cn.nju.edu.service.StoryMapService;
+import cn.nju.edu.util.ExcelHelper;
 import cn.nju.edu.vo.StoryMapVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,9 @@ public class StoryMapServiceImpl implements StoryMapService {
 
     @Autowired
     private StoryMapRepository storyMapRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
 
     @Override
     @Transactional
@@ -82,6 +88,46 @@ public class StoryMapServiceImpl implements StoryMapService {
 //        storyMap.setRelease(storyMapVo.getRelease());
         storyMap.setUserId(storyMapVo.getUserId());
         storyMapRepository.delete(storyMap);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean exportExcel(int storyId) {
+        List<Card> cards = cardRepository.findByStoryId(storyId);
+
+        int map_long = 0;
+        int map_wide = 0;
+
+        for(Card temp : cards){
+            if(temp.getPositionY() > map_long){
+                map_long = temp.getPositionY();
+            }if(temp.getPositionX() > map_wide){
+                map_wide = temp.getPositionX();
+            }
+        }
+
+        List<String[]> sheet = new ArrayList<>();
+        for(int i = 0;i < map_wide;i++){
+            String[] line = new String[map_long];
+            sheet.add(line);
+        }
+        ExcelHelper excelHelper = new ExcelHelper();
+
+        for(Card temp : cards){
+            System.out.println(temp.toString());
+            sheet.get(temp.getPositionX() - 1)[temp.getPositionY() - 1] = temp.getContent();
+            System.out.println(sheet.get(temp.getPositionX() - 1)[temp.getPositionY() - 1]);
+        }
+
+        for(String[] temp : sheet){
+            for(int i = 0;i < temp.length;i++){
+                System.out.print(temp[i] + " ");
+            }
+        }
+
+        excelHelper.writeExcel(sheet, "src/main/resources/Excel/storyMap.xlsx");
+
         return true;
     }
 }

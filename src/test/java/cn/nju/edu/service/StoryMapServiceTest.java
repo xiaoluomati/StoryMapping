@@ -139,4 +139,9 @@ public class StoryMapServiceTest {
         Assert.assertEquals(isDeleted,true);
     }
 
+    @Test
+    public void exportExcel(){
+        storyMapService.exportExcel(1);
+    }
+
 }

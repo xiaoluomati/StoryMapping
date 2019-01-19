@@ -16,5 +16,7 @@ public interface StoryMapService {
 
     boolean deleteStoryMap(StoryMapVo storyMapVo);
 
+    boolean exportExcel(int StoryId);
+
 
 }
