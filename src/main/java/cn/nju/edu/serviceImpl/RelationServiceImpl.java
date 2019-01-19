@@ -49,8 +49,6 @@ public class RelationServiceImpl implements RelationService {
     public boolean deleteRelation(RelationVo relationVo) {
         Relation relation = new Relation();
         relation.setRelationId(relationVo.getRelationId());
-        relation.setRoleId(relationVo.getRoleId());
-        relation.setCardId(relationVo.getCardId());
         relationRepository.delete(relation);
         return true;
     }
