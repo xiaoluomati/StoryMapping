@@ -1,11 +1,14 @@
 <template>
   <div>
+    <div style="text-align:left">
+      <el-button icon="el-icon-plus" @click="addCard(1, 1)" v-if="cards.length === 0" circle></el-button>
+    </div>
     <div v-for="h in map_height" :key="h" :style="{'width': map_width * card_width + 'px', 'height': card_width + 'px' }">
       <div v-for= "w in map_width" :key="w" style="float: left">
         <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null" v-bind:class="{ highlightcard : isHighlight(getCard(h,w).cardId)}">
           <div slot="header" class="clearfix">
             <span>{{getCard(h,w).title}}</span>
-            <span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>
+            <!--<span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>-->
             <span style="float: right" v-if="h === 1">
               <el-button icon="el-icon-myicon-user" size="mini" @click="initCardRoles(h,w)" circle></el-button>
             </span>
@@ -203,8 +206,8 @@ export default {
         }
         let map = res.data
         if (map) {
-          this.map_width = map.mapWide
-          this.map_height = map.mapLong
+          this.map_width = map.mapLong
+          this.map_height = map.mapWide
           this.cards = map.cardVos
         }
       })
@@ -221,7 +224,10 @@ export default {
     },
     addCard (x, y) {
       this.dialogFormVisible = true
-      if (x === 1 || x === 2) {
+      if (x === 1 && y === 1) {
+        this.addform.x = x
+        this.addform.y = y
+      } else if (x === 1 || x === 2) {
         let i = y + 1
         while (i < this.map_width && this.getCard(x, i) === null) {
           i++
@@ -240,7 +246,7 @@ export default {
       API.addCard({ 'storyId': this.$route.params.storymapid,
         'title': this.addform.name,
         'content': this.addform.descr,
-        'state': this.addform.cardstate,
+        'state': 'DOING',
         'cost': 0,
         'positionX': this.addform.x,
         'positionY': this.addform.y
