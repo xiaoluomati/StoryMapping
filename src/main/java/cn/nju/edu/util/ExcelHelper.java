@@ -21,7 +21,7 @@ public class ExcelHelper {
     private File file;
     private Workbook workbook;
 
-    public boolean openFile(File file) {
+    public Workbook openFile(File file) {
         try {
             String fileName = file.getName();
             workbook = null;
@@ -40,9 +40,9 @@ public class ExcelHelper {
             is.close();
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return true;
+        return workbook;
     }
 
     /**
