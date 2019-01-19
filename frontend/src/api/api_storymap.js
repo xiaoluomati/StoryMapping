@@ -6,6 +6,19 @@ export default {
   //   return API.GET(`storyroles/${storyid}`)
   // },
 
+  addStoryMap: story => {
+    return API.POST('addStoryMap', { 'storyName': story.storyName,
+      'storyDescription': story.storyDescription,
+      'release': story.release,
+      'userId': story.userId,
+      'storyId': story.storyId })
+    // return API.POST('addStoryMap', { 'storyName': story.storyName,
+    //   'storyDescription': story.storyDescription,
+    //   'release': story.release,
+    //   'userId': story.userId,
+    //   'storyId': story.storyId })
+  },
+
   getStoryMapList: userid => {
     return API.GET(`getStoryMapList`, { 'userId': userid })
   },
