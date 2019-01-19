@@ -17,6 +17,10 @@ export default {
 
   deleteCard: card => {
     return API.DELETE('deleteCard', {'positionX': card.positionX,'positionY': card.positionY, 'storyId': card.storyId})
-  }
+  },
 
+  updateCard: card => {
+    return API.PUT(`updateCard`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
+      'cost': card.cost, 'positionX': card.positionX,'positionY': card.positionY})
+  }
 }

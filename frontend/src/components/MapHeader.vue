@@ -87,7 +87,7 @@
   </el-row>
 </template>
 <script>
-import API from '@/api/api_storymap'
+import API from '@/api/api_roles'
 import { eventBus } from '../main'
 export default {
   data () {
@@ -119,14 +119,11 @@ export default {
     downloadFile () {
       // TODO API操作
     },
-    testMapId () {
-      console.log(this.$route.params.storymapid)
-    },
     messageCards (words) {
       eventBus.$emit('searchWords', words)
     },
     initStoryMapRoles () {
-      API.getStoryMapRoles(this.$route.params.storymapid).then(res => {
+      API.getStoryRoleList(this.$route.params.storymapid).then(res => {
         let status = res.status
         if (status !== 200) {
           this.$notify.error('获取角色列表失败')
@@ -152,7 +149,18 @@ export default {
       this.dialogFormVisible = false
       console.log('roleName=' + this.addform.roleName)
       console.log('roleDetail=' + this.addform.roleDetail)
-      // TODO API操作
+      API.addStoryRole({ 'storyId': this.$route.params.storymapid,
+        'roleDetail': this.addform.roleDetail,
+        'roleName': this.addform.roleName
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('添加角色成功')
+        } else {
+          this.$message.error('添加角色失败')
+        }
+      })
+      this.initStoryMapRoles()
       this.addform.roleName = ''
       this.addform.roleDetail = ''
     },
@@ -165,7 +173,19 @@ export default {
     },
     confirmEdit () {
       this.dialogEditFormVisible = false
-      // TODO API操作
+      API.updateStoryRole({ 'storyId': this.$route.params.storymapid,
+        'roleId': this.editform.roleId,
+        'roleDetail': this.editform.roleDetail,
+        'roleName': this.editform.roleName
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('更新角色成功')
+        } else {
+          this.$message.error('更新角色失败')
+        }
+      })
+      this.initStoryMapRoles()
       console.log(this.editform.roleId)
     },
     deleteRole (roleId) {
@@ -174,7 +194,17 @@ export default {
     },
     confirmDelete () {
       this.dialogVisible = false
-      // TODO API操作
+      API.deleteStoryRole({ 'storyId': this.$route.params.storymapid,
+        'roleId': this.deleteRoleId
+      }).then(res => {
+        let status = res.status
+        if (status === 200) {
+          this.$message.success('删除角色成功')
+        } else {
+          this.$message.error('删除角色失败')
+        }
+      })
+      this.initStoryMapRoles()
     }
   },
   mounted () {
