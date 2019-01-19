@@ -228,7 +228,8 @@ export default {
 
     changePwd () {
       this.pwdForm.id = this.account.id
-      API.updatePassword(this.account.id, this.pwdForm)
+      let pwd = { id: '', old: '', new1: '' }
+      API.updatePassword(this.account.id, pwd)
         .then(res => {
           let status = res.status
           if (status === 200) {
