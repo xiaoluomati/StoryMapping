@@ -23,6 +23,6 @@ export default {
   },
 
   updatePassword: (id, params) => {
-    return API.PUT(`user/${id}`, params)
+    return API.PUT(`user/password/${id}`, params)
   }
 }
