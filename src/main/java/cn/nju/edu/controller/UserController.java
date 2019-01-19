@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
@@ -25,12 +25,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Integer> register(@RequestBody UserLoginVo userLoginVo) {
+    public ResponseEntity register(@RequestBody UserLoginVo userLoginVo) {
         int id = userService.getUserByNameAndPassword(userLoginVo);
         if (id == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(id, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
     }
 
@@ -54,7 +54,7 @@ public class UserController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/{id}/updatePswd", method = RequestMethod.PUT)
+    @RequestMapping(value = "/password/{id}", method = RequestMethod.PUT)
     public ResponseEntity updatePassword(@PathVariable("id") int userId, @RequestBody UserPswdVo userPswdVo) {
         boolean flag = userService.updatePassword(userPswdVo);
         if (flag) {

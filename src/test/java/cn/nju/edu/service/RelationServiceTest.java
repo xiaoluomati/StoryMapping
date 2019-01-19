@@ -53,7 +53,7 @@ public class RelationServiceTest {
         testCase.setRoleId(2);
         testCase.setCardId(3);
         relationService.addRelation(testCase);
-        
+
         RelationVo relationVo = new RelationVo();
         relationVo.setRelationId(2);
         relationVo.setRoleId(2);
