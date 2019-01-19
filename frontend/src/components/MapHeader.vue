@@ -88,6 +88,7 @@
 </template>
 <script>
 import API from '@/api/api_roles'
+import API_U from '@/api/api_user'
 import { eventBus } from '../main'
 export default {
   data () {
@@ -117,7 +118,7 @@ export default {
   },
   methods: {
     downloadFile () {
-      // TODO API操作
+      API_U.test()
     },
     messageCards (words) {
       eventBus.$emit('searchWords', words)
