@@ -23,6 +23,10 @@ export default {
   },
 
   updatePassword: (id, params) => {
-    return API.PUT(`user/${id}`, params)
+    return API.PUT(`user/password/${id}`, params)
+  },
+
+  test: () => {
+    return API.GET('exportExcel', {'storyId': '1'})
   }
 }

@@ -88,27 +88,31 @@ export default {
       this.loading = true
 
       // for test , 假装 id 是 1
-      localStorage.setItem('access-user', '1')
-      this.jumpTo('/storymap-manager')
+      // localStorage.setItem('access-user', '1')
+      // this.jumpTo('/storymap-manager')
       // for test
 
       this.$refs[formName].validate((valid) => {
         if (valid) {
           API.login(this.login)
             .then(res => {
+              console.log(res.status)
               let status = res.status
               if (status === 200) {
-                localStorage.setItem('access-user', JSON.stringify(res.data.id))
+                console.log(res.data)
+                localStorage.setItem('access-user', res.data)
+                console.log(localStorage.getItem('access-user'))
                 this.jumpTo('/storymap-manager')
-              } else {
-                this.loading = false
-                this.$message.error('账号或密码错误')
-                this.login.password = ''
               }
             })
-            .catch(() => {
+            .catch(error => {
               this.loading = false
-              this.$message.error('网络错误，请重试')
+              if (error.response.status === 400) {
+                this.$message.error('账号或密码错误')
+                this.login.password = ''
+              } else {
+                this.$message.error('网络错误，请重试')
+              }
             })
         } else {
           this.$message.error('请检查输入')
@@ -120,7 +124,36 @@ export default {
 
     jumpTo (url) {
       this.$router.push(url) // 用go刷新
+    },
+
+    test () {
+      API.test()
+        .then(res => {
+          console.log(res)
+          let linkElement = document.createElement('a')
+          try {
+            let blob = new Blob([res.data], { type: 'application/octet-stream' })
+            let url = window.URL.createObjectURL(blob)
+            linkElement.setAttribute('href', url)
+            linkElement.setAttribute("download", 'filename')
+            let clickEvent = new MouseEvent("click", {
+              "view": window,
+              "bubbles": true,
+              "cancelable": false
+            })
+            linkElement.dispatchEvent(clickEvent)
+          } catch (ex) {
+            console.log(ex)
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     }
+  },
+
+  mounted () {
+    this.test()
   }
 }
 

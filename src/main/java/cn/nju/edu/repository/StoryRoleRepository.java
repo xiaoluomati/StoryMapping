@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface StoryRoleRepository extends CrudRepository<StoryRole, Integer> {
+    StoryRole findByRoleNameAndStoryId(String roleName, int storyId);
 
-    List<StoryRole> findByStoryNameAndUserId(String storyName, int userId);
+    List<StoryRole> findByStoryId(int storyId);
 }

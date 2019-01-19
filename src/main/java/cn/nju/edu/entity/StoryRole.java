@@ -10,8 +10,7 @@ public class StoryRole {
     private int roleId;
     private String roleName;
     private String roleDetail;
-    private String storyName;
-    private int userId;
+    private int storyId;
 
     @Column(name = "role_id")
     public int getRoleId() {
@@ -40,22 +39,13 @@ public class StoryRole {
         this.roleDetail = roleDetail;
     }
 
-    @Column(name = "story_name")
-    public String getStoryName() {
-        return storyName;
+    @Column(name = "story_id")
+    public int getStoryId() {
+        return storyId;
     }
 
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    @Column(name = "user_id")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 
     @Override
@@ -64,8 +54,7 @@ public class StoryRole {
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
                 ", roleDetail='" + roleDetail + '\'' +
-                ", storyName='" + storyName + '\'' +
-                ", userId=" + userId +
+                ", storyId=" + storyId +
                 '}';
     }
 }

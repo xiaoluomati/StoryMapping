@@ -4,8 +4,7 @@ public class StoryRoleVo {
     private int roleId;
     private String roleName;
     private String roleDetail;
-    private String storyName;
-    private int userId;
+    private int storyId;
 
     public int getRoleId() {
         return roleId;
@@ -31,20 +30,12 @@ public class StoryRoleVo {
         this.roleDetail = roleDetail;
     }
 
-    public String getStoryName() {
-        return storyName;
+    public int getStoryId() {
+        return storyId;
     }
 
-    public void setStoryName(String storyName) {
-        this.storyName = storyName;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setStoryId(int storyId) {
+        this.storyId = storyId;
     }
 
     @Override
@@ -53,8 +44,7 @@ public class StoryRoleVo {
                 "roleId=" + roleId +
                 ", roleName='" + roleName + '\'' +
                 ", roleDetail='" + roleDetail + '\'' +
-                ", storyName='" + storyName + '\'' +
-                ", userId=" + userId +
+                ", storyId=" + storyId +
                 '}';
     }
 }

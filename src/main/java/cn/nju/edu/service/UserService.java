@@ -16,7 +16,7 @@ public interface UserService {
     UserVo getUserById(int id);
 
     //添加用户
-    boolean addUser(UserVo userVo);
+    int addUser(UserVo userVo);
 
     //修改用户信息(nickname, email)
     boolean updateUser(UserVo userVo);
