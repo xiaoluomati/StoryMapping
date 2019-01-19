@@ -137,6 +137,7 @@ export default {
       changepwdFormLabelWidth: '60px',
       changepwdFormWidth: '500px',
       pwdForm: {
+        id: '',
         old: '',
         new1: '',
         new2: ''
@@ -172,6 +173,7 @@ export default {
     },
 
     handleToUpdateAccount () {
+      this.updateUserInfo()
       this.accountFormVisible = true
       if (this.$refs['account'] !== undefined) {
         this.$refs['account'].resetFields()
@@ -225,6 +227,7 @@ export default {
     },
 
     changePwd () {
+      this.pwdForm.id = this.account.id
       API.updatePassword(this.account.id, this.pwdForm)
         .then(res => {
           let status = res.status
@@ -234,16 +237,16 @@ export default {
               message: '密码更改成功',
               type: 'success'
             })
-          } else if (status === 400) {
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 400) {
             this.$message.error('旧密码输入错误')
             this.$refs['pwdForm'].resetFields()
           } else {
             this.$message.error('密码更改失败，请重试')
             this.$refs['pwdForm'].resetFields()
           }
-        })
-        .catch(() => {
-          this.$message.error('密码更改失败，请重试')
         })
     },
 
@@ -275,8 +278,6 @@ export default {
   },
 
   mounted () {
-    // let user = window.localStorage.getItem('access-user');
-    // 登陆成功后会在 window.localStorage 里 set，现在先 mock
     this.updateUserInfo()
   }
 }

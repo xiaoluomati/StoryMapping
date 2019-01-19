@@ -7,14 +7,14 @@ export default {
   // },
 
   getStoryMapList: userid => {
-    return API.GET(`storymaplist/`, { 'userid': userid })
+    return API.GET(`getStoryMapList`, { 'userId': userid })
   },
 
-  deleteStoryMap: storyid => {
-    return API.DELETE(`storymaps/${storyid}`)
+  deleteStoryMap: (storyid, params) => {
+    return API.POST('deleteStoryMap', params)
   },
 
-  updateStoryMap: (storyid, params) => {
-    return API.PUT(`storymaps/${storyid}`, params)
+  updateStoryMap: params => {
+    return API.POST('updateStoryMap', params)
   }
 }

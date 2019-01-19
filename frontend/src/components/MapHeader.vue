@@ -17,8 +17,10 @@
                 <el-collapse-item v-for="role in roles" :key="role.roleId" :title="role.roleName" :name="role.roleId">
                   <div>
                     {{role.roleDetail}}
-                    <el-button icon="el-icon-edit" style="float: right" @click="editRole(role.roleId)" size="mini" circle></el-button>
-                    <el-button icon="el-icon-delete" style="float: right" @click="deleteRole(role.roleId)" size="mini" circle></el-button>
+                    <el-button icon="el-icon-edit" style="float: right" @click="editRole(role.roleId)" size="mini"
+                               circle></el-button>
+                    <el-button icon="el-icon-delete" style="float: right" @click="deleteRole(role.roleId)" size="mini"
+                               circle></el-button>
                   </div>
                 </el-collapse-item>
               </el-collapse>
@@ -29,7 +31,7 @@
         </el-popover>
         <el-popover placement="bottom" trigger="click" @hide="messageCards('')">
           <el-form :inline="true" :model="formInline" class="demo-form-inline" style="display: flex">
-            <el-form-item >
+            <el-form-item>
               <el-input v-model="formInline.searchWords"></el-input>
             </el-form-item>
             <el-form-item>
@@ -41,10 +43,10 @@
         <el-popover placement="bottom" trigger="click">
           <el-radio-group v-model="radio">
             <el-radio label="excel">导出为XLSX格式</el-radio>
-            <el-radio  label="png" disabled>导出为PNG格式</el-radio>
+            <el-radio label="png" disabled>导出为PNG格式</el-radio>
           </el-radio-group>
           <el-button style="margin-left: 30px" type="primary" @click="downloadFile()">下载</el-button>
-          <el-button slot="reference" icon="el-icon-download"  circle></el-button>
+          <el-button slot="reference" icon="el-icon-download" circle></el-button>
         </el-popover>
         <el-button icon="el-icon-back" circle></el-button>
       </div>
@@ -88,8 +90,9 @@
 </template>
 <script>
 import API from '@/api/api_roles'
-import API_U from '@/api/api_user'
+import axios from 'axios'
 import { eventBus } from '../main'
+
 export default {
   data () {
     return {
@@ -118,7 +121,31 @@ export default {
   },
   methods: {
     downloadFile () {
-      API_U.test()
+      let storyId = 1
+      axios.get(`api/exportExcel?storyId=${storyId}`, {
+        responseType: 'blob' // 指定返回数据的格式为blob
+      })
+        .then(res => {
+          console.log(res)
+          let linkElement = document.createElement('a')
+          try {
+            // let blob = new Blob([res.data], { type: 'application/x-xls' })
+            let url = window.URL.createObjectURL(res.data)
+            linkElement.setAttribute('href', url)
+            linkElement.setAttribute('download', 'storymap.xlsx')
+            let clickEvent = new MouseEvent('click', {
+              'view': window,
+              'bubbles': true,
+              'cancelable': false
+            })
+            linkElement.dispatchEvent(clickEvent)
+          } catch (ex) {
+            console.log(ex)
+          }
+        })
+        .catch(error => {
+          console.log(error.response)
+        })
     },
     messageCards (words) {
       eventBus.$emit('searchWords', words)
@@ -150,7 +177,8 @@ export default {
       this.dialogFormVisible = false
       console.log('roleName=' + this.addform.roleName)
       console.log('roleDetail=' + this.addform.roleDetail)
-      API.addStoryRole({ 'storyId': this.$route.params.storymapid,
+      API.addStoryRole({
+        'storyId': this.$route.params.storymapid,
         'roleDetail': this.addform.roleDetail,
         'roleName': this.addform.roleName
       }).then(res => {
@@ -174,7 +202,8 @@ export default {
     },
     confirmEdit () {
       this.dialogEditFormVisible = false
-      API.updateStoryRole({ 'storyId': this.$route.params.storymapid,
+      API.updateStoryRole({
+        'storyId': this.$route.params.storymapid,
         'roleId': this.editform.roleId,
         'roleDetail': this.editform.roleDetail,
         'roleName': this.editform.roleName
@@ -195,7 +224,8 @@ export default {
     },
     confirmDelete () {
       this.dialogVisible = false
-      API.deleteStoryRole({ 'storyId': this.$route.params.storymapid,
+      API.deleteStoryRole({
+        'storyId': this.$route.params.storymapid,
         'roleId': this.deleteRoleId
       }).then(res => {
         let status = res.status
@@ -231,6 +261,7 @@ export default {
     color: #f9f9f9;
     margin-left: 10px;
   }
+
   .topbar-wrap .topbar-logo {
     float: left;
     width: 60px;
@@ -263,6 +294,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
   }
+
   .topbar-wrap .operation-buttons {
     float: right;
     padding-right: 12px;

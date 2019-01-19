@@ -13,19 +13,19 @@
         <el-button @click="resetSearch" style="margin-left: 20px;">重置</el-button>
       </div>
     </el-col>
-    <el-col :span="6" v-for="storymap in storymapsOnShow" :key="storymap.id" :offset=1>
+    <el-col :span="6" v-for="storymap in storymaps" :key="storymap.storyId" :offset=1>
       <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
-               @click.native="jumpTo('storymap', storymap.id)">
-        <div style="padding: 10px; height: 100%">
-          <h1>{{ storymap.title }}</h1>
+               @click.native="jumpTo('storymap', storymap.storyId)">
+        <div style="padding: 10px; height: 100%" >
+          <h1>{{ storymap.storyName }}</h1>
           <p>
-            {{ storymap.description }}
+            {{ storymap.storyDescription }}
           </p>
         </div>
       </el-card>
       <div class="operation">
-        <el-button icon="el-icon-delete" circle class="storymap-icon" @click="handleDeleteStoryMap"></el-button>
-        <el-button icon="el-icon-edit" circle class="storymap-icon" @click="handleEditStoryMap(storymap.id)"></el-button>
+        <el-button icon="el-icon-delete" circle class="storymap-icon" @click="handleDeleteStoryMap(storymap.storyId)"></el-button>
+        <el-button icon="el-icon-edit" circle class="storymap-icon" @click="handleEditStoryMap(storymap.storyId)"></el-button>
       </div>
     </el-col>
 
@@ -59,9 +59,11 @@ export default {
       searchInput: '',
       searchSelect: '1',
       storymapEdit: {
-        id: '',
-        title: '',
-        description: ''
+        storyId: '',
+        storyName: '',
+        storyDescription: '',
+        release: 0,
+        userId: ''
       },
       editStoryMapVisible: false
     }
@@ -84,7 +86,8 @@ export default {
             if (status === 200) {
               // this.storymaps = res.data[0].storymaps
               // 测试的时候返回的是数组，运行时改成注释的样子
-              this.storymaps = res.data.storymaps
+              // console.log(res)
+              this.storymaps = res.data
               this.storymapsOnShow = this.storymaps.slice()
             } else {
               this.$message.error('读取数据出错，请刷新页面')
@@ -127,7 +130,7 @@ export default {
     },
 
     deleteStoryMap () {
-      API.deleteStoryMap(this.storymapEdit.id)
+      API.deleteStoryMap(this.storymapEdit)
         .then(res => {
           let status = res.status
           if (status === 200) {
@@ -150,13 +153,14 @@ export default {
         })
     },
 
-    handleDeleteStoryMap () {
+    handleDeleteStoryMap (storymapId) {
+      this.updateStoryMapEdit(storymapId)
       this.$confirm('此操作将永久删除该故事地图, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        API.deleteStoryMap()
+        this.deleteStoryMap()
       }).catch(() => {
 
       })
@@ -171,7 +175,7 @@ export default {
         })
         return
       }
-      API.updateStoryMap(this.storymapEdit.id, this.storymapEdit)
+      API.updateStoryMap(this.storymapEdit)
         .then(res => {
           let status = res.status
           if (status === 200) {
@@ -195,11 +199,17 @@ export default {
 
     handleEditStoryMap (storymapId) {
       this.editStoryMapVisible = true
+      this.updateStoryMapEdit(storymapId)
+    },
+
+    updateStoryMapEdit (storymapId) {
       for (let i = 0; i < this.storymaps.length; i++) {
         if (this.storymaps[i].id === storymapId) {
-          this.storymapEdit.id = this.storymaps[i].id
-          this.storymapEdit.title = this.storymaps[i].title
-          this.storymapEdit.description = this.storymaps[i].description
+          this.storymapEdit.storyId = this.storymaps[i].storyId
+          this.storymapEdit.storyName = this.storymaps[i].storyName
+          this.storymapEdit.storyDescription = this.storymaps[i].storyDescription
+          this.storymapEdit.userId = this.storymaps[i].userId
+          this.storymapEdit.release = this.storymaps[i].release
           break
         }
       }
