@@ -33,18 +33,17 @@ public class CardController {
     }
 
     @PostMapping("/addCard")
-    public void addCard(CardVo cardVo){
-        System.out.println("鼎鼎看这里！ ：" + cardVo.toString());
+    public void addCard(@RequestBody CardVo cardVo){
         cardService.addCard(cardVo);
     }
 
     @PostMapping("/updateCard")
-    public void updateCard(CardVo cardVo){
+    public void updateCard(@RequestBody CardVo cardVo){
         cardService.updateCard(cardVo);
     }
 
     @PostMapping("/deleteCard")
-    public void deleteCard(CardVo cardVo){
+    public void deleteCard(@RequestBody CardVo cardVo){
         cardService.deleteCard(cardVo);
     }
 

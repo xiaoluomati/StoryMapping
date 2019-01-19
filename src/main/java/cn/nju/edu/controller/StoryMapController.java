@@ -4,7 +4,6 @@ import cn.nju.edu.service.StoryMapService;
 import cn.nju.edu.util.ExcelHelper;
 import cn.nju.edu.vo.StoryMapVo;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -34,17 +33,17 @@ public class StoryMapController {
     }
 
     @PostMapping("/addStoryMap")
-    public void addStoryMap(StoryMapVo storyMapVo){
+    public void addStoryMap(@RequestBody StoryMapVo storyMapVo){
         storyMapService.addStoryMap(storyMapVo);
     }
 
     @PostMapping("/updateStoryMap")
-    public void updateStoryMap(StoryMapVo storyMapVo){
+    public void updateStoryMap(@RequestBody StoryMapVo storyMapVo){
         storyMapService.updateStoryMap(storyMapVo);
     }
 
     @PostMapping("/deleteStoryMap")
-    public void deleteStoryMap(StoryMapVo storyMapVo){
+    public void deleteStoryMap(@RequestBody StoryMapVo storyMapVo){
         storyMapService.deleteStoryMap(storyMapVo);
     }
 

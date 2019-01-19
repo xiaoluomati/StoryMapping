@@ -121,7 +121,7 @@ export default {
   },
   methods: {
     downloadFile () {
-      let storyId = 1
+      let storyId = this.$route.params.storymapid
       axios.get(`api/exportExcel?storyId=${storyId}`, {
         responseType: 'blob' // 指定返回数据的格式为blob
       })
