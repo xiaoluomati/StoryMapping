@@ -34,6 +34,7 @@ public class CardController {
 
     @PostMapping("/addCard")
     public void addCard(CardVo cardVo){
+        System.out.println("鼎鼎看这里！ ：" + cardVo.toString());
         cardService.addCard(cardVo);
     }
 
