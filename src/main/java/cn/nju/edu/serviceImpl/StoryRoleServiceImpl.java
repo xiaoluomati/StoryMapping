@@ -18,19 +18,30 @@ public class StoryRoleServiceImpl implements StoryRoleService {
 
     @Override
     @Transactional
-    public List<StoryRoleVo> getStoryRoleList(String storyName, int userId) {
+    public List<StoryRoleVo> getStoryRoleList(int storyId) {
         List<StoryRoleVo> storyRoleVos = new ArrayList<>();
-        List<StoryRole> storyRoles = storyRoleRepository.findByStoryNameAndUserId(storyName, userId);
+        List<StoryRole> storyRoles = storyRoleRepository.findByStoryId(storyId);
         for (StoryRole storyRole : storyRoles) {
             StoryRoleVo storyRoleVo = new StoryRoleVo();
             storyRoleVo.setRoleId(storyRole.getRoleId());
             storyRoleVo.setRoleName(storyRole.getRoleName());
             storyRoleVo.setRoleDetail(storyRole.getRoleDetail());
-            storyRoleVo.setStoryName(storyRole.getStoryName());
-            storyRoleVo.setUserId(storyRole.getUserId());
+            storyRoleVo.setStoryId(storyRole.getStoryId());
             storyRoleVos.add(storyRoleVo);
         }
         return storyRoleVos;
+    }
+
+    @Override
+    @Transactional
+    public StoryRoleVo getRoleByRoleNameAndStoryId(String roleName, int storyId) {
+        StoryRole storyRole = storyRoleRepository.findByRoleNameAndStoryId(roleName, storyId);
+        StoryRoleVo storyRoleVo = new StoryRoleVo();
+        storyRoleVo.setRoleId(storyRole.getRoleId());
+        storyRoleVo.setRoleName(storyRole.getRoleName());
+        storyRoleVo.setRoleDetail(storyRole.getRoleDetail());
+        storyRoleVo.setStoryId(storyRole.getStoryId());
+        return storyRoleVo;
     }
 
     @Override
@@ -39,8 +50,7 @@ public class StoryRoleServiceImpl implements StoryRoleService {
         StoryRole storyRole = new StoryRole();
         storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
-        storyRole.setStoryName(storyRoleVo.getStoryName());
-        storyRole.setUserId(storyRoleVo.getUserId());
+        storyRole.setStoryId(storyRoleVo.getStoryId());
         storyRoleRepository.save(storyRole);
         return true;
     }
@@ -50,10 +60,9 @@ public class StoryRoleServiceImpl implements StoryRoleService {
     public boolean deleteStoryRole(StoryRoleVo storyRoleVo) {
         StoryRole storyRole = new StoryRole();
         storyRole.setRoleId(storyRoleVo.getRoleId());
-        storyRole.setRoleName(storyRoleVo.getRoleName());
-        storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
-        storyRole.setStoryName(storyRoleVo.getStoryName());
-        storyRole.setUserId(storyRoleVo.getUserId());
+//        storyRole.setRoleName(storyRoleVo.getRoleName());
+//        storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
+        storyRole.setStoryId(storyRoleVo.getStoryId());
         storyRoleRepository.delete(storyRole);
         return true;
     }
@@ -65,8 +74,7 @@ public class StoryRoleServiceImpl implements StoryRoleService {
         storyRole.setRoleId(storyRoleVo.getRoleId());
         storyRole.setRoleName(storyRoleVo.getRoleName());
         storyRole.setRoleDetail(storyRoleVo.getRoleDetail());
-        storyRole.setStoryName(storyRoleVo.getStoryName());
-        storyRole.setUserId(storyRoleVo.getUserId());
+        storyRole.setStoryId(storyRoleVo.getStoryId());
         storyRoleRepository.save(storyRole);
         return true;
     }

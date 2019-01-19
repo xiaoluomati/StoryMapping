@@ -60,17 +60,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean addUser(UserVo userVo) {
+    public int addUser(UserVo userVo) {
         User user = new User();
         if (userVo.getName().isEmpty() || userVo.getPassword().isEmpty()) {
-            return false;
+            return 0;
         }
         user.setName(userVo.getName());
         user.setPassword(userVo.getPassword());
         user.setNickname(userVo.getNickname());
         user.setEmail(userVo.getEmail());
         userRepository.save(user);
-        return true;
+        int id = userRepository.findByName(user.getName()).getId();
+        return id;
     }
 
     @Override

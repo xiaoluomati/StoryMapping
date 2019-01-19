@@ -16,21 +16,21 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity login(@RequestBody UserVo userVo) {
-        boolean flag = userService.addUser(userVo);
-        if (flag) {
-            return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<Integer> login(@RequestBody UserVo userVo) {
+        int id  = userService.addUser(userVo);
+        if (id == 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity register(@RequestBody UserLoginVo userLoginVo) {
+    public ResponseEntity<Integer> register(@RequestBody UserLoginVo userLoginVo) {
         int id = userService.getUserByNameAndPassword(userLoginVo);
         if (id == 0) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(id, HttpStatus.OK);
         }
     }
 

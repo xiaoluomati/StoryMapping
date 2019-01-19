@@ -21,9 +21,8 @@ public class StoryRoleController {
     RelationService relationService;
 
     @RequestMapping(value = "/getStoryRoleList", method = RequestMethod.GET)
-    public ResponseEntity<List<StoryRoleVo>> getStoryRoleList(@RequestParam(value = "storyName") String storyName,
-                                                              @RequestParam(value = "userId") int userId) {
-        return new ResponseEntity<>(storyRoleService.getStoryRoleList(storyName, userId), HttpStatus.OK);
+    public ResponseEntity<List<StoryRoleVo>> getStoryRoleList(@RequestParam(value = "storyId") int storyId) {
+        return new ResponseEntity<>(storyRoleService.getStoryRoleList(storyId), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addStoryRole", method = RequestMethod.POST)

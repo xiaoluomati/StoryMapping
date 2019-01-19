@@ -5,6 +5,8 @@ import cn.nju.edu.vo.StoryRoleVo;
 import java.util.List;
 
 public interface StoryRoleService {
+    StoryRoleVo getRoleByRoleNameAndStoryId(String roleName, int storyId);
+
     //添加角色
     boolean addStoryRole(StoryRoleVo storyRoleVo);
 
@@ -15,5 +17,5 @@ public interface StoryRoleService {
     boolean updateStoryRole(StoryRoleVo storyRoleVo);
 
     //获取角色列表
-    List<StoryRoleVo> getStoryRoleList(String storyName, int userId);
+    List<StoryRoleVo> getStoryRoleList(int storyId);
 }
