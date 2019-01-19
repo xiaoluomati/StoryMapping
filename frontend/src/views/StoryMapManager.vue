@@ -59,16 +59,16 @@ export default {
     initStoryMap () {
       let id = tool.getUserId()
       if (id == null) {
-        this.$message.error('请先登录')
+        // this.$message.error('请先登录')
         this.$router.push('/login')
       } else {
         API.getStoryMapList(id)
           .then(res => {
             let status = res.status
             if (status === 200) {
-              this.storymaps = res.data[0].storymaps
+              // this.storymaps = res.data[0].storymaps
               // 测试的时候返回的是数组，运行时改成注释的样子
-              // this.storymaps = res.data.storymaps
+              this.storymaps = res.data.storymaps
             } else {
               this.$message.error('读取数据出错，请刷新页面')
             }

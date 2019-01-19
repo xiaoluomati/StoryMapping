@@ -88,27 +88,29 @@ export default {
       this.loading = true
 
       // for test , 假装 id 是 1
-      localStorage.setItem('access-user', '1')
-      this.jumpTo('/storymap-manager')
+      // localStorage.setItem('access-user', '1')
+      // this.jumpTo('/storymap-manager')
       // for test
 
       this.$refs[formName].validate((valid) => {
         if (valid) {
           API.login(this.login)
             .then(res => {
+              console.log(res.status)
               let status = res.status
               if (status === 200) {
-                localStorage.setItem('access-user', JSON.stringify(res.data.id))
+                localStorage.setItem('access-user', res.data.id)
                 this.jumpTo('/storymap-manager')
-              } else {
-                this.loading = false
-                this.$message.error('账号或密码错误')
-                this.login.password = ''
               }
             })
-            .catch(() => {
+            .catch(error => {
               this.loading = false
-              this.$message.error('网络错误，请重试')
+              if (error.response.status === 400) {
+                this.$message.error('账号或密码错误')
+                this.login.password = ''
+              } else {
+                this.$message.error('网络错误，请重试')
+              }
             })
         } else {
           this.$message.error('请检查输入')
