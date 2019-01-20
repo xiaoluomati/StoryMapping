@@ -56,10 +56,23 @@ public class CardServiceImpl implements CardService {
             if(x < 3){//对activity和task卡片来说是右边的卡片右移一格（全部右边的卡片）
                 if(source.equals("right")){
                     if(temp.getPositionY() >= y){
-                        CardKey key = new CardKey();
-                        key.setPositionX(5);
-                        key.setPositionY(1);
-                        key.setStoryId(1);
+                        if(x == 2){
+                            CardKey key = new CardKey();
+                            key.setPositionX(cardVo.getPositionX());
+                            key.setPositionY(cardVo.getPositionY());
+                            key.setStoryId(cardVo.getStoryId());
+                            boolean flag1 = cardRepository.existsById(key);
+
+                            CardKey key1 = new CardKey();
+                            key1.setPositionX(cardVo.getPositionX() - 1);
+                            key1.setPositionY(cardVo.getPositionY());
+                            key1.setStoryId(cardVo.getStoryId());
+                            boolean flag2 = cardRepository.existsById(key1);
+
+                            if(flag1 == false && flag2 == false){
+                                break;
+                            }
+                        }
 
                         Card card1 = new Card();
                         card1.setTitle(temp.getTitle());
