@@ -58,7 +58,7 @@ export default {
             this.$message.error('网络波动，请稍后重试')
           })
       }
-    },
+    }
 
     // submitAndOpen () {
     //   submitForm()
