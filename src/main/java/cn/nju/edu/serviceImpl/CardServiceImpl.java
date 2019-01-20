@@ -7,7 +7,6 @@ import cn.nju.edu.repository.CardRepository;
 import cn.nju.edu.service.CardService;
 import cn.nju.edu.vo.CardVo;
 import cn.nju.edu.entity.Card;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -123,11 +122,11 @@ public class CardServiceImpl implements CardService {
 
         for(Card temp : toDelete){
             System.out.println("deleting: " + temp.toString());
-            cardRepository.deleteByCardId(temp.getCardId());
-//            cardRepository.delete(temp);
+            cardRepository.delete(temp);
+            cardRepository.flush();
         }for(Card temp : toSave){
             System.out.println("saving: " + temp.toString());
-            cardRepository.save(temp);
+            cardRepository.saveAndFlush(temp);
         }
 //        cardRepository.deleteAll(toUpdate);
 //        cardRepository.saveAll(toUpdate);
@@ -141,7 +140,7 @@ public class CardServiceImpl implements CardService {
         card.setPositionY(y);
         card.setStoryId(id);
         System.out.println("--------------------- " + card.toString());
-        cardRepository.save(card);
+        cardRepository.saveAndFlush(card);
         return true;
     }
 
