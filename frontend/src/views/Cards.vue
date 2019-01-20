@@ -375,12 +375,12 @@ export default {
     margin: 0 0 0 3px !important;
   }
   .card-activity {
-    background: purple;
+    background: #AED9E9;
   }
   .card-task {
-    background: yellowgreen;
+    background: #F4E459;
   }
   .card-story {
-    background: deepskyblue;
+    background: #C2EE87;
   }
 </style>

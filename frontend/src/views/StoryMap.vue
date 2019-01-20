@@ -27,4 +27,9 @@ export default {
   .el-header {
     padding: 0;
   }
+
+  .el-container {
+    height: 100%;
+    background: #EFEFEF;
+  }
 </style>
