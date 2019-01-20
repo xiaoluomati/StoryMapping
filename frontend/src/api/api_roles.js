@@ -23,7 +23,7 @@ export default {
   },
 
   deleteStoryRole: role => {
-    return API.DELETE(`storyRoles/deleteStoryRole`, { 'roleId': role.roleId, 'storyId': role.storyId })
+    return API.DELETE(`storyRoles/deleteStoryRole`, { 'roleId': role.roleId, 'storyId': role.storyId, 'roleName': '', 'roleDetail': '' })
   },
 
   updateStoryRole: role => {
