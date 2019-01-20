@@ -83,6 +83,7 @@ export default {
     },
 
     deleteStoryMap () {
+      console.log(this.storymapEdit)
       API.deleteStoryMap(this.storymapEdit)
         .then(res => {
           let status = res.status
@@ -91,6 +92,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             })
+           this.initStoryMap()
           } else {
             this.$message({
               type: 'warning',

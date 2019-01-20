@@ -63,5 +63,5 @@ yarn-error.log*
 *.sln
 *.sw*
 
-.xlsx
-.xls
+*.xlsx
+*.xls

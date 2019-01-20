@@ -23,7 +23,7 @@ export default {
     return API.GET(`getStoryMapList`, { 'userId': userid })
   },
 
-  deleteStoryMap: (storyid, params) => {
+  deleteStoryMap: params => {
     return API.POST('deleteStoryMap', params)
   },
 
