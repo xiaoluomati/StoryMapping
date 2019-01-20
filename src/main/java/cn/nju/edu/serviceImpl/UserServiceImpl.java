@@ -83,8 +83,8 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         user.setId(id);
-        user.setName(userRepository.findById(id).get().getName());
-        user.setPassword(userRepository.findById(id).get().getPassword());
+        user.setName(userRepository.findById(id).orElse(new User()).getName());
+        user.setPassword(userRepository.findById(id).orElse(new User()).getPassword());
         user.setNickname(userVo.getNickname());
         user.setEmail(userVo.getEmail());
         userRepository.save(user);
@@ -96,12 +96,12 @@ public class UserServiceImpl implements UserService {
     public boolean updatePassword(UserPswdVo userPswdVo) {
         User user = new User();
         int id = userPswdVo.getId();
-        String password = userRepository.findById(id).get().getPassword();
+        String password = userRepository.findById(id).orElse(new User()).getPassword();
         if (password.equals(userPswdVo.getOldPassword())) {
             user.setId(id);
-            user.setName(userRepository.findById(id).get().getName());
-            user.setNickname(userRepository.findById(id).get().getNickname());
-            user.setEmail(userRepository.findById(id).get().getEmail());
+            user.setName(userRepository.findById(id).orElse(new User()).getName());
+            user.setNickname(userRepository.findById(id).orElse(new User()).getNickname());
+            user.setEmail(userRepository.findById(id).orElse(new User()).getEmail());
             user.setPassword(userPswdVo.getNewPassword());
             userRepository.save(user);
             return true;
