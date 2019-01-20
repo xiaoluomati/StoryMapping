@@ -21,6 +21,6 @@ export default {
 
   updateCard: card => {
     return API.PUT(`updateCard`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
-      'cost': card.cost, 'positionX': card.positionX,'positionY': card.positionY})
+      'cost': card.cost, 'positionX': card.positionX,'positionY': card.positionY, 'cardId': card.cardId})
   }
 }

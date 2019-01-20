@@ -211,11 +211,11 @@ export default {
         let status = res.status
         if (status === 200) {
           this.$message.success('更新角色成功')
+          this.initStoryMapRoles()
         } else {
           this.$message.error('更新角色失败')
         }
       })
-      this.initStoryMapRoles()
       console.log(this.editform.roleId)
     },
     deleteRole (roleId) {
@@ -231,11 +231,11 @@ export default {
         let status = res.status
         if (status === 200) {
           this.$message.success('删除角色成功')
+          this.initStoryMapRoles()
         } else {
           this.$message.error('删除角色失败')
         }
       })
-      this.initStoryMapRoles()
     }
   },
   mounted () {

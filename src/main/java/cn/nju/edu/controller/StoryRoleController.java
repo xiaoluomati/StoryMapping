@@ -34,7 +34,7 @@ public class StoryRoleController {
     }
 
     @RequestMapping(value = "/deleteStoryRole", method = RequestMethod.DELETE)
-    public ResponseEntity deleteStoryRole(@RequestBody StoryRoleVo storyRoleVo) {
+    public ResponseEntity deleteStoryRole(StoryRoleVo storyRoleVo) {
         if (storyRoleService.deleteStoryRole(storyRoleVo)) {
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -63,7 +63,7 @@ public class StoryRoleController {
     }
 
     @RequestMapping(value = "/deleteRelation", method = RequestMethod.DELETE)
-    public ResponseEntity deleteRelation(@RequestBody RelationVo relationVo) {
+    public ResponseEntity deleteRelation(RelationVo relationVo) {
         if (relationService.deleteRelation(relationVo)) {
             return new ResponseEntity(HttpStatus.OK);
         }
