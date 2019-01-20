@@ -10,17 +10,17 @@ export default {
     return API.GET(`getCardList`, { 'storyId' : storyid })
   },
 
-  addCard: card => {
-    return API.POST(`addCard`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
+  addCard: (from, card) => {
+    return API.POST(`addCard/${from}`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
                                     'cost': card.cost, 'positionX': card.positionX,'positionY': card.positionY})
   },
 
   deleteCard: card => {
-    return API.DELETE('deleteCard', {'positionX': card.positionX,'positionY': card.positionY, 'storyId': card.storyId})
+    return API.POST('deleteCard', {'positionX': card.positionX,'positionY': card.positionY, 'storyId': card.storyId})
   },
 
   updateCard: card => {
-    return API.PUT(`updateCard`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
+    return API.POST(`updateCard`, { 'storyId': card.storyId, 'title': card.title, 'content': card.content, 'state': card.state,
       'cost': card.cost, 'positionX': card.positionX,'positionY': card.positionY, 'cardId': card.cardId})
   }
 }

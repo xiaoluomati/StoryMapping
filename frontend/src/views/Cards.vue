@@ -91,6 +91,7 @@ import { eventBus } from '../main'
 export default {
   data () {
     return {
+      fromWhere: '',
       dialogRoleVisible: false,
       srcAddedRoleIds: [],
       addedRoleIds: [],
@@ -231,6 +232,7 @@ export default {
     },
     addChildCard (x, y) {
       this.dialogFormVisible = true
+      this.fromWhere = 'down'
       this.addform.x = x + 1
       this.addform.y = y
       console.log('x=' + this.addform.x)
@@ -238,6 +240,7 @@ export default {
     },
     addCard (x, y) {
       this.dialogFormVisible = true
+      this.fromWhere = 'right'
       if (x === 1 && y === 1 && this.getCard(1, 1) === null) {
         this.addform.x = x
         this.addform.y = y
@@ -254,7 +257,8 @@ export default {
     },
     confirmAdd () {
       this.dialogFormVisible = false
-      API.addCard({ 'storyId': this.$route.params.storymapid,
+      API.addCard( this.fromWhere ,
+        { 'storyId': this.$route.params.storymapid,
         'title': this.addform.name,
         'content': this.addform.descr,
         'state': 'DOING',
