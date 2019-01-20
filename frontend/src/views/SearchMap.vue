@@ -13,7 +13,7 @@
         <el-button @click="resetSearch" style="margin-left: 20px;">重置</el-button>
       </div>
     </el-col>
-    <el-col :span="6" v-for="storymap in storymaps" :key="storymap.storyId" :offset=1>
+    <el-col :span="6" v-for="storymap in storymapsOnShow" :key="storymap.storyId" :offset=1>
       <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
                @click.native="jumpTo('storymap', storymap.storyId)">
         <div style="padding: 10px; height: 100%" >
@@ -104,22 +104,23 @@ export default {
         this.storymapsOnShow = this.storymaps.slice()
         return
       }
-
+      console.log(this.searchInput)
       let result = []
       let maps = this.storymaps.slice()
       if (this.searchSelect === '1') {
         for (let i = 0; i < maps.length; i++) {
-          if (maps[i].title.indexOf(this.searchInput) > -1) {
+          if (maps[i].storyName.indexOf(this.searchInput) > -1) {
             result.push(maps[i])
           }
         }
       } else if (this.searchSelect === '2') {
         for (let i = 0; i < maps.length; i++) {
-          if (maps[i].description.indexOf(this.searchInput) > -1) {
+          if (maps[i].storyDescription.indexOf(this.searchInput) > -1) {
             result.push(maps[i])
           }
         }
       }
+      console.log(result)
       this.storymapsOnShow = result
     },
 
@@ -167,8 +168,8 @@ export default {
     },
 
     updateStoryMap () {
-      if (this.storymapEdit.title.trim().length === 0 ||
-        this.storymapEdit.title.description().length === 0) {
+      if (this.storymapEdit.storyName.trim().length === 0 ||
+        this.storymapEdit.storyDescription.trim().length === 0) {
         this.$message({
           type: 'warning',
           message: '内容不得为空'
@@ -204,7 +205,7 @@ export default {
 
     updateStoryMapEdit (storymapId) {
       for (let i = 0; i < this.storymaps.length; i++) {
-        if (this.storymaps[i].id === storymapId) {
+        if (this.storymaps[i].storyId === storymapId) {
           this.storymapEdit.storyId = this.storymaps[i].storyId
           this.storymapEdit.storyName = this.storymaps[i].storyName
           this.storymapEdit.storyDescription = this.storymaps[i].storyDescription

@@ -29,7 +29,7 @@ public class CardRepositoryTest {
 
         Card card = cardRepository.findById(id).get();
         Assert.assertNotNull(card);
-        Assert.assertEquals(card.getContent(),"awayz is a rbq");
+        Assert.assertEquals(card.getContent(),"团长好！");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CardRepositoryTest {
         Card card = cardRepository.findByCardId(1);
 
         Assert.assertNotNull(card);
-        Assert.assertEquals(card.getContent(),"awayz is a rbq");
+        Assert.assertEquals(card.getContent(),"团长好！");
     }
 
     @Test

@@ -8,7 +8,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="success" @click.native="submitForm">保存</el-button>
-      <el-button type="primary" @click.native="submitAndOpen">保存并打开</el-button>
+      <!--<el-button type="primary" @click.native="submitAndOpen">保存并打开</el-button>-->
     </el-form-item>
   </el-form>
 </template>
@@ -59,6 +59,11 @@ export default {
           })
       }
     }
+
+    // submitAndOpen () {
+    //   submitForm()
+    //   this.$router.push()
+    // }
   }
 }
 </script>

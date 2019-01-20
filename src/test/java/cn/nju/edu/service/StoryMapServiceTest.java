@@ -42,7 +42,7 @@ public class StoryMapServiceTest {
                         storyId
                 },
                 new Object[]{
-                        "its a rbq",
+                        "团长",
                         1
                 }
         );

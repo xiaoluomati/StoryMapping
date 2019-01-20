@@ -57,7 +57,7 @@ public class CardServiceTest {
                 },
                 new Object[]{
                         "awayz",
-                        "awayz is a rbq",
+                        "团长好！",
                         CardState.DOING,
                         CardType.USER_STORY,
                         1,
@@ -185,7 +185,7 @@ public class CardServiceTest {
                         "eee",
                         "ooxxxxoo",
                         "xxooooxx",
-                        "awayz is a rbq",
+                        "团长好！",
                 }
         );
     }

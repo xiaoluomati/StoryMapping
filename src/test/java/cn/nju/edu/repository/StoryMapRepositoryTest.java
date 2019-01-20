@@ -37,7 +37,7 @@ public class StoryMapRepositoryTest {
         StoryMap storyMap = storyMapRepository.findByStoryId(1);
 
         Assert.assertNotNull(storyMap);
-        Assert.assertEquals(storyMap.getStoryDescription(),"its a rbq");
+        Assert.assertEquals(storyMap.getStoryDescription(),"团长");
     }
 
     @Test
