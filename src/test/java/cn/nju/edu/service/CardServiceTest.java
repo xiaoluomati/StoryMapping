@@ -78,7 +78,7 @@ public class CardServiceTest {
         cardVo.setStoryId(1);
         cardVo.setType(CardType.USER_STORY);
 
-        cardService.addCard(cardVo);
+        cardService.addCard("down",cardVo);
 
         CardVo cardVo1 = new CardVo();
         cardVo1.setContent("xiaoluomati");
@@ -89,7 +89,7 @@ public class CardServiceTest {
         cardVo1.setStoryId(1);
         cardVo1.setType(CardType.USER_STORY);
 
-        cardService.addCard(cardVo1);
+        cardService.addCard("down",cardVo1);
 
         List<CardVo> cardVos = cardService.getCardList(1);
         String content = "";
@@ -136,7 +136,7 @@ public class CardServiceTest {
         cardVo.setStoryId(1);
         cardVo.setType(CardType.USER_STORY);
 
-        cardService.addCard(cardVo);
+        cardService.addCard("right",cardVo);
 
         List<CardVo> cardVos = cardService.getCardList(1);
         String content1 = "";
