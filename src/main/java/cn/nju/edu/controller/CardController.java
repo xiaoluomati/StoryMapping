@@ -32,9 +32,9 @@ public class CardController {
         return new AllCard(mapLong,mapWide,cardVos);
     }
 
-    @PostMapping("/addCard")
-    public void addCard(@RequestBody CardVo cardVo){
-        cardService.addCard(cardVo);
+    @PostMapping("/addCard/{source}")
+    public void addCard(@PathVariable("source") String source,@RequestBody CardVo cardVo){
+        cardService.addCard(source,cardVo);
     }
 
     @PostMapping("/updateCard")

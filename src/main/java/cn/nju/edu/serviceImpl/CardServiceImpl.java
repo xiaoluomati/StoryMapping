@@ -1,5 +1,6 @@
 package cn.nju.edu.serviceImpl;
 
+import cn.nju.edu.entity.CardKey;
 import cn.nju.edu.enumeration.CardState;
 import cn.nju.edu.enumeration.CardType;
 import cn.nju.edu.repository.CardRepository;
@@ -45,7 +46,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public boolean addCard(CardVo cardVo) {
+    public boolean addCard(String source,CardVo cardVo) {
         int x = cardVo.getPositionX();
         int y = cardVo.getPositionY();
         int id = cardVo.getStoryId();
@@ -54,29 +55,36 @@ public class CardServiceImpl implements CardService {
         List<Card> toSave = new ArrayList<>();
         for(CardVo temp : cardVos){
             if(x < 3){//对activity和task卡片来说是右边的卡片右移一格（全部右边的卡片）
-                if(temp.getPositionY() >= y){
-                    Card card1 = new Card();
-                    card1.setTitle(temp.getTitle());
-                    card1.setContent(temp.getContent());
-                    card1.setState(temp.getState().ordinal());
-                    card1.setCost(temp.getCost());
-                    card1.setPositionX(temp.getPositionX());
-                    card1.setPositionY(temp.getPositionY() + 1);
-                    card1.setStoryId(temp.getStoryId());
-                    card1.setCardId(temp.getCardId());
-                    System.out.println("--------------------- " + card1.toString());
-                    toSave.add(card1);
+                if(source.equals("right")){
+                    if(temp.getPositionY() >= y){
+                        CardKey key = new CardKey();
+                        key.setPositionX(5);
+                        key.setPositionY(1);
+                        key.setStoryId(1);
 
-                    Card card3 = new Card();
-                    card3.setTitle(temp.getTitle());
-                    card3.setContent(temp.getContent());
-                    card3.setState(temp.getState().ordinal());
-                    card3.setCost(temp.getCost());
-                    card3.setPositionX(temp.getPositionX());
-                    card3.setPositionY(temp.getPositionY());
-                    card3.setStoryId(temp.getStoryId());
-                    card3.setCardId(temp.getCardId());
-                    toDelete.add(card3);
+                        Card card1 = new Card();
+                        card1.setTitle(temp.getTitle());
+                        card1.setContent(temp.getContent());
+                        card1.setState(temp.getState().ordinal());
+                        card1.setCost(temp.getCost());
+                        card1.setPositionX(temp.getPositionX());
+                        card1.setPositionY(temp.getPositionY() + 1);
+                        card1.setStoryId(temp.getStoryId());
+                        card1.setCardId(temp.getCardId());
+                        System.out.println("--------------------- " + card1.toString());
+                        toSave.add(card1);
+
+                        Card card3 = new Card();
+                        card3.setTitle(temp.getTitle());
+                        card3.setContent(temp.getContent());
+                        card3.setState(temp.getState().ordinal());
+                        card3.setCost(temp.getCost());
+                        card3.setPositionX(temp.getPositionX());
+                        card3.setPositionY(temp.getPositionY());
+                        card3.setStoryId(temp.getStoryId());
+                        card3.setCardId(temp.getCardId());
+                        toDelete.add(card3);
+                    }
                 }
             }
             else {//对story卡片来说是下面的卡片下移一格（仅有此列的卡片）
@@ -114,10 +122,11 @@ public class CardServiceImpl implements CardService {
         }
 
         for(Card temp : toDelete){
-            System.out.println(temp.toString());
-            cardRepository.delete(temp);
+            System.out.println("deleting: " + temp.toString());
+            cardRepository.deleteByCardId(temp.getCardId());
+//            cardRepository.delete(temp);
         }for(Card temp : toSave){
-            System.out.println(temp.toString());
+            System.out.println("saving: " + temp.toString());
             cardRepository.save(temp);
         }
 //        cardRepository.deleteAll(toUpdate);

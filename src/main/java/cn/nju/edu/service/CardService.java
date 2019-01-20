@@ -7,7 +7,7 @@ import java.util.List;
 public interface CardService {
     List<CardVo> getCardList(int storyId);
 
-    boolean addCard(CardVo cardVo);
+    boolean addCard(String source,CardVo cardVo);
 
     boolean updateCard(CardVo cardVo);
 
