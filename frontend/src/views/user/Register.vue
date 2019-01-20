@@ -126,14 +126,14 @@ export default {
         .then(res => {
           let status = res.status
           if (status === 200) {
-            localStorage.setItem('access-user', JSON.stringify(this.register))
+            localStorage.setItem('access-user', res.data)
             this.jumpTo('/storymap-manager')
           }
         })
         .catch(error => {
           this.loading = false
           if (error.response.status === 400) {
-              this.$message.error('该账号已存在')
+            this.$message.error('该账号已存在')
           } else {
             this.$message.error('网络错误，请重试')
           }

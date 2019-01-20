@@ -137,7 +137,6 @@ export default {
       changepwdFormLabelWidth: '60px',
       changepwdFormWidth: '500px',
       pwdForm: {
-        id: '',
         old: '',
         new1: '',
         new2: ''
@@ -227,8 +226,7 @@ export default {
     },
 
     changePwd () {
-      this.pwdForm.id = this.account.id
-      let pwd = { id: '', old: '', new1: '' }
+      let pwd = { id: this.account.id, oldPassword: this.pwdForm.old, newPassword: this.pwdForm.new1 }
       API.updatePassword(this.account.id, pwd)
         .then(res => {
           let status = res.status

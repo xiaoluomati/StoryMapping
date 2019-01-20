@@ -3,7 +3,7 @@
     <el-col :span="6" v-for="storymap in storymaps" :key="storymap.storyId" :offset=1>
       <el-card :body-style="{ padding: '0px' }" class="storymap" shadow="never"
                @click.native="jumpTo('storymap', storymap.storyId)">
-        <div style="padding: 10px; height: 100%" >
+        <div style="padding: 10px; height: 100%">
           <h1>{{ storymap.storyName }}</h1>
           <p>
             {{ storymap.storyDescription }}
@@ -11,8 +11,10 @@
         </div>
       </el-card>
       <div class="operation">
-        <el-button icon="el-icon-delete" circle class="storymap-icon" @click="handleDeleteStoryMap(storymap.storyId)"></el-button>
-        <el-button icon="el-icon-edit" circle class="storymap-icon" @click="handleEditStoryMap(storymap.storyId)"></el-button>
+        <el-button icon="el-icon-delete" circle class="storymap-icon"
+                   @click="handleDeleteStoryMap(storymap.storyId)"></el-button>
+        <el-button icon="el-icon-edit" circle class="storymap-icon"
+                   @click="handleEditStoryMap(storymap.storyId)"></el-button>
       </div>
     </el-col>
 
@@ -83,7 +85,7 @@ export default {
     },
 
     deleteStoryMap () {
-      console.log(this.storymapEdit)
+      // console.log(this.storymapEdit)
       API.deleteStoryMap(this.storymapEdit)
         .then(res => {
           let status = res.status
@@ -92,7 +94,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             })
-           this.initStoryMap()
+            this.initStoryMap()
           } else {
             this.$message({
               type: 'warning',
@@ -122,8 +124,8 @@ export default {
     },
 
     updateStoryMap () {
-      if (this.storymapEdit.title.trim().length === 0 ||
-        this.storymapEdit.title.description().length === 0) {
+      if (this.storymapEdit.storyName.trim().length === 0 ||
+        this.storymapEdit.storyDescription.trim().length === 0) {
         this.$message({
           type: 'warning',
           message: '内容不得为空'
@@ -159,7 +161,7 @@ export default {
 
     updateStoryMapEdit (storymapId) {
       for (let i = 0; i < this.storymaps.length; i++) {
-        if (this.storymaps[i].id === storymapId) {
+        if (this.storymaps[i].storyId === storymapId) {
           this.storymapEdit.storyId = this.storymaps[i].storyId
           this.storymapEdit.storyName = this.storymaps[i].storyName
           this.storymapEdit.storyDescription = this.storymaps[i].storyDescription

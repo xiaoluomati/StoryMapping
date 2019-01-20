@@ -204,7 +204,7 @@ export default {
 
     updateStoryMapEdit (storymapId) {
       for (let i = 0; i < this.storymaps.length; i++) {
-        if (this.storymaps[i].id === storymapId) {
+        if (this.storymaps[i].storymapId === storymapId) {
           this.storymapEdit.storyId = this.storymaps[i].storyId
           this.storymapEdit.storyName = this.storymaps[i].storyName
           this.storymapEdit.storyDescription = this.storymaps[i].storyDescription
