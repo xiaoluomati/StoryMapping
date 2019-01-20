@@ -34,7 +34,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserVo> getUser(@PathVariable("id") int userId) {
         UserVo userVo = userService.getUserById(userId);
         if (userVo.getId() == 0) {
