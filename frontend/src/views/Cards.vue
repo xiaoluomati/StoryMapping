@@ -244,13 +244,16 @@ export default {
       if (x === 1 && y === 1 && this.getCard(1, 1) === null) {
         this.addform.x = x
         this.addform.y = y
-      } else {
+      } else if (x === 1) {
         let i = y + 1
         while (i <= this.map_width && this.getCard(x, i) === null) {
           i++
         }
         this.addform.x = x
         this.addform.y = i
+      } else if (x === 2) {
+        this.addform.x = x
+        this.addform.y = y + 1
       }
       console.log('x=' + this.addform.x)
       console.log('y=' + this.addform.y)
