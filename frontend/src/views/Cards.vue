@@ -350,10 +350,11 @@ export default {
   },
   mounted () {
     this.initStoryMap()
-  },
-  created () {
     eventBus.$on('searchWords', (message) => {
       this.searchWord = message
+    })
+    eventBus.$on('updateRole', (message) => {
+      this.initStoryMap()
     })
   }
 }
