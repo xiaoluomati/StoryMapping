@@ -246,7 +246,7 @@ export default {
         this.addform.y = y
       } else {
         let i = y + 1
-        while (i < this.map_width && this.getCard(x, i) === null) {
+        while (i <= this.map_width && this.getCard(x, i) === null) {
           i++
         }
         this.addform.x = x
@@ -293,11 +293,11 @@ export default {
         let status = res.status
         if (status === 200) {
           this.$message.success('删除卡片成功')
+          this.initStoryMap()
         } else {
           this.$message.error('删除卡片失败')
         }
       })
-      this.initStoryMap()
       this.deleteCardLoc.x = ''
       this.deleteCardLoc.y = ''
     },
@@ -325,11 +325,11 @@ export default {
         let status = res.status
         if (status === 200) {
           this.$message.success('修改卡片成功')
+          this.initStoryMap()
         } else {
           this.$message.error('修改卡片失败')
         }
       })
-      this.initStoryMap()
       console.log(this.editform.x)
     }
   },
@@ -365,7 +365,7 @@ export default {
     margin: 10px;
   }
   .highlightcard {
-    -webkit-box-shadow: 0 0 5px rgba(0,113,241,1)
+    -webkit-box-shadow: 0 0px 15px rgb(30, 30, 30)
   }
   .operation-btns {
     margin: -45px 20px 0 0;
