@@ -32,10 +32,10 @@
     <el-dialog title="用户故事地图编辑" :visible.sync="editStoryMapVisible" width="30%">
       <el-form :label-position="'top'" label-width="100px" :model="storymapEdit">
         <el-form-item label="地图名称">
-          <el-input v-model="storymapEdit.title"></el-input>
+          <el-input v-model="storymapEdit.storyName"></el-input>
         </el-form-item>
         <el-form-item label="地图描述">
-          <el-input type="textarea" v-model="storymapEdit.description"></el-input>
+          <el-input type="textarea" v-model="storymapEdit.storyDescription"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button @click.native="editStoryMapVisible = false">取消</el-button>
@@ -139,6 +139,7 @@ export default {
               type: 'success',
               message: '删除成功!'
             })
+            this.initStoryMap()
           } else {
             this.$message({
               type: 'warning',
