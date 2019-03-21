@@ -1,7 +1,7 @@
 module.exports = {
-  baseUrl: process.env.NODE_ENV === 'production'
-    ? '//your_url'
-    : '/',
+  baseUrl: process.env.NODE_ENV === 'production' ?
+    '//your_url' :
+    '/',
 
   outputDir: 'dist',
 
@@ -45,8 +45,7 @@ module.exports = {
   // corsUseCredentials: false,
   // webpack 配置，键值对象时会合并配置，为方法时会改写配置
   // https://cli.vuejs.org/guide/webpack.html#simple-configuration
-  configureWebpack: (config) => {
-  },
+  configureWebpack: (config) => {},
 
   // webpack 链接 API，用于生成和修改 webapck 配置
   // https://github.com/mozilla-neutrino/webpack-chain
@@ -93,7 +92,7 @@ module.exports = {
   devServer: {
     open: true,
 
-    host: '127.0.0.1',
+    host: '172.19.240.12',
 
     port: 3000,
 
@@ -118,24 +117,23 @@ module.exports = {
       //   }
       // },
       '/api': {
-        // target: 'http://172.19.240.12:9999/',  // 通过本地服务器将你的请求转发到这个地址
-        target: 'http://localhost:9999/',  // 通过本地服务器将你的请求转发到这个地址
-        changeOrigin: true,  // 设置这个参数可以避免跨域
+        target: 'http://172.19.240.12:9999/', // 通过本地服务器将你的请求转发到这个地址
+        // target: 'http://localhost:9999/',  // 通过本地服务器将你的请求转发到这个地址
+        changeOrigin: true, // 设置这个参数可以避免跨域
         pathRewrite: {
           '/api': '/'
         }
       },
     },
 
-    before: app => {
-      }
-    },
-    // 构建时开启多进程处理 babel 编译
-    parallel: require('os').cpus().length > 1,
+    before: app => {}
+  },
+  // 构建时开启多进程处理 babel 编译
+  parallel: require('os').cpus().length > 1,
 
-    // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-    pwa: {},
+  // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
+  pwa: {},
 
-    // 第三方插件配置
-    pluginOptions: {}
-  };
+  // 第三方插件配置
+  pluginOptions: {}
+};
