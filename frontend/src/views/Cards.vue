@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="root">
+    <div id="pic" ref="pic">
     <div style="text-align:left">
       <el-button icon="el-icon-plus" @click="addCard(1, 1)" v-if="cards.length === 0" circle></el-button>
     </div>
@@ -25,6 +26,7 @@
           <div class="text item"></div>
         </el-card>
       </div>
+    </div>
     </div>
     <!--<el-button icon="el-icon-delete" @click="test()" size="mini" circle></el-button>-->
     <!--<div style="width: 200px" id="test">-->
@@ -88,6 +90,8 @@
 import API from '@/api/api_cards'
 import API_R from '@/api/api_roles'
 import { eventBus } from '../main'
+import html2canvas from 'html2canvas'
+
 export default {
   data () {
     return {
@@ -118,7 +122,7 @@ export default {
         x: '',
         y: '',
         name: '',
-        descr: '',
+        descr: ''
         // cardstate: ''
       },
       formLabelWidth: '120px',
@@ -132,6 +136,21 @@ export default {
     }
   },
   methods: {
+    getImage () {
+      setTimeout(function () {
+        html2canvas(document.getElementById('pic'), {
+        }).then((canvas) => {
+          let dataURL = canvas.toDataURL('image/png')
+          this.dataURL = dataURL
+          console.log(dataURL)
+          let a = document.createElement('a')
+          let event = new MouseEvent('click')
+          a.download = name || 'photo'
+          a.href = dataURL
+          a.dispatchEvent(event)
+        })
+      }, 1000)
+    },
     initCardRoles (x, y) {
       let card = this.getCard(x, y)
       this.allRoles = []
@@ -169,10 +188,10 @@ export default {
       return null
     },
     editCardRoles () {
-      console.log("srcAddedRoleIds:" + this.srcAddedRoleIds)
+      console.log('srcAddedRoleIds:' + this.srcAddedRoleIds)
       for (let item in this.srcAddedRoleIds) {
         let deletedId = this.srcAddedRoleIds[item]
-        console.log("deletedId:" + deletedId)
+        console.log('deletedId:' + deletedId)
         console.log(this.addedRoleIds.indexOf(deletedId))
         if (this.addedRoleIds.indexOf(deletedId) === -1) {
           let relationId = ''
@@ -180,9 +199,9 @@ export default {
             if (parseInt(this.currentCardRelations[j].roleId) === parseInt(deletedId)) {
               relationId = this.currentCardRelations[j].relationId
             }
-            console.log("currentCardRelations:" + this.currentCardRelations[j].roleId)
+            console.log('currentCardRelations:' + this.currentCardRelations[j].roleId)
           }
-          console.log("relationId:" + relationId)
+          console.log('relationId:' + relationId)
           if (relationId !== '') {
             API_R.deleteRelation(relationId)
           }
@@ -260,15 +279,15 @@ export default {
     },
     confirmAdd () {
       this.dialogFormVisible = false
-      API.addCard( this.fromWhere ,
+      API.addCard(this.fromWhere,
         { 'storyId': this.$route.params.storymapid,
-        'title': this.addform.name,
-        'content': this.addform.descr,
-        'state': 'DOING',
-        'cost': 0,
-        'positionX': this.addform.x,
-        'positionY': this.addform.y
-      }).then(res => {
+          'title': this.addform.name,
+          'content': this.addform.descr,
+          'state': 'DOING',
+          'cost': 0,
+          'positionX': this.addform.x,
+          'positionY': this.addform.y
+        }).then(res => {
         let status = res.status
         if (status === 200) {
           this.$message.success('添加卡片成功')
@@ -358,6 +377,9 @@ export default {
     })
     eventBus.$on('updateRole', (message) => {
       this.initStoryMap()
+    })
+    eventBus.$on('getImage', (message) => {
+      this.getImage()
     })
   }
 }

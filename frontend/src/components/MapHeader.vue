@@ -1,5 +1,6 @@
 <template>
   <el-row>
+
     <el-col :span="24" class="topbar-wrap">
       <div class="topbar-logo topbar-btn">
         <!--<a href="/"><img src="../assets/logo.png" style="padding-left:8px;"></a>-->
@@ -43,9 +44,9 @@
         <el-popover placement="bottom" trigger="click">
           <el-radio-group v-model="radio">
             <el-radio label="excel">导出为XLSX格式</el-radio>
-            <el-radio label="png" disabled>导出为PNG格式</el-radio>
+            <el-radio label="png">导出为PNG格式</el-radio>
           </el-radio-group>
-          <el-button style="margin-left: 30px" type="primary" @click="downloadFile()">下载</el-button>
+          <el-button style="margin-left: 30px" type="primary" @click="exportAsFile()">下载</el-button>
           <el-button slot="reference" icon="el-icon-download" circle></el-button>
         </el-popover>
         <el-button icon="el-icon-back" circle></el-button>
@@ -120,6 +121,13 @@ export default {
     }
   },
   methods: {
+    exportAsFile () {
+      if (this.radio === 'excel') {
+        this.downloadFile()
+      } else {
+        eventBus.$emit('getImage', '')
+      }
+    },
     downloadFile () {
       let storyId = this.$route.params.storymapid
       axios.get(`api/exportExcel?storyId=${storyId}`, {
