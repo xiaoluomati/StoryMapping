@@ -96,7 +96,7 @@ export default {
         if (valid) {
           API.login(this.login)
             .then(res => {
-              console.log(res.status)
+              // console.log(res.status)
               let status = res.status
               if (status === 200) {
                 console.log(res.data)

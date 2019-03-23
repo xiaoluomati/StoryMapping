@@ -220,7 +220,7 @@ export default {
           }
         })
         .catch(() => {
-          this.$message.error('获取用户信息失败，请重试')
+          // this.$message.error('获取用户信息失败，请重试')
         })
       this.loading = false
     },

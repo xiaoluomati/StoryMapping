@@ -92,7 +92,8 @@ module.exports = {
   devServer: {
     open: true,
 
-    host: '172.19.240.12',
+    // host: '172.19.240.12',
+    host: 'localhost',
 
     port: 3000,
 
