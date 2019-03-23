@@ -244,6 +244,12 @@ public class CardServiceTest {
 
         List<CardVo> cardVos = cardService.getCardList(1);
 
+        System.out.println("------------------------");
+
+        for(CardVo temp:cardVos){
+            System.out.println(temp.toString());
+        }
+
         boolean isDeleted1 = true;
         boolean isDeleted2 = true;
         boolean isDeleted3 = true;
@@ -251,13 +257,15 @@ public class CardServiceTest {
         boolean isDeleted5 = true;
         boolean isDeleted6 = true;
         boolean isDeleted7 = true;
+        boolean isDeleted8 = true;
+        boolean isDeleted9 = true;
         for(int i = 0;i < cardVos.size();i++){
             CardVo temp = cardVos.get(i);
-            if(temp.getPositionX() == 5 && temp.getPositionY() == 1){
+            if(temp.getPositionX() == 5 && temp.getPositionY() == 1 && temp.getCardId() == 1){
                 isDeleted1 = false;
-            }if(temp.getPositionX() == 5 && temp.getPositionY() == 2){
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 2 && temp.getCardId() == 6){
                 isDeleted2 = false;
-            }if(temp.getPositionX() == 2 && temp.getPositionY() == 1){
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 1 && temp.getCardId() == 3){
                 isDeleted3 = false;
             }if(temp.getPositionX() == 1 && temp.getPositionY() == 1){
                 isDeleted4 = false;
@@ -265,8 +273,12 @@ public class CardServiceTest {
                 isDeleted5 = false;
             }if(temp.getPositionX() == 5 && temp.getPositionY() == 3){
                 isDeleted6 = false;
-            }if(temp.getPositionX() == 2 && temp.getPositionY() == 2){
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 2 && temp.getCardId() == 7){
                 isDeleted7 = false;
+            }if(temp.getPositionX() == 2 && temp.getPositionY() == 1 && temp.getCardId() == 5){
+                isDeleted8 = false;
+            }if(temp.getPositionX() == 5 && temp.getPositionY() == 1 && temp.getCardId() == 2){
+                isDeleted9 = false;
             }
         }
         System.out.println("isDeleted1 = " + isDeleted1);
@@ -276,6 +288,8 @@ public class CardServiceTest {
         System.out.println("isDeleted5 = " + isDeleted5);
         System.out.println("isDeleted6 = " + isDeleted6);
         System.out.println("isDeleted7 = " + isDeleted7);
+        System.out.println("isDeleted8 = " + isDeleted8);
+        System.out.println("isDeleted9 = " + isDeleted9);
         Assert.assertArrayEquals(
                 new Object[]{
                         isDeleted1,
@@ -284,13 +298,17 @@ public class CardServiceTest {
                         isDeleted4,
                         isDeleted5,
                         isDeleted6,
-                        isDeleted7
+                        isDeleted7,
+                        isDeleted8,
+                        isDeleted9
                 },
                 new Object[]{
                         true,
                         false,
                         true,
                         false,
+                        true,
+                        true,
                         false,
                         false,
                         false

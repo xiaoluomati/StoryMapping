@@ -177,7 +177,7 @@ public class CardServiceImpl implements CardService {
         card.setCardId(cardVo.getCardId());
         System.out.println("--------------------- " + card.toString());
 
-        cardRepository.save(card);
+        cardRepository.saveAndFlush(card);
         return true;
     }
 
@@ -195,6 +195,8 @@ public class CardServiceImpl implements CardService {
         card.setStoryId(id);
 //        card.setCardId(cardVo.getCardId());
         cardRepository.delete(card);
+
+        int left_move = 0;
 
         if(x < 3){//删除所有子卡片
             List<CardVo> cardVos = getCardList(id);
@@ -216,6 +218,11 @@ public class CardServiceImpl implements CardService {
                     }
                 }
                 if(will_delete == true){
+                    System.out.println("bias :" + (temp.getPositionY() - y + 1));
+                    if(temp.getPositionY() - y  + 1 > left_move){
+                        left_move = temp.getPositionY() - y + 1;
+                        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=leftmove: " + left_move);
+                    }
                     Card card1 = new Card();
                     card1.setPositionX(temp.getPositionX());
                     card1.setPositionY(temp.getPositionY());
@@ -223,6 +230,38 @@ public class CardServiceImpl implements CardService {
                     cardRepository.delete(card1);
                 }
             }
+        }
+
+        List<CardVo> toDelete = getCardList(id);
+        List<CardVo> toAdd = new ArrayList<>();
+        for(CardVo temp:toDelete){
+            if(temp.getPositionY() > y){
+                Card card1 = new Card();
+                int x1 = temp.getPositionX();
+                int y1 = temp.getPositionY();
+                int id1 = temp.getStoryId();
+                card1.setPositionX(x1);
+                card1.setPositionY(y1);
+                card1.setStoryId(id1);
+                cardRepository.delete(card1);
+                cardRepository.flush();
+                temp.setPositionY(temp.getPositionY() - left_move);
+                System.out.println("left_move: " + left_move);
+                System.out.println("update here! " + temp.toString());
+                toAdd.add(temp);
+            }
+        }
+        for(CardVo temp : toAdd){
+            Card card1 = new Card();
+            card1.setTitle(temp.getTitle());
+            card1.setContent(temp.getContent());
+            card1.setState(temp.getState().ordinal());
+            card1.setCost(temp.getCost());
+            card1.setPositionX(temp.getPositionX());
+            card1.setPositionY(temp.getPositionY());
+            card1.setStoryId(temp.getStoryId());
+            card1.setCardId(temp.getCardId());
+            cardRepository.saveAndFlush(card1);
         }
 
         return true;
