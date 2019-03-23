@@ -7,6 +7,7 @@ import '@/assets/css/story-style.css'
 
 Vue.config.productionTip = false
 export const eventBus = new Vue()
+
 Vue.component('remote-script', {
   render: function (createElement) {
     let self = this;
@@ -38,6 +39,7 @@ Vue.component('remote-script', {
     }
   }
 });
+
 new Vue({
   router,
   render: h => h(App)
