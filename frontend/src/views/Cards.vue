@@ -91,6 +91,8 @@ import API from '@/api/api_cards'
 import API_R from '@/api/api_roles'
 import { eventBus } from '../main'
 import html2canvas from 'html2canvas'
+import {ContainerMixin, ElementMixin} from 'vue-slicksort';
+
 
 export default {
   data () {

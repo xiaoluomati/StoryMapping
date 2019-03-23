@@ -23,7 +23,7 @@ Vue.component('remote-script', {
           self.$emit('error', event);
         },
         readystatechange: function (event) {
-          if (this.readyState == 'complete') {
+          if (this.readyState === 'complete') {
             self.$emit('load', event);
           }
         }
