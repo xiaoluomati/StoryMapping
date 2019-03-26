@@ -11,7 +11,8 @@ export default {
   },
 
   addCard: (from, card) => {
-    return API.POST(`addCard/${from}`, { 'storyId': card.storyId,
+    return API.POST(`addCard/${from}`, {
+      'storyId': card.storyId,
       'title': card.title,
       'content': card.content,
       'state': card.state,
@@ -22,14 +23,16 @@ export default {
   },
 
   deleteCard: card => {
-    return API.POST('deleteCard', { 'positionX': card.positionX,
+    return API.POST('deleteCard', {
+      'positionX': card.positionX,
       'positionY': card.positionY,
       'storyId': card.storyId
     })
   },
 
   updateCard: card => {
-    return API.POST(`updateCard`, { 'storyId': card.storyId,
+    return API.POST(`updateCard`, {
+      'storyId': card.storyId,
       'title': card.title,
       'content': card.content,
       'state': card.state,
@@ -38,5 +41,14 @@ export default {
       'positionY': card.positionY,
       'cardId': card.cardId
     })
+  },
+
+
+  // {
+  //   allCards: [{}{}{}{}]
+  //   storyId: "3"
+  // }
+  updateAllCards: cards => {
+    return API.PUT(`updateAllCards`, cards)
   }
 }

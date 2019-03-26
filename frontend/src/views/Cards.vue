@@ -1,36 +1,69 @@
 <template>
   <div id="root">
+    <div class="root">
+    </div>
     <div id="pic" ref="pic">
-    <div style="text-align:left">
-      <el-button icon="el-icon-plus" @click="addCard(1, 1)" v-if="cards.length === 0" circle></el-button>
-    </div>
-    <div v-for="h in map_height" :key="h" :style="{'width': map_width * card_width + 'px', 'height': card_width + 'px' }">
-      <div v-for= "w in map_width" :key="w" style="float: left">
-        <el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null" v-bind:class="{ highlightcard : isHighlight(getCard(h,w).cardId), 'card-activity' : h === 1, 'card-task' : h === 2, 'card-story' : h >= 3 }">
-          <div slot="header" class="clearfix">
-            <span>{{getCard(h,w).title}}</span>
-            <!--<span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>-->
-            <span style="float: right" v-if="h === 1">
-              <el-button icon="el-icon-myicon-user" size="mini" @click="initCardRoles(h,w)" circle></el-button>
-            </span>
-          </div>
-          <div class="text item">{{getCard(h,w).content}}</div>
-         </el-card>
-        <div class="operation-btns" v-if="getCard(h,w) != null" >
-          <el-button class="card-button" icon="el-icon-delete" @click="deleteCard(h, w)" size="mini" circle></el-button>
-          <el-button class="card-button" icon="el-icon-arrow-right" @click="addCard(h, w)" v-if="h <= 2" size="mini" circle></el-button>
-          <el-button class="card-button" icon="el-icon-edit" @click="editCard(h, w)" size="mini" circle></el-button>
-          <el-button class="card-button" icon="el-icon-arrow-down" @click="addChildCard(h, w)" size="mini" circle></el-button>
-        </div>
-        <el-card class="box-card" shadow="hover" v-if="getCard(h,w) == null">
-          <div class="text item"></div>
-        </el-card>
+      <div style="text-align:left">
+        <el-button icon="el-icon-plus" @click="addCard(1, 1)" v-if="cards.length === 0" circle></el-button>
       </div>
-    </div>
+
+      <div v-for="h in map_height" :key="h" :style="{'width': map_width * card_width + 'px', 'height': card_width + 'px' }">
+        <draggable v-model="card_table[h]" @end="dropCard">
+          <div v-for="(item, index) in card_table[h]" :key="index" style="float: left">
+            <el-card class="box-card" shadow="hover" v-if="item != null" v-bind:class="{ highlightcard : isHighlight(item.cardId), 'card-activity' : h === 1, 'card-task' : h === 2, 'card-story' : h >= 3 }">
+              <div slot="header" class="clearfix">
+                <span>{{item.title}}</span>
+                <!--<span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>-->
+                <span style="float: right" v-if="h === 1">
+                  <el-button icon="el-icon-myicon-user" size="mini" @click="initCardRoles(h, index+1)" circle></el-button>
+                </span>
+              </div>
+              <div class="text item">{{item.content}}</div>
+            </el-card>
+            <div class="operation-btns" v-if="item != null" >
+              <el-button class="card-button" icon="el-icon-delete" @click="deleteCard(h, index+1)" size="mini" circle></el-button>
+              <el-button class="card-button" icon="el-icon-arrow-right" @click="addCard(h, index+1)" v-if="h <= 2" size="mini" circle></el-button>
+              <el-button class="card-button" icon="el-icon-edit" @click="editCard(h, index+1)" size="mini" circle></el-button>
+              <el-button class="card-button" icon="el-icon-arrow-down" @click="addChildCard(h, index+1)" size="mini" circle></el-button>
+            </div>
+            <el-card class="box-card" shadow="hover" v-if="item == null">
+              <div class="text item"></div>
+            </el-card>
+          </div>
+        </draggable>
+      </div>
+      <!--<div v-for="h in map_height" :key="h" :style="{'width': map_width * card_width + 'px', 'height': card_width + 'px' }">-->
+        <!--<draggable :list="cards" @end="dropCard">-->
+          <!--<div v-for= "w in map_width" :key="w" style="float: left">-->
+            <!--<div>-->
+              <!--<el-card class="box-card" shadow="hover" v-if="getCard(h,w) != null" v-bind:class="{ highlightcard : isHighlight(getCard(h,w).cardId), 'card-activity' : h === 1, 'card-task' : h === 2, 'card-story' : h >= 3 }">-->
+              <!--<div slot="header" class="clearfix">-->
+                <!--<span>{{getCard(h,w).title}}</span>-->
+                <!--&lt;!&ndash;<span style="float: right" v-if="h > 2">{{getCard(h,w).state}}</span>&ndash;&gt;-->
+                <!--<span style="float: right" v-if="h === 1">-->
+                  <!--<el-button icon="el-icon-myicon-user" size="mini" @click="initCardRoles(h,w)" circle></el-button>-->
+                <!--</span>-->
+              <!--</div>-->
+              <!--<div class="text item">{{getCard(h,w).content}}</div>-->
+            <!--</el-card>-->
+              <!--<div class="operation-btns" v-if="getCard(h,w) != null" >-->
+              <!--<el-button class="card-button" icon="el-icon-delete" @click="deleteCard(h, w)" size="mini" circle></el-button>-->
+              <!--<el-button class="card-button" icon="el-icon-arrow-right" @click="addCard(h, w)" v-if="h <= 2" size="mini" circle></el-button>-->
+              <!--<el-button class="card-button" icon="el-icon-edit" @click="editCard(h, w)" size="mini" circle></el-button>-->
+              <!--<el-button class="card-button" icon="el-icon-arrow-down" @click="addChildCard(h, w)" size="mini" circle></el-button>-->
+            <!--</div>-->
+              <!--<el-card class="box-card" shadow="hover" v-if="getCard(h,w) == null">-->
+              <!--<div class="text item"></div>-->
+              <!--</el-card>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;{{getCard(h,w).content}}&ndash;&gt;-->
+          <!--</div>-->
+        <!--</draggable>-->
+      <!--</div>-->
     </div>
     <!--<el-button icon="el-icon-delete" @click="test()" size="mini" circle></el-button>-->
     <!--<div style="width: 200px" id="test">-->
-      <!--test-->
+    <!--test-->
     <!--</div>-->
     <el-dialog title="修改角色" :visible.sync="dialogRoleVisible" @close="editCardRoles()">
       <span><el-transfer v-model="addedRoleIds" :titles="['所有角色', '相关角色']" :data="allRoles"></el-transfer></span>
@@ -91,10 +124,12 @@ import API from '@/api/api_cards'
 import API_R from '@/api/api_roles'
 import { eventBus } from '../main'
 import html2canvas from 'html2canvas'
-import {ContainerMixin, ElementMixin} from 'vue-slicksort';
-
+import draggable from 'vuedraggable'
 
 export default {
+    components: {
+      draggable,
+    },
   data () {
     return {
       fromWhere: '',
@@ -134,7 +169,24 @@ export default {
       cards: [
 
       ],
-      searchWord: ''
+      searchWord: '',
+      card_table: [
+      ],
+      tasks: [
+        {
+          card: "",
+          activities: [
+            {
+              card: "",
+              stories: [
+                {
+                  card: ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   methods: {
@@ -221,11 +273,14 @@ export default {
     },
     getCard (x, y) {
       for (let item in this.cards) {
-        if (this.cards[item].positionX === x && this.cards[item].positionY === y) {
+        if (this.isXYCard(x, y, item)) {
           return this.cards[item]
         }
       }
       return null
+    },
+    isXYCard(x, y, item) {
+      return this.cards[item].positionX === x && this.cards[item].positionY === y
     },
     initStoryMap () {
       API.getCardList(this.$route.params.storymapid).then(res => {
@@ -238,6 +293,8 @@ export default {
           this.map_width = map.mapLong
           this.map_height = map.mapWide
           this.cards = map.cardVos
+          // console.log(this.cards)
+          this.initCardTable()
         }
       })
       API_R.getStoryRoleList(this.$route.params.storymapid).then(res => {
@@ -250,6 +307,7 @@ export default {
           this.mapRoles = roles
         }
       })
+
     },
     addChildCard (x, y) {
       this.dialogFormVisible = true
@@ -355,6 +413,50 @@ export default {
         }
       })
       console.log(this.editform.x)
+    },
+    dropCard (evt) {
+      let allCards = []
+      for (let i = 1; i < this.map_height + 1; i++) {
+        for (let j = 0; j < this.map_width; j++) {
+          let newCard = this.card_table[i][j]
+          if (newCard != null) {
+            if (newCard.positionY !== j + 1) {
+              newCard.positionX = i
+              newCard.positionY = j + 1
+            }
+            allCards.push(newCard)
+          }
+          // if (newCard != null && newCard.positionY !== j+1) {
+          //   // console.log("old_card" + newCard.positionY);
+          //   // API.updateCard(newCard)
+          //   // console.log("new_place" + (j+1));
+          //
+          // }
+        }
+      }
+      API.updateAllCards(
+        { 'storyId': this.$route.params.storymapid,
+          'allCards': allCards
+      })
+    },
+    initCardTable () {
+      this.card_table = []
+      for (let i = 0; i < this.map_height + 1; i++) {
+        this.card_table[i] = new Array(this.map_width)
+      }
+
+      for (let i = 0; i < this.map_height + 1; i++) {
+        for (let j = 0; j < this.map_width; j++) {
+          this.card_table[i][j] = null
+        }
+      }
+
+      for (let item in this.cards) {
+        let card = this.cards[item]
+        let x = card.positionX
+        let y = card.positionY
+        this.card_table[x][y - 1] = card
+      }
     }
   },
   computed: {
@@ -372,6 +474,7 @@ export default {
       }
     }
   },
+
   mounted () {
     this.initStoryMap()
     eventBus.$on('searchWords', (message) => {

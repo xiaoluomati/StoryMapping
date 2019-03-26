@@ -10,7 +10,7 @@ export const eventBus = new Vue()
 
 Vue.component('remote-script', {
   render: function (createElement) {
-    let self = this;
+    let self = this
     return createElement('script', {
       attrs: {
         type: 'text/javascript',
@@ -18,18 +18,18 @@ Vue.component('remote-script', {
       },
       on: {
         load: function (event) {
-          self.$emit('load', event);
+          self.$emit('load', event)
         },
         error: function (event) {
-          self.$emit('error', event);
+          self.$emit('error', event)
         },
         readystatechange: function (event) {
           if (this.readyState === 'complete') {
-            self.$emit('load', event);
+            self.$emit('load', event)
           }
         }
       }
-    });
+    })
   },
 
   props: {
@@ -38,7 +38,7 @@ Vue.component('remote-script', {
       required: true
     }
   }
-});
+})
 
 new Vue({
   router,
