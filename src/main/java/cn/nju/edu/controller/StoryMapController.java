@@ -2,6 +2,7 @@ package cn.nju.edu.controller;
 
 import cn.nju.edu.service.StoryMapService;
 import cn.nju.edu.util.ExcelHelper;
+import cn.nju.edu.vo.CollaboratorVo;
 import cn.nju.edu.vo.StoryMapVo;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
@@ -35,6 +36,11 @@ public class StoryMapController {
     @PostMapping("/addStoryMap")
     public void addStoryMap(@RequestBody StoryMapVo storyMapVo){
         storyMapService.addStoryMap(storyMapVo);
+    }
+
+    @PostMapping("/addCollaborator")
+    public void addCollaborator(@RequestBody CollaboratorVo collaboratorVo){
+        storyMapService.addCollaborator(collaboratorVo);
     }
 
     @PostMapping("/updateStoryMap")
