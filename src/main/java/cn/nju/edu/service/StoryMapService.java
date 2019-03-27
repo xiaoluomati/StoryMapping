@@ -1,5 +1,6 @@
 package cn.nju.edu.service;
 
+import cn.nju.edu.vo.CollaboratorVo;
 import cn.nju.edu.vo.StoryMapVo;
 
 import java.util.List;
@@ -11,6 +12,8 @@ public interface StoryMapService {
 //    StoryMapVo getStoryMapByName(String name);
 
     boolean addStoryMap(StoryMapVo storyMapVo);
+
+    boolean addCollaborator(CollaboratorVo collaboratorVo);
 
     boolean updateStoryMap(StoryMapVo storyMapVo);
 

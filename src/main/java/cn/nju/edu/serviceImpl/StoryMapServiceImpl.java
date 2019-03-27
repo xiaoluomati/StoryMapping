@@ -1,11 +1,14 @@
 package cn.nju.edu.serviceImpl;
 
 import cn.nju.edu.entity.Card;
+import cn.nju.edu.entity.Collaborator;
 import cn.nju.edu.entity.StoryMap;
 import cn.nju.edu.repository.CardRepository;
+import cn.nju.edu.repository.CollaboratorRepository;
 import cn.nju.edu.repository.StoryMapRepository;
 import cn.nju.edu.service.StoryMapService;
 import cn.nju.edu.util.ExcelHelper;
+import cn.nju.edu.vo.CollaboratorVo;
 import cn.nju.edu.vo.StoryMapVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ public class StoryMapServiceImpl implements StoryMapService {
     @Autowired
     private CardRepository cardRepository;
 
+    @Autowired
+    private CollaboratorRepository collaboratorRepository;
+
     @Override
     @Transactional
     public List<StoryMapVo> getStoryMapList(int userId) {
@@ -38,6 +44,20 @@ public class StoryMapServiceImpl implements StoryMapService {
             storyMapVo.setStoryId(temp.getStoryId());
             storyMapVolist.add(storyMapVo);
         }
+
+        List<Collaborator> collaborators = collaboratorRepository.findByUserId(userId);
+        for(Collaborator temp : collaborators){
+            int storyId = temp.getStoryId();
+            StoryMap storyMap = storyMapRepository.findByStoryId(storyId);
+            StoryMapVo storyMapVo = new StoryMapVo();
+            storyMapVo.setStoryName(storyMap.getStoryName());
+            storyMapVo.setStoryDescription(storyMap.getStoryDescription());
+            storyMapVo.setRelease(storyMap.getRelease());
+            storyMapVo.setUserId(storyMap.getUserId());
+            storyMapVo.setStoryId(storyMap.getStoryId());
+            storyMapVolist.add(storyMapVo);
+        }
+
         return storyMapVolist;
     }
 
@@ -62,6 +82,20 @@ public class StoryMapServiceImpl implements StoryMapService {
         storyMap.setRelease(storyMapVo.getRelease());
         storyMap.setUserId(storyMapVo.getUserId());
         storyMapRepository.save(storyMap);
+        return true;
+    }
+
+    @Override
+    public boolean addCollaborator(CollaboratorVo collaboratorVo) {
+        int userId = collaboratorVo.getUserId();
+        int storyId = collaboratorVo.getStoryId();
+        if(collaboratorRepository.findByStoryIdAndUserId(storyId,userId) != null){
+            return false;
+        }
+        Collaborator collaborator = new Collaborator();
+        collaborator.setStoryId(storyId);
+        collaborator.setUserId(userId);
+        collaboratorRepository.saveAndFlush(collaborator);
         return true;
     }
 

@@ -1,6 +1,7 @@
 package cn.nju.edu.service;
 
 import cn.nju.edu.entity.StoryMapKey;
+import cn.nju.edu.vo.CollaboratorVo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +45,40 @@ public class StoryMapServiceTest {
                 new Object[]{
                         "团长",
                         1
+                }
+        );
+    }
+
+    @Test
+    public void getStoryMapList1(){
+        CollaboratorVo collaboratorVo = new CollaboratorVo();
+        collaboratorVo.setStoryId(175);
+        collaboratorVo.setUserId(1);
+
+        storyMapService.addCollaborator(collaboratorVo);
+
+        List<StoryMapVo> storyMapVos = storyMapService.getStoryMapList(1);
+        Assert.assertNotNull(storyMapVos);
+
+        String description = "";
+        int storyId = 0;
+
+        for(int i = 0;i < storyMapVos.size();i++){
+            StoryMapVo temp = storyMapVos.get(i);
+            if(temp.getStoryName().equals("storymap")){
+                description = temp.getStoryDescription();
+                storyId = temp.getStoryId();
+            }
+        }
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        description,
+                        storyId
+                },
+                new Object[]{
+                        "storymap for show",
+                        175
                 }
         );
     }
