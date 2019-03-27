@@ -182,6 +182,37 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
+    public boolean updateCardList(List<CardVo> cardVoList) {
+        for(CardVo temp : cardVoList){
+            Card card = new Card();
+            card.setTitle(temp.getTitle());
+            card.setContent(temp.getContent());
+            card.setState(temp.getState().ordinal());
+            card.setCost(temp.getCost());
+            card.setPositionX(temp.getPositionX());
+            card.setPositionY(temp.getPositionY());
+            card.setStoryId(temp.getStoryId());
+            card.setCardId(temp.getCardId());
+            cardRepository.delete(card);
+            cardRepository.flush();
+        }
+
+        for(CardVo cardVo : cardVoList){
+            Card card = new Card();
+            card.setTitle(cardVo.getTitle());
+            card.setContent(cardVo.getContent());
+            card.setState(cardVo.getState().ordinal());
+            card.setCost(cardVo.getCost());
+            card.setPositionX(cardVo.getPositionX());
+            card.setPositionY(cardVo.getPositionY());
+            card.setStoryId(cardVo.getStoryId());
+            card.setCardId(cardVo.getCardId());
+            cardRepository.saveAndFlush(card);
+        }
+        return true;
+    }
+
+    @Override
     public boolean deleteCard(CardVo cardVo) {
         Card card = new Card();
 //        card.setContent(cardVo.getContent());

@@ -11,5 +11,7 @@ public interface CardService {
 
     boolean updateCard(CardVo cardVo);
 
+    boolean updateCardList(List<CardVo> cardVoList);
+
     boolean deleteCard(CardVo cardVo);
 }

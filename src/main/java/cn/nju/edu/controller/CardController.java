@@ -37,6 +37,11 @@ public class CardController {
         cardService.addCard(source,cardVo);
     }
 
+    @PostMapping("/udateCardList")
+    public void addCard(@RequestBody List<CardVo> cardVoList){
+        cardService.updateCardList(cardVoList);
+    }
+
     @PostMapping("/updateCard")
     public void updateCard(@RequestBody CardVo cardVo){
         cardService.updateCard(cardVo);

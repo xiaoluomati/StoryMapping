@@ -230,6 +230,45 @@ public class CardServiceTest {
     }
 
     @Test
+    public void updateList(){
+        List<CardVo> cardVos = cardService.getCardList(1);
+        for(CardVo temp : cardVos){
+            if(temp.getCardId() == 1){
+                temp.setPositionY(2);
+            }
+            else if(temp.getCardId() == 2){
+                temp.setPositionY(1);
+            }
+        }
+
+        cardService.updateCardList(cardVos);
+
+        List<CardVo> cardVoList = cardService.getCardList(1);
+        int Y1 = 0;
+        int Y2 = 0;
+        for(CardVo temp : cardVoList){
+            if(temp.getCardId() == 1){
+                Y1 = temp.getPositionY();
+            }
+            else if(temp.getCardId() == 2){
+                Y2 = temp.getPositionY();
+            }
+        }
+
+        Assert.assertArrayEquals(
+                new Object[]{
+                        Y1,
+                        Y2
+                },
+                new Object[]{
+                        2,
+                        1
+                }
+        );
+
+    }
+
+    @Test
     public void deleteCard(){
         CardVo cardVo = new CardVo();
 //        cardVo.setContent("awayz is a rbq");
