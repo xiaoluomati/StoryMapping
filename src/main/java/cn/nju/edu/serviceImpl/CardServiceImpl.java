@@ -193,7 +193,7 @@ public class CardServiceImpl implements CardService {
             card.setPositionY(temp.getPositionY());
             card.setStoryId(temp.getStoryId());
             card.setCardId(temp.getCardId());
-            cardRepository.delete(card);
+            cardRepository.deleteByCardId(temp.getCardId());
             cardRepository.flush();
         }
 

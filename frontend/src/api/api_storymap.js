@@ -29,5 +29,10 @@ export default {
 
   updateStoryMap: params => {
     return API.POST('updateStoryMap', params)
+  },
+
+  addCollaborators: (userId, storyId) => {
+    console.log(userId, storyId)
+    return API.POST('addCollaborator', { 'userId': userId, 'storyId' : storyId })
   }
 }

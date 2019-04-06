@@ -15,6 +15,8 @@
                    @click="handleDeleteStoryMap(storymap.storyId)"></el-button>
         <el-button icon="el-icon-edit" circle class="storymap-icon"
                    @click="handleEditStoryMap(storymap.storyId)"></el-button>
+        <el-button icon="el-icon-circle-plus-outline" circle class="storymap-icon"
+                   @click="handleCollaborator(storymap.storyId)"></el-button>
       </div>
     </el-col>
 
@@ -32,11 +34,24 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
+    <el-dialog title="添加协作者" :visible.sync="addCollaboratorVisible" width="30%">
+      <el-form :label-position="'top'" label-width="100px" :model="collaborator">
+        <el-form-item label="用户名称">
+          <el-input v-model="collaborator.name"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click.native="addCollaboratorVisible = false">取消</el-button>
+          <el-button type="primary" @click.native="addCollaborator">保存</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </el-row>
 </template>
 
 <script>
 import API from '@/api/api_storymap'
+import API_U from '@/api/api_user'
 import tool from '@/util/tool'
 
 export default {
@@ -49,9 +64,15 @@ export default {
         storyName: '',
         storyDescription: '',
         release: 0,
-        userId: ''
+        userId: '',
+        editor: '', // 编辑者
       },
-      editStoryMapVisible: false
+      editStoryMapVisible: false,
+      addCollaboratorVisible: false,
+      collaborator: {
+        name: '',
+        storyId: ''
+      }
     }
   },
 
@@ -167,9 +188,40 @@ export default {
           this.storymapEdit.storyDescription = this.storymaps[i].storyDescription
           this.storymapEdit.userId = this.storymaps[i].userId
           this.storymapEdit.release = this.storymaps[i].release
+          this.storymapEdit.editor = tool.getUserId()
           break
         }
       }
+    },
+
+    handleCollaborator (storyId) {
+      this.addCollaboratorVisible = true
+      this.collaborator.name = ''
+      this.collaborator.storyId = storyId
+    },
+
+    addCollaborator () {
+      let collaborators = []
+      API_U.listUser()
+        .then(res => {
+          let status = res.status
+          if (status === 200) {
+            collaborators = res.data
+
+            if (this.collaborator.name.trim().length > 0) {
+              for (let i = 0; i < collaborators.length; i++) {
+                let c = collaborators[i]
+                if (c.name === this.collaborator.name && c.id !== tool.getUserId()) {
+                  API.addCollaborators(c.id, this.collaborator.storyId)
+                  this.$message.success('更改成功')
+                  this.addCollaboratorVisible = false
+                  return
+                }
+              }
+              this.$message.error('没有找到用户')
+            }
+          }
+        })
     }
   },
 

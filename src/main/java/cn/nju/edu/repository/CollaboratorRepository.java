@@ -9,4 +9,8 @@ public interface CollaboratorRepository extends JpaRepository<Collaborator,Integ
     Collaborator findByStoryIdAndUserId(int storyId,int userId);
 
     List<Collaborator> findByUserId(int userId);
+
+    List<Collaborator> findByStoryId(int storyId);
+
+    void deleteByStoryId(int storyId);
 }

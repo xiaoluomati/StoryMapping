@@ -43,12 +43,7 @@ export default {
     })
   },
 
-
-  // {
-  //   allCards: [{}{}{}{}]
-  //   storyId: "3"
-  // }
   updateAllCards: cards => {
-    return API.PUT(`updateAllCards`, cards)
+    return API.POST(`udateCardList`, cards)
   }
 }

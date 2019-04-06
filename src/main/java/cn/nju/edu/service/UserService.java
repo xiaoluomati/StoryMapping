@@ -1,8 +1,11 @@
 package cn.nju.edu.service;
 
+import cn.nju.edu.vo.SimpleUserVo;
 import cn.nju.edu.vo.UserLoginVo;
 import cn.nju.edu.vo.UserPswdVo;
 import cn.nju.edu.vo.UserVo;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -23,4 +26,7 @@ public interface UserService {
 
     //修改用户密码
     boolean updatePassword(UserPswdVo userPswdVo);
+
+    // 列出所有用户
+    List<SimpleUserVo> listUser();
 }

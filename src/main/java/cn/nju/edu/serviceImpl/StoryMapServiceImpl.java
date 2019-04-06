@@ -116,12 +116,26 @@ public class StoryMapServiceImpl implements StoryMapService {
     @Override
     @Transactional
     public boolean deleteStoryMap(StoryMapVo storyMapVo) {
+        // 如果删除的地图的拥有者和编辑用户不同， 在协作者中删除编辑用户
+        int userId = storyMapVo.getUserId();
+        int editor = storyMapVo.getEditor();
+        System.out.println("userId = " + userId);
+        System.out.println("editor = " + editor);
+        if (editor != userId) {
+            Collaborator byStoryIdAndUserId = collaboratorRepository.findByStoryIdAndUserId(storyMapVo.getStoryId(), editor);
+            collaboratorRepository.delete(byStoryIdAndUserId);
+            return true;
+        }
+
+        // 删除地图及其协作者
         StoryMap storyMap = new StoryMap();
         storyMap.setStoryName(storyMapVo.getStoryName());
 //        storyMap.setStoryDescription(storyMapVo.getStoryDescription());
 //        storyMap.setRelease(storyMapVo.getRelease());
         storyMap.setUserId(storyMapVo.getUserId());
         storyMapRepository.delete(storyMap);
+
+        collaboratorRepository.deleteByStoryId(storyMapVo.getStoryId());
         return true;
     }
 

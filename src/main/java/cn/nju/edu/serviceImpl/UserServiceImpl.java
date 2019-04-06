@@ -3,6 +3,7 @@ package cn.nju.edu.serviceImpl;
 import cn.nju.edu.entity.User;
 import cn.nju.edu.repository.UserRepository;
 import cn.nju.edu.service.UserService;
+import cn.nju.edu.vo.SimpleUserVo;
 import cn.nju.edu.vo.UserLoginVo;
 import cn.nju.edu.vo.UserPswdVo;
 import cn.nju.edu.vo.UserVo;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -107,6 +110,19 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<SimpleUserVo> listUser() {
+        Iterable<User> all = userRepository.findAll();
+        List<SimpleUserVo> users = new ArrayList<>();
+        for (User user : all) {
+            SimpleUserVo simpleUserVo = new SimpleUserVo();
+            simpleUserVo.setId(user.getId());
+            simpleUserVo.setName(user.getNickname());
+            users.add(simpleUserVo);
+        }
+        return users;
     }
 
 }

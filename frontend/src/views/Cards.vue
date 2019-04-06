@@ -426,19 +426,12 @@ export default {
             }
             allCards.push(newCard)
           }
-          // if (newCard != null && newCard.positionY !== j+1) {
-          //   // console.log("old_card" + newCard.positionY);
-          //   // API.updateCard(newCard)
-          //   // console.log("new_place" + (j+1));
-          //
-          // }
         }
       }
-      API.updateAllCards(
-        { 'storyId': this.$route.params.storymapid,
-          'allCards': allCards
-      })
+      // console.log(allCards)
+      API.updateAllCards(allCards)
     },
+
     initCardTable () {
       this.card_table = []
       for (let i = 0; i < this.map_height + 1; i++) {

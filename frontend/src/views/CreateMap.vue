@@ -59,11 +59,6 @@ export default {
           })
       }
     }
-
-    // submitAndOpen () {
-    //   submitForm()
-    //   this.$router.push()
-    // }
   }
 }
 </script>

@@ -11,6 +11,16 @@ public class StoryMapVo {
 
     private int storyId;
 
+    private int editor;
+
+    public int getEditor() {
+        return editor;
+    }
+
+    public void setEditor(int editor) {
+        this.editor = editor;
+    }
+
     public String getStoryName() {
         return storyName;
     }
