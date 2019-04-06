@@ -49,6 +49,7 @@ public class StoryMapServiceImpl implements StoryMapService {
         for(Collaborator temp : collaborators){
             int storyId = temp.getStoryId();
             StoryMap storyMap = storyMapRepository.findByStoryId(storyId);
+//            System.out.println("storyMap = " + storyMap);
             StoryMapVo storyMapVo = new StoryMapVo();
             storyMapVo.setStoryName(storyMap.getStoryName());
             storyMapVo.setStoryDescription(storyMap.getStoryDescription());
@@ -109,6 +110,9 @@ public class StoryMapServiceImpl implements StoryMapService {
         storyMap.setStoryDescription(storyMapVo.getStoryDescription());
         storyMap.setRelease(storyMapVo.getRelease());
         storyMap.setUserId(storyMapVo.getUserId());
+
+        storyMap.setStoryId(storyMapVo.getStoryId());
+
         storyMapRepository.save(storyMap);
         return true;
     }
@@ -119,8 +123,8 @@ public class StoryMapServiceImpl implements StoryMapService {
         // 如果删除的地图的拥有者和编辑用户不同， 在协作者中删除编辑用户
         int userId = storyMapVo.getUserId();
         int editor = storyMapVo.getEditor();
-        System.out.println("userId = " + userId);
-        System.out.println("editor = " + editor);
+//        System.out.println("userId = " + userId);
+//        System.out.println("editor = " + editor);
         if (editor != userId) {
             Collaborator byStoryIdAndUserId = collaboratorRepository.findByStoryIdAndUserId(storyMapVo.getStoryId(), editor);
             collaboratorRepository.delete(byStoryIdAndUserId);
